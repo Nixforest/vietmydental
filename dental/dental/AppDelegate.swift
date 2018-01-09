@@ -7,15 +7,32 @@
 //
 
 import UIKit
+import harpyframework
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    internal var rootNav: UINavigationController = UINavigationController()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        SlideMenuOptions.leftViewWidth = GlobalConst.POPOVER_WIDTH
+        SlideMenuOptions.panGesturesEnabled = true
+        SlideMenuOptions.hideStatusBar = false
+        let firstVC = G00HomeVC(nibName: G00HomeVC.theClassName,
+                                bundle: nil)
+        rootNav = UINavigationController(rootViewController: firstVC)
+        rootNav.isNavigationBarHidden = false
+        let menu = MenuVC(nibName: MenuVC.theClassName, bundle: nil)
+        let slide = BaseSlideMenuViewController(
+            mainViewController: rootNav,
+            leftMenuViewController: menu)
+        
+        slide.delegate = firstVC
+        self.window?.rootViewController = slide
+        self.window?.makeKeyAndVisible()
         return true
     }
 
