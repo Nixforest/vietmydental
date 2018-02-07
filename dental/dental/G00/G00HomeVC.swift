@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import harpyframework
 
 class G00HomeVC: BaseParentViewController {
 
@@ -15,22 +16,31 @@ class G00HomeVC: BaseParentViewController {
 
         // Do any additional setup after loading the view.
         self.createNavigationBar(title: "Trang chủ")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        startLogic()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: Event handler
+    internal func finishUpdateConfigRequest(_ notification: Notification) {
+        let data = notification.object as! String
+        let model = LoginRespBean(jsonString: data)
+        if model.isSuccess() {
+            LoginRespBean.saveConfigData(data: model)
+        }
     }
-    */
+    
+    // MARK: Logic
+    private func startLogic() {
+        if BaseModel.shared.checkIsLogin() {
+            requestUpdateConfig()
+        } else {
+            openLogin()
+        }
+    }
+    
+    private func requestUpdateConfig() {
+        UpdateConfigurationRequest.requestUpdateConfiguration(
+            action: #selector(finishUpdateConfigRequest(_:)),
+            view: self)
+    }
 
 }

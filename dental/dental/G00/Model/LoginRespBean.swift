@@ -33,4 +33,12 @@ class LoginRespBean: BaseRespModel {
             print(DomainConst.JSON_ERR_WRONG_FORMAT)
         }
     }
+    
+    /**
+     * Handle save config data
+     * - parameter data: LoginRespBean
+     */
+    public static func saveConfigData(data: LoginRespBean) {
+        BaseModel.shared.setListMenu(listMenu: data.data.menu)
+    }
 }

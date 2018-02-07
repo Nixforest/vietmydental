@@ -16,5 +16,19 @@ class BaseParentViewController: ParentExtViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func openLogin() {
+        let loginView = G00LoginExtVC(nibName: G00LoginExtVC.theClassName, bundle: nil)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.present(loginView, animated: true, completion: finishOpenLogin)
+        }
+    }
+    
+    /**
+     * Handle when finish open login screen
+     */
+    internal func finishOpenLogin() -> Void {
+        print("finishOpenLogin")
+    }
 
 }

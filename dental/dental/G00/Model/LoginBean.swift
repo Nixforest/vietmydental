@@ -10,6 +10,7 @@ import UIKit
 import harpyframework
 
 class LoginBean: ConfigBean {
+    // MARK: Properties
     /** User token */
     var token:              String          = DomainConst.BLANK
     /** List menu */

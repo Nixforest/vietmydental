@@ -24,7 +24,7 @@ class G00LoginExtVC: ChildExtViewController {
     /** Label OR */
     var lblOr:          UILabel     = UILabel()
     /** Button facebook */
-    var btnFacebook:    CustomButton    = CustomButton(type: UIButtonType.custom)
+    var btnFacebook:    UIButton    = UIButton()
     /** Button Zalo */
     var btnZalo:        CustomButton    = CustomButton(type: .custom)
     //++ BUG0177-SPJ (NguyenPT 20171207) Add hotline in Login and Confirm code screen
@@ -114,25 +114,25 @@ class G00LoginExtVC: ChildExtViewController {
     /**
      * Handle set background image
      */
-    override func setBackgroundImage() {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone:
-            self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPHONE_IMG_NAME)
-            break
-        case .pad:
-            switch UIApplication.shared.statusBarOrientation {
-            case .portrait, .portraitUpsideDown:
-                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
-            case .landscapeLeft, .landscapeRight:
-                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_LANDSCAPE_IMG_NAME)
-            default:
-                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
-            }
-            break
-        default:
-            self.setBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
-        }
-    }
+//    override func setBackgroundImage() {
+//        switch UIDevice.current.userInterfaceIdiom {
+//        case .phone:
+//            self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPHONE_IMG_NAME)
+//            break
+//        case .pad:
+//            switch UIApplication.shared.statusBarOrientation {
+//            case .portrait, .portraitUpsideDown:
+//                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
+//            case .landscapeLeft, .landscapeRight:
+//                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_LANDSCAPE_IMG_NAME)
+//            default:
+//                self.updateBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
+//            }
+//            break
+//        default:
+//            self.setBackground(bkg: DomainConst.LOGIN_BKG_IPAD_IMG_NAME)
+//        }
+//    }
     
     /**
      * Create children views
@@ -359,6 +359,8 @@ class G00LoginExtVC: ChildExtViewController {
         if model.isSuccess() {
             BaseModel.shared.loginSuccess(model.data.token)
 //            BaseModel.shared.saveTempData(loginModel: model)
+//            BaseModel.shared.setListMenu(listMenu: model.data.menu)
+            LoginRespBean.saveConfigData(data: model)
             self.dismiss(animated: true, completion: finishDismissLogin)
         } else {
             showAlert(message: model.message)
@@ -484,6 +486,7 @@ class G00LoginExtVC: ChildExtViewController {
             action: #selector(G00LoginExtVC.imgLogoTapped(_:)))
         imgLogo.isUserInteractionEnabled = true
         imgLogo.addGestureRecognizer(tappedRecog)
+        imgLogo.contentMode = .scaleAspectFit
         
 //        createNextBtn()
         CommonProcess.updateViewPos(view: imgLogo,
@@ -635,9 +638,9 @@ class G00LoginExtVC: ChildExtViewController {
         txtPhone.frame              = CGRect(x: x, y: y, width: w, height: h)
         txtPhone.placeholder        = DomainConst.CONTENT00049
         txtPhone.backgroundColor    = UIColor.white
+        txtPhone.borderStyle        = .roundedRect
         txtPhone.textAlignment      = .center
         txtPhone.layer.cornerRadius = GlobalConst.BUTTON_CORNER_RADIUS_NEW
-//        txtPhone.keyboardType       = .numberPad
         txtPhone.returnKeyType      = .next
         txtPhone.adjustsFontSizeToFitWidth = true
     }
@@ -688,6 +691,7 @@ class G00LoginExtVC: ChildExtViewController {
         txtPassword.placeholder        = DomainConst.CONTENT00050
         txtPassword.backgroundColor    = UIColor.white
         txtPassword.textAlignment      = .center
+        txtPassword.borderStyle        = .roundedRect
         txtPassword.layer.cornerRadius = GlobalConst.BUTTON_CORNER_RADIUS_NEW
         txtPassword.isSecureTextEntry = true
         txtPassword.returnKeyType      = .done
@@ -843,9 +847,9 @@ class G00LoginExtVC: ChildExtViewController {
         btnFacebook.frame = CGRect(x: x, y: y, width: w, height: h)
         btnFacebook.setTitle(DomainConst.CONTENT00051, for: UIControlState())
         btnFacebook.setTitleColor(UIColor.white, for: UIControlState())
-        btnFacebook.titleLabel?.font = UIFont.systemFont(ofSize: GlobalConst.BUTTON_FONT_SIZE)
-        btnFacebook.backgroundColor = GlobalConst.FACEBOOK_BKG_COLOR
-        btnFacebook.layer.cornerRadius = GlobalConst.BUTTON_CORNER_RADIUS_NEW
+//        btnFacebook.titleLabel?.font    = UIFont.systemFont(ofSize: GlobalConst.BUTTON_FONT_SIZE)
+        btnFacebook.backgroundColor     = GlobalConst.MAIN_COLOR_GAS_24H
+        btnFacebook.layer.cornerRadius  = GlobalConst.BUTTON_CORNER_RADIUS_NEW
         btnFacebook.addTarget(self, action: #selector(btnFacebookTapped(_:)), for: .touchUpInside)
 //        btnFacebook.leftImage(image: ImageManager.getImage(named: DomainConst.LOGO_FACEBOOK_ICON_IMG_NAME)!)
 //        btnFacebook.imageView?.contentMode = .scaleAspectFit

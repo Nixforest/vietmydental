@@ -67,18 +67,12 @@ class MenuVC: BaseMenuViewController {
     
     //++ BUG0165-SPJ (NguyenPT 20171123) Override select home menu
     override func openHome() {
-//        // Get current view controller
-//        if let currentView = BaseViewController.getCurrentViewController() {
-//            // Check if current view controller is G12F01S01VC
-//            if currentView.theClassName == G12F01S01VC.theClassName {
-//                // Start new request Transaction Status
-//                (currentView as! G12F01S01VC).requestNewTransactionStatus()
-//            } else {
-//                // Pop to root view controller
-//                currentView.clearData()
-//                currentView.popToRootView()
-//            }
-//        }
+        // Get current view controller
+        if let currentView = BaseViewController.getCurrentViewController() {
+            // Pop to root view controller
+            currentView.clearData()
+            currentView.popToRootView()
+        }
     }
     //-- BUG0165-SPJ (NguyenPT 20171123) Override select home menu
 
@@ -90,11 +84,19 @@ class MenuVC: BaseMenuViewController {
     }
     
     override func openUserProfile() {
-//        let view = G00AccountExtVC(nibName: G00AccountExtVC.theClassName,
-//                                    bundle: nil)
-//        if let controller = BaseViewController.getCurrentViewController() {
-//            controller.navigationController?.pushViewController(view, animated: true)
-//        }
+        let view = G00AccountExtVC(nibName: G00AccountExtVC.theClassName,
+                                   bundle: nil)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view, animated: true)
+        }
+    }
+    
+    override func openCustomerList() {
+        let view = G01F00S01VC(nibName: G01F00S01VC.theClassName,
+                                   bundle: nil)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view, animated: true)
+        }
     }
     
     //++ BUG0171-SPJ (NguyenPT 20171127) Add new menu
@@ -159,8 +161,8 @@ class MenuVC: BaseMenuViewController {
         let data = (notification.object as! String)
         let model = UserProfileRespModel(jsonString: data)
         if model.isSuccess() {
-            BaseModel.shared.setUserInfo(userInfo: model.record)
-            setUserInfo(info: model.record)
+            BaseModel.shared.setUserInfo(userInfo: model.data)
+            setUserInfo(info: model.data)
         }
     }
     
