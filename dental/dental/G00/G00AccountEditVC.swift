@@ -16,7 +16,7 @@ class G00AccountEditVC: ChildExtViewController {
     /** Data */
     var _data:              [ConfigurationModel]    = [ConfigurationModel]()
     /** Address data (Province id, District id, Ward id, Street id) */
-    var _addressData:       (String, String, String, String)        = ("", "", "", "")
+    var _addressData:       (String, String, String, String)    = ("", "", "", "")
     /** Flag user has change data */
     var _isChanged:         Bool                    = false
     
@@ -33,36 +33,43 @@ class G00AccountEditVC: ChildExtViewController {
         self.createNavigationBar(title: DomainConst.CONTENT00442)
         updateAddress()
     }
-    
+    /**
+     * Notifies the view controller that its view was added to a view hierarchy.
+     */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Check if table view has selected item
         if let selectedIndex = tblInfo.indexPathForSelectedRow, selectedIndex.section == 0 {
+            // Get selected model
             let model = _data[selectedIndex.row]
             switch model.id {
-            case DomainConst.ACCOUNT_INFO_STREET_ID:
+            case DomainConst.ACCOUNT_INFO_STREET_ID:        // Street select
                 if !BaseModel.shared.sharedString.isEmpty {
                     _addressData.3 = BaseModel.shared.sharedString
                     model.updateData(id: model.id,
                                      name: model.name,
                                      iconPath: model.getIconPath(),
-                                     value: BaseModel.shared.getStreetNameById(id: _addressData.3))
+                                     value: BaseModel.shared.getConfigStreetNameById(
+                                        id: _addressData.3,
+                                        cityId: _addressData.0))
                     tblInfo.reloadData()
                 }
                 break
-            case DomainConst.ACCOUNT_INFO_CITY_ID:
-                if _addressData.0 != BaseModel.shared.sharedString && !BaseModel.shared.sharedString.isEmpty {
+            case DomainConst.ACCOUNT_INFO_CITY_ID:        // City select
+                if _addressData.0 != BaseModel.shared.sharedString
+                    && !BaseModel.shared.sharedString.isEmpty {
                     // Update id
                     _addressData.0 = BaseModel.shared.sharedString
                     // Update value
                     model.updateData(id: model.id,
                                      name: model.name,
                                      iconPath: model.getIconPath(),
-                                     value: BaseModel.shared.getProvinceNameById(id: _addressData.0))
+                                     value: LoginBean.shared.getCityById(id: _addressData.0).name)
                     // Update province for view
                     updateProvinceForView()
                 }
                 break
-            case DomainConst.ACCOUNT_INFO_DISTRICT_ID:
+            case DomainConst.ACCOUNT_INFO_DISTRICT_ID:  // District select
                 if _addressData.1 != BaseModel.shared.sharedString && !BaseModel.shared.sharedString.isEmpty {
                     // Update id
                     _addressData.1 = BaseModel.shared.sharedString
@@ -70,14 +77,13 @@ class G00AccountEditVC: ChildExtViewController {
                     model.updateData(id: model.id,
                                      name: model.name,
                                      iconPath: model.getIconPath(),
-                                     value: BaseModel.shared.getDistrictNameById(
-                                        id: _addressData.1,
-                                        provinceId: _addressData.0))
+                                     value: LoginBean.shared.getDistrictById(
+                                        id: _addressData.1, cityId: _addressData.0).name)
                     // Update district for view
                     updateDistrictForView()
                 }
                 break
-            case DomainConst.ACCOUNT_INFO_WARD_ID:
+            case DomainConst.ACCOUNT_INFO_WARD_ID:      // Ward select
                 if _addressData.2 != BaseModel.shared.sharedString && !BaseModel.shared.sharedString.isEmpty {
                     // Update id
                     _addressData.2 = BaseModel.shared.sharedString
@@ -85,9 +91,10 @@ class G00AccountEditVC: ChildExtViewController {
                     model.updateData(id: model.id,
                                      name: model.name,
                                      iconPath: model.getIconPath(),
-                                     value: BaseModel.shared.getWardNameById(
+                                     value: LoginBean.shared.getWardById(
                                         id: _addressData.2,
-                                        districtId: _addressData.1))
+                                        cityId: _addressData.0,
+                                        districtId: _addressData.1).name)
                     // Update ward for view
                     updateWardForView()
                 }
@@ -163,47 +170,20 @@ class G00AccountEditVC: ChildExtViewController {
     
     // MARK: Event handler
     /**
-     * Handle when finish request list provinces from server
+     * Handle when finish request list streets from server
      */
-    internal func finishRequestListProvinces(_ notification: Notification) {
-        let data = (notification.object as! String)
-        let model = ProvincesListRespModel(jsonString: data)
-        if model.isSuccess() {
-            // Save data
-            BaseModel.shared.setListProvinces(data: model.getRecord())
-            // Update province info for view
-            updateProvinceForView()
-        }
-    }
-    
-    /**
-     * Handle when finish request list districts from server
-     */
-    internal func finishRequestListDistricts(_ notification: Notification) {
+    internal func finishRequestListStreets(_ notification: Notification) {
         let data = (notification.object as! String)
         let model = DistrictsListRespModel(jsonString: data)
         if model.isSuccess() {
             // Save data
-            BaseModel.shared.setListDistricts(provinceId: _addressData.0, data: model.getRecord())
+            BaseModel.shared.setListConfigStreets(cityId: _addressData.0,
+                                                  data: model.getRecord())
             // Update district for view
             updateDistrictForView()
         }
     }
     
-    /**
-     * Handle when finish request list wards from server
-     */
-    internal func finishRequestListWards(_ notification: Notification) {
-        let data = (notification.object as! String)
-        let model = WardsListRespModel(jsonString: data)
-        if model.isSuccess() {
-            // Save data
-            BaseModel.shared.setListWards(districtId: _addressData.1,
-                                          data: model.getRecord())
-            // Update ward for view
-            updateWardForView()
-        }
-    }
     internal func finishRequestChangeProfile(_ notification: Notification) {
         let data = (notification.object as! String)
         let model = BaseRespModel(jsonString: data)
@@ -215,15 +195,12 @@ class G00AccountEditVC: ChildExtViewController {
     }
     
     // MARK: Logic
+    /**
+     * Handle update address value to view
+     */
     private func updateAddress() {
-        // Check provinces list is empty
-        if BaseModel.shared.checkProvincesListEmpty() {
-            // Request from server
-            requestProvinces()
-        } else {
-            // Update province info for view
-            updateProvinceForView()
-        }
+        // Update province info for view
+        updateProvinceForView()
     }
     
     /**
@@ -238,12 +215,12 @@ class G00AccountEditVC: ChildExtViewController {
                 id: DomainConst.ACCOUNT_INFO_CITY_ID,
                 name: DomainConst.CONTENT00298,
                 iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
-                value: BaseModel.shared.getProvinceNameById(id: provinceId)))
+                value: LoginBean.shared.getCityById(id: provinceId).name))
             tblInfo.reloadData()
-            // Check districts list is empty
-            if BaseModel.shared.checkDistrictListEmpty(provinceId: provinceId) {
-                // Request from server
-                requestDistricts(provinceId: provinceId)
+            
+            // Check streets list is empty
+            if BaseModel.shared.checkListConfigStreetsEmpty(cityId: provinceId) {
+                requestStreets(cityId: provinceId)
             } else {
                 // Update district for view
                 updateDistrictForView()
@@ -252,25 +229,56 @@ class G00AccountEditVC: ChildExtViewController {
     }
     
     /**
+     * Update street info for view
+     */
+    private func updateStreetForView() {
+        // Get name of street
+        var streetName = BaseModel.shared.getConfigStreetNameById(
+            id: _addressData.3, cityId: _addressData.0)
+        // Check street name is empty
+        if streetName.isEmpty {
+            // Get current list
+            let list = BaseModel.shared.getListConfigStreets(cityId: _addressData.0)
+            // Check list is not empty
+            if !list.isEmpty {
+                _addressData.3 = list[0].id
+                // Get new name of street
+                streetName = BaseModel.shared.getConfigStreetNameById(
+                    id: _addressData.3, cityId: _addressData.0)
+            }
+        }
+        // Check if current street id is empty
+        if !_addressData.3.isEmpty {
+            // Show selected district
+            updateDataForTblView(model: ConfigurationModel(
+                id: DomainConst.ACCOUNT_INFO_STREET_ID,
+                name: DomainConst.CONTENT00058,
+                iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
+                value: streetName))
+            tblInfo.reloadData()
+        }
+    }
+    
+    /**
      * Update district info for view
      */
     private func updateDistrictForView() {
-        // Get name of district
-        var districtName = BaseModel.shared.getDistrictNameById(
-            id: _addressData.1,
-            provinceId: _addressData.0)
+        updateStreetForView()
+        var district = LoginBean.shared.getDistrictById(
+            id: _addressData.1, cityId: _addressData.0)
+        var districtName = district.name
         // Check district name is empty
         if districtName.isEmpty {
             // Get current list
-            let list = BaseModel.shared.getListDistricts(provinceId: _addressData.0)
+            let list = LoginBean.shared.getCityById(id: _addressData.0).data
             // Check list is not empty
             if !list.isEmpty {
                 // Get new value of district id is first element of list
                 _addressData.1 = list[0].id
                 // Get new name of district
-                districtName = BaseModel.shared.getDistrictNameById(
-                    id: _addressData.1,
-                    provinceId: _addressData.0)
+                district = LoginBean.shared.getDistrictById(
+                    id: _addressData.1, cityId: _addressData.0)
+                districtName = district.name
             }
         }
         let districtId = _addressData.1
@@ -284,15 +292,8 @@ class G00AccountEditVC: ChildExtViewController {
                 iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
                 value: districtName))
             tblInfo.reloadData()
-            // Check if wards list is empty
-            if BaseModel.shared.checkWardListEmpty(districtId: districtId) {
-                // Request from server
-                requestWards(provinceId: _addressData.0,
-                             districtId: districtId)
-            } else {
-                // Update ward for view
-                updateWardForView()
-            }
+            // Update ward for view
+            updateWardForView()
         }
     }
     
@@ -301,21 +302,22 @@ class G00AccountEditVC: ChildExtViewController {
      */
     private func updateWardForView() {
         // Get name of ward
-        var wardName = BaseModel.shared.getWardNameById(
+        var wardName = LoginBean.shared.getWardById(
             id: _addressData.2,
-            districtId: _addressData.1)
+            cityId: _addressData.0, districtId: _addressData.1).name
         // Check Ward name is empty
         if wardName.isEmpty {
             // Get current list
-            let list = BaseModel.shared.getListWards(districtId: _addressData.1)
+            let list = LoginBean.shared.getDistrictById(
+                id: _addressData.1, cityId: _addressData.0).data
             // Check list is not empty
             if !list.isEmpty {
                 // Get new value of ward id is first element of list
                 _addressData.2 = list[0].id
                 // Get new name of ward
-                wardName = BaseModel.shared.getWardNameById(
+                wardName = LoginBean.shared.getWardById(
                     id: _addressData.2,
-                    districtId: _addressData.1)
+                    cityId: _addressData.0, districtId: _addressData.1).name
             }
         }
         
@@ -335,36 +337,14 @@ class G00AccountEditVC: ChildExtViewController {
     }
     
     /**
-     * Request provinces
+     * Request streets
+     * - parameter cityId: Id of city
      */
-    private func requestProvinces() {
-        ProvincesListRequest.request(
-            action: #selector(finishRequestListProvinces(_:)),
-            view: self)
-    }
-    
-    /**
-     * Request districts
-     * - parameter provinceId: Id of province
-     */
-    private func requestDistricts(provinceId: String) {
-        DistrictsListRequest.request(
-            action: #selector(finishRequestListDistricts(_:)),
+    private func requestStreets(cityId: String) {
+        StreetsListRequest.request(
+            action: #selector(finishRequestListStreets(_:)),
             view: self,
-            provinceId: provinceId)
-    }
-    
-    /**
-     * Request list wards
-     * - parameter provinceId: Id of province
-     * - parameter districtId: Id of district
-     */
-    private func requestWards(provinceId: String, districtId: String) {
-        WardsListRequest.request(
-            action: #selector(finishRequestListWards(_:)),
-            view: self,
-            provinceId: provinceId,
-            districtId: districtId)
+            id: cityId)
     }
     
     /**
@@ -373,10 +353,11 @@ class G00AccountEditVC: ChildExtViewController {
     private func updateDataForTblView(model: ConfigurationModel) {
         for item in _data {
             if item.id == model.id {
-                item.updateData(id: model.id,
-                                name: model.name,
-                                iconPath: model.getIconPath(),
-                                value: model.getValue())
+                item.updateData(
+                    id: model.id,
+                    name: model.name,
+                    iconPath: model.getIconPath(),
+                    value: model.getValue())
                 break
             }
         }
@@ -446,14 +427,20 @@ class G00AccountEditVC: ChildExtViewController {
         case DomainConst.ACCOUNT_INFO_HOUSE_NUMBER_ID:
             return (model.getValue() != BaseModel.shared.getUserInfo().getHouseNumber())
         case DomainConst.ACCOUNT_INFO_STREET_ID:
-            return (model.getValue() != BaseModel.shared.getStreetNameById(
-                id: BaseModel.shared.getUserInfo().getStreetId()))
+            return (model.getValue() != BaseModel.shared.getConfigStreetNameById(
+                id: BaseModel.shared.getUserInfo().getStreetId(),
+                cityId: BaseModel.shared.getUserInfo().getProvinceId()))
         case DomainConst.ACCOUNT_INFO_CITY_ID:
-            return (model.getValue() != BaseModel.shared.getUserInfoProvinceName())
+            return (model.getValue() != LoginBean.shared.getCityById(id: BaseModel.shared.getUserInfo().getProvinceId()).name)
         case DomainConst.ACCOUNT_INFO_DISTRICT_ID:
-            return (model.getValue() != BaseModel.shared.getUserInfoDistrictName())
+            return (model.getValue() != LoginBean.shared.getDistrictById(
+                id: BaseModel.shared.getUserInfo().getDistrictId(),
+                cityId: BaseModel.shared.getUserInfo().getProvinceId()).name)
         case DomainConst.ACCOUNT_INFO_WARD_ID:
-            return (model.getValue() != BaseModel.shared.getUserInfoWardName())
+            return (model.getValue() != LoginBean.shared.getWardById(
+                id: BaseModel.shared.getUserInfo().getWardId(),
+                cityId: BaseModel.shared.getUserInfo().getProvinceId(),
+                districtId: BaseModel.shared.getUserInfo().getDistrictId()).name)
         default:
             break
         }
@@ -489,8 +476,9 @@ class G00AccountEditVC: ChildExtViewController {
                 retVal = (item.getValue() != BaseModel.shared.getUserInfo().getHouseNumber())
                 break
             case DomainConst.ACCOUNT_INFO_STREET_ID:
-                retVal = (item.getValue() != BaseModel.shared.getStreetNameById(
-                    id: BaseModel.shared.getUserInfo().getStreetId()))
+                retVal = (item.getValue() != BaseModel.shared.getConfigStreetNameById(
+                    id: BaseModel.shared.getUserInfo().getStreetId(),
+                    cityId: BaseModel.shared.getUserInfo().getProvinceId()))
                 break
             case DomainConst.ACCOUNT_INFO_CITY_ID:
                 retVal = (item.getValue() != BaseModel.shared.getUserInfoProvinceName())
@@ -554,7 +542,7 @@ class G00AccountEditVC: ChildExtViewController {
 //        tblInfo.separatorStyle = .none
         _data.append(ConfigurationModel(
             id: DomainConst.ACCOUNT_INFO_NAME_ID,
-            name: DomainConst.CONTENT00079,
+            name: DomainConst.CONTENT00542,
             iconPath: DomainConst.NAME_ICON_IMG_NAME,
             value: BaseModel.shared.getUserInfo().getName()))
         _data.append(ConfigurationModel(
@@ -575,24 +563,27 @@ class G00AccountEditVC: ChildExtViewController {
             id: DomainConst.ACCOUNT_INFO_STREET_ID,
             name: DomainConst.CONTENT00058,
             iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
-            value: BaseModel.shared.getStreetNameById(id: _addressData.3)))
+            value: BaseModel.shared.getConfigStreetNameById(
+                id: _addressData.3,
+                cityId: _addressData.0)))
         _data.append(ConfigurationModel(
             id: DomainConst.ACCOUNT_INFO_CITY_ID,
             name: DomainConst.CONTENT00298,
             iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
-            value: BaseModel.shared.getProvinceNameById(id: _addressData.0)))
+            value: LoginBean.shared.getCityById(id: _addressData.0).name))
         _data.append(ConfigurationModel(
             id: DomainConst.ACCOUNT_INFO_DISTRICT_ID,
             name: DomainConst.CONTENT00299,
             iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
-            value: BaseModel.shared.getDistrictNameById(id: _addressData.1,
-                                                        provinceId: _addressData.0)))
+            value: LoginBean.shared.getDistrictById(
+                id: _addressData.1, cityId: _addressData.0).name))
         _data.append(ConfigurationModel(
             id: DomainConst.ACCOUNT_INFO_WARD_ID,
             name: DomainConst.CONTENT00300,
             iconPath: DomainConst.ADDRESS_ICON_NEW_IMG_NAME,
-            value: BaseModel.shared.getWardNameById(id: _addressData.2,
-                                                    districtId: _addressData.1)))
+            value: LoginBean.shared.getWardById(id: _addressData.2,
+                                                cityId: _addressData.0,
+                                                districtId: _addressData.1).name))
         tblInfo.reloadData()
     }
     
@@ -724,20 +715,20 @@ extension G00AccountEditVC: UITableViewDelegate {
             case DomainConst.ACCOUNT_INFO_STREET_ID:
                 openAddressSelectVC(
                     title: DomainConst.CONTENT00141 + " \(_data[indexPath.row].name)",
-                    data: BaseModel.shared.getListStreets(),
+                    data: BaseModel.shared.getListConfigStreets(cityId: _addressData.0),
                     selectedValue: _addressData.3)
                 break
             case DomainConst.ACCOUNT_INFO_CITY_ID:
                 openAddressSelectVC(
                     title: DomainConst.CONTENT00141 + " \(_data[indexPath.row].name)",
-                    data: BaseModel.shared.getListProvinces(),
+                    data: LoginBean.shared.address_config,
                     selectedValue: _addressData.0)
                 break
             case DomainConst.ACCOUNT_INFO_DISTRICT_ID:
                 if !_addressData.0.isEmpty {
                     openAddressSelectVC(
                         title: DomainConst.CONTENT00141 + " \(_data[indexPath.row].name)",
-                        data: BaseModel.shared.getListDistricts(provinceId: _addressData.0),
+                        data: LoginBean.shared.getCityById(id: _addressData.0).data,
                         selectedValue: _addressData.1)
                 }
                 
@@ -746,7 +737,8 @@ extension G00AccountEditVC: UITableViewDelegate {
                 if !_addressData.1.isEmpty {
                     openAddressSelectVC(
                         title: DomainConst.CONTENT00141 + " \(_data[indexPath.row].name)",
-                        data: BaseModel.shared.getListWards(districtId: _addressData.1),
+                        data: LoginBean.shared.getDistrictById(
+                            id: _addressData.1, cityId: _addressData.0).data,
                         selectedValue: _addressData.2)
                 }
                 break

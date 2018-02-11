@@ -158,12 +158,15 @@ extension G01F00S01VC: UITableViewDataSource {
 // MARK: Protocol - UITableViewDelegate
 extension G01F00S01VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = G01F00S02VC(nibName: G01F00S02VC.theClassName,
-                             bundle: nil)
-        view.setId(id: self._data.getList()[indexPath.row].id)
-        if let controller = BaseViewController.getCurrentViewController() {
-            controller.navigationController?.pushViewController(view,
-                                                                animated: true)
-        }
+//        let view = G01F00S02VC(nibName: G01F00S02VC.theClassName,
+//                             bundle: nil)
+//        view.setId(id: self._data.getList()[indexPath.row].id)
+//        if let controller = BaseViewController.getCurrentViewController() {
+//            controller.navigationController?.pushViewController(view,
+//                                                                animated: true)
+//        }
+        let vc = G01F00S02CustomerInfoViewController()
+        vc.id = self._data.getList()[indexPath.row].id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

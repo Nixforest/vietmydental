@@ -40,5 +40,8 @@ class LoginRespBean: BaseRespModel {
      */
     public static func saveConfigData(data: LoginRespBean) {
         BaseModel.shared.setListMenu(listMenu: data.data.menu)
+        LoginBean.shared.pathological       = data.data.pathological
+        LoginBean.shared.status_treatment   = data.data.status_treatment
+        LoginBean.shared.address_config     = data.data.address_config
     }
 }

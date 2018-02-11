@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommonObjectView" customModule="dental" customModuleProvider="target">
+            <connections>
+                <outlet property="img" destination="ees-Sw-zFk" id="LPu-wu-b0N"/>
+                <outlet property="lbDescription" destination="Eu7-UQ-Pmy" id="4oP-FF-Mia"/>
+                <outlet property="lbTitle" destination="4Jr-v9-G6n" id="0f8-bz-qxG"/>
+                <outlet property="view" destination="sws-E3-iyc" id="VDC-iO-f2j"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="sws-E3-iyc">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GUser.png" translatesAutoresizingMaskIntoConstraints="NO" id="ees-Sw-zFk">
+                    <rect key="frame" x="16" y="13" width="44" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="tmi-Lc-YAL"/>
+                        <constraint firstAttribute="width" constant="44" id="unK-8D-gBH"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="imageRenderingMode">
+                            <integer key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jr-v9-G6n">
+                    <rect key="frame" x="72" y="17" width="37.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eu7-UQ-Pmy">
+                    <rect key="frame" x="72" y="41" width="271" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.55294117649999996" green="0.55294117649999996" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BcC-bn-Sik">
+                    <rect key="frame" x="345" y="17" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="4c0-so-zqM"/>
+                        <constraint firstAttribute="width" constant="22" id="nuu-1X-u3q"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="BcC-bn-Sik" firstAttribute="top" secondItem="4Jr-v9-G6n" secondAttribute="top" id="2pm-OE-NLc"/>
+                <constraint firstAttribute="trailing" secondItem="BcC-bn-Sik" secondAttribute="trailing" constant="8" id="35C-Vp-vlp"/>
+                <constraint firstItem="Eu7-UQ-Pmy" firstAttribute="bottom" secondItem="ees-Sw-zFk" secondAttribute="bottom" id="4rt-Av-137"/>
+                <constraint firstItem="ees-Sw-zFk" firstAttribute="centerY" secondItem="sws-E3-iyc" secondAttribute="centerY" id="5qG-iY-phZ"/>
+                <constraint firstItem="Eu7-UQ-Pmy" firstAttribute="leading" secondItem="4Jr-v9-G6n" secondAttribute="leading" id="IeD-YP-7Kb"/>
+                <constraint firstItem="4Jr-v9-G6n" firstAttribute="leading" secondItem="ees-Sw-zFk" secondAttribute="trailing" constant="12" id="SL5-gM-FvZ"/>
+                <constraint firstItem="ees-Sw-zFk" firstAttribute="leading" secondItem="sws-E3-iyc" secondAttribute="leading" constant="16" id="SNX-nt-nDo"/>
+                <constraint firstItem="xfy-1G-9ai" firstAttribute="trailing" secondItem="Eu7-UQ-Pmy" secondAttribute="trailing" constant="32" id="pUZ-Ek-voj"/>
+                <constraint firstItem="4Jr-v9-G6n" firstAttribute="top" secondItem="ees-Sw-zFk" secondAttribute="top" constant="4" id="rP5-4t-onE"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="xfy-1G-9ai"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="GUser.png" width="980" height="980"/>
+    </resources>
+</document>

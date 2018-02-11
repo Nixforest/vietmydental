@@ -121,6 +121,13 @@ class MenuVC: BaseMenuViewController {
     }
     //-- BUG0171-SPJ (NguyenPT 20171127) Add new menu
     
+    override func openConfig() {
+        let view = G00ConfigVC(nibName: G00ConfigVC.theClassName, bundle: nil)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view, animated: true)
+        }
+    }
+    
     override func update() {
         super.update()
         

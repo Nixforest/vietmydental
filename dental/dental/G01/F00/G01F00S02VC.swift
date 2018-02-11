@@ -120,7 +120,7 @@ extension G01F00S02VC: UITableViewDataSource {
      * - returns: 1 section
      */
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self._data.data.count
     }
     
     /**
@@ -128,25 +128,21 @@ extension G01F00S02VC: UITableViewDataSource {
      * - returns: List information count
      */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self._data.getList().count
-        return 0
+        return self._data.data[section]._dataExt.count
     }
     
     /**
      * Asks the data source for a cell to insert in a particular location of the table view.
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.row > self._data.getList().count {
-//            return UITableViewCell()
-//        }
-//        let data = self._data.getList()[indexPath.row]
-//        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-//        cell.textLabel?.text = data.name
-//        cell.textLabel?.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-//        cell.detailTextLabel?.text = data.address
-//        cell.detailTextLabel?.font = GlobalConst.BASE_BOLD_FONT
-//        cell.detailTextLabel?.lineBreakMode = .byWordWrapping
-//        cell.detailTextLabel?.numberOfLines = 0
+        let sectionId = self._data.data[indexPath.section].id
+        switch sectionId {
+        case DomainConst.GROUP_MEDICAL_RECORD:
+            break
+        case DomainConst.GROUP_TREATMENT:
+            break
+        default: break
+        }
         
         return UITableViewCell()
     }

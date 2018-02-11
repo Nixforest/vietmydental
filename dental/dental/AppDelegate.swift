@@ -8,11 +8,13 @@
 
 import UIKit
 import harpyframework
+let app = UIApplication.shared.delegate as! AppDelegate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var HUD: MBProgressHUD?
     internal var rootNav: UINavigationController = UINavigationController()
 
 
@@ -72,6 +74,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         }
         return UIInterfaceOrientationMask.all
+    }
+    
+    //MARK: - App Function
+    //MARK - HUD
+    func showHUD(title: String){
+        weak var weakself = self
+        DispatchQueue.main.async {
+            if (weakself?.HUD == nil) {
+                weakself?.HUD = MBProgressHUD.showAdded(to: self.window!, animated: true)
+                weakself?.HUD?.backgroundView.style = MBProgressHUDBackgroundStyle.solidColor
+                weakself?.HUD?.backgroundView.color = UIColor.init(white: 0, alpha: 0.3)
+                weakself?.HUD?.label.text = title
+            }
+        }
+    }
+    func closeHUD(){
+        weak var weakself = self
+        DispatchQueue.main.async {
+            if(weakself?.HUD != nil){
+                weakself?.HUD?.removeFromSuperview()
+                weakself?.HUD = nil
+            }
+        }
     }
 
 }

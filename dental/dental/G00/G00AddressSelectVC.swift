@@ -114,12 +114,6 @@ class G00AddressSelectVC: ChildExtViewController {
         self._data = data
         self._selectedValue = selectedValue
         self._originData = data
-        for item in _originData {
-            if item.data.isEmpty {
-                item.data.append(ConfigBean(id: DomainConst.BLANK,
-                                            name: item.name.removeSign().lowercased()))
-            }
-        }
         tblInfo.reloadData()
     }
     
@@ -177,11 +171,7 @@ extension G00AddressSelectVC: UITableViewDataSource {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         if indexPath.row < self._data.count {
             let data = self._data[indexPath.row]
-            if BaseModel.shared.checkTrainningMode() {
-                cell.textLabel?.text = data.name + " - \(data.data[0].name)"
-            } else {
-                cell.textLabel?.text = data.name
-            }
+            cell.textLabel?.text = data.name
             cell.textLabel?.font = GlobalConst.BASE_FONT
             if data.id == _selectedValue {
                 cell.textLabel?.textColor = UIColor.red
@@ -212,7 +202,8 @@ extension G00AddressSelectVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             let keyword = searchText.removeSign().lowercased()
-            _data = _originData.filter { $0.data[0].name.contains(keyword) }
+            _data = _originData.filter { $0.name.removeSign().lowercased()
+.contains(keyword) }
         } else {
             _data = _originData
         }

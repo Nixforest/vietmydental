@@ -177,7 +177,7 @@ extension G00AccountExtVC: UITableViewDataSource {
         if section == 0 {
             return _data.count
         } else {
-            return 4
+            return 2
         }
     }
     
@@ -190,7 +190,8 @@ extension G00AccountExtVC: UITableViewDataSource {
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
             if indexPath.row < self._data.count {
                 let data = self._data[indexPath.row]
-                cell.imageView?.setImage(imgPath: data.getIconPath())
+                cell.imageView?.image = ImageManager.getImage(
+                    named: data.getIconPath(), margin: GlobalConst.MARGIN)
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.textLabel?.text = data.name
                 cell.textLabel?.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
@@ -208,22 +209,24 @@ extension G00AccountExtVC: UITableViewDataSource {
                 cell.textLabel?.text = DomainConst.CONTENT00442
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel?.textColor = UIColor.white
+                cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.contentView.backgroundColor = GlobalConst.MAIN_COLOR_GAS_24H
             case 1:
-                cell.textLabel?.text = DomainConst.CONTENT00441
+                cell.textLabel?.text = DomainConst.CONTENT00089
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel?.textColor = UIColor.white
+                cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.contentView.backgroundColor = GlobalConst.TEXT_COLOR_GRAY
-            case 2:
-                cell.textLabel?.text = DomainConst.VERSION_CODE_WITH_NAME
-                cell.textLabel?.textAlignment = .center
-                break
-            case 3:
-                cell.textLabel?.text = DomainConst.CONTENT00090
-                cell.textLabel?.textAlignment = .center
-                cell.textLabel?.textColor = UIColor.white
-                cell.contentView.backgroundColor = GlobalConst.BUTTON_COLOR_YELLOW_NEW
-                break
+//            case 2:
+//                cell.textLabel?.text = DomainConst.VERSION_CODE_WITH_NAME
+//                cell.textLabel?.textAlignment = .center
+//                break
+//            case 3:
+//                cell.textLabel?.text = DomainConst.CONTENT00090
+//                cell.textLabel?.textAlignment = .center
+//                cell.textLabel?.textColor = UIColor.white
+//                cell.contentView.backgroundColor = GlobalConst.BUTTON_COLOR_YELLOW_NEW
+//                break
             default:
                 break
             }
@@ -248,19 +251,19 @@ extension G00AccountExtVC: UITableViewDelegate {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-//                let view = G00AccountEditVC(nibName: G00AccountEditVC.theClassName,
-//                                            bundle: nil)
-//                if let controller = BaseViewController.getCurrentViewController() {
-//                    controller.navigationController?.pushViewController(view,
-//                                                                        animated: true)
-//                }
+                let view = G00AccountEditVC(
+                    nibName: G00AccountEditVC.theClassName,
+                    bundle: nil)
+                if let controller = BaseViewController.getCurrentViewController() {
+                    controller.navigationController?.pushViewController(view, animated: true)
+                }
                 break
             case 1:
 //                self.updateVersionAppStore()
                 break
-            case 3:
-                LogoutRequest.requestLogout(action: #selector(self.finishRequestLogout), view: self)
-                break
+//            case 3:
+//                LogoutRequest.requestLogout(action: #selector(self.finishRequestLogout), view: self)
+//                break
             default:
                 break
             }
