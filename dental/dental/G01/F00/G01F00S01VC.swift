@@ -49,7 +49,7 @@ class G01F00S01VC: BaseParentViewController {
         let data = (notification.object as! String)
         let model = CustomerListRespBean(jsonString: data)
         if model.isSuccess() {
-            _data.append(list: model.getList())
+            _data.updateData(bean: model.data)
             _tblInfo.reloadData()
         } else {
             showAlert(message: model.message)
@@ -158,15 +158,36 @@ extension G01F00S01VC: UITableViewDataSource {
 // MARK: Protocol - UITableViewDelegate
 extension G01F00S01VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let view = G01F00S02VC(nibName: G01F00S02VC.theClassName,
-//                             bundle: nil)
-//        view.setId(id: self._data.getList()[indexPath.row].id)
-//        if let controller = BaseViewController.getCurrentViewController() {
-//            controller.navigationController?.pushViewController(view,
-//                                                                animated: true)
-//        }
-        let vc = G01F00S02CustomerInfoViewController()
-        vc.id = self._data.getList()[indexPath.row].id
-        self.navigationController?.pushViewController(vc, animated: true)
+        if self._data.getList().count > indexPath.row {
+            let view = G01F00S02VC(nibName: G01F00S02VC.theClassName,
+                                   bundle: nil)
+            view.setId(id: self._data.getList()[indexPath.row].id)
+            if let controller = BaseViewController.getCurrentViewController() {
+                controller.navigationController?.pushViewController(view,
+                                                                    animated: true)
+            }
+        }
+        
+//        let vc = G01F00S02CustomerInfoViewController()
+//        vc.id = self._data.getList()[indexPath.row].id
+//        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    /**
+     * Tells the delegate the table view is about to draw a cell for a particular row.
+     */
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Total page does not 1
+        if _data.data.getTotalPage() != 1 {
+            let lastElement = _data.getList().count - 1
+            // Current is the last element
+            if indexPath.row == lastElement {
+                self._page += 1
+                // Page less than total page
+                if self._page <= _data.data.getTotalPage() {
+                    self.requestData()
+                }
+            }
+        }
     }
 }

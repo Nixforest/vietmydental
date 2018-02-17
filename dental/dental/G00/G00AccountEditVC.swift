@@ -33,6 +33,7 @@ class G00AccountEditVC: ChildExtViewController {
         self.createNavigationBar(title: DomainConst.CONTENT00442)
         updateAddress()
     }
+    
     /**
      * Notifies the view controller that its view was added to a view hierarchy.
      */

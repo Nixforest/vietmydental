@@ -49,11 +49,12 @@ class CustomerListRespBean: BaseRespModel {
     }
     
     /**
-     * Append data to list data
-     * - parameter list: List CustomerBean
+     * Update data
+     * - parameter bean: CustomerListBean
      */
-    public func append(list: [CustomerBean]) {
-        self.data._list.append(contentsOf: list)
+    public func updateData(bean: CustomerListBean) {
+        self.data._list.append(contentsOf: bean._list)
+        self.data.setTotal(record: bean.getTotalRecord(), page: bean.getTotalPage())
     }
     
     /**

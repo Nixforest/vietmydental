@@ -16,5 +16,9 @@ class G01Const: NSObject {
     public static let PATH_CUSTOMER_LIST                        = "customer/list"
     /** Path to connect with PHP server */
     public static let PATH_CUSTOMER_INFO                        = "customer/view"
+    /** Path to connect with PHP server */
+    public static let PATH_MEDICAL_RECORD_INFO                  = "customer/medicalRecordInfo"
+    /** Path to connect with PHP server */
+    public static let PATH_MEDICAL_RECORD_UPDATE                = "customer/updateMedicalRecord"
 
 }

@@ -26,6 +26,7 @@ class G01F00S02VC: ChildExtViewController {
     
     // MARK: Static values
     // MARK: Constant
+    var HEADER_HEIGHT:      CGFloat = GlobalConst.LABEL_H * 2
     
     // MARK: Override methods
     /**
@@ -36,6 +37,16 @@ class G01F00S02VC: ChildExtViewController {
 
         // Do any additional setup after loading the view.
         self.createNavigationBar(title: DomainConst.CONTENT00543)
+        createInfoTableView()
+        self.view.addSubview(_tblInfo)
+        requestData()
+    }
+    
+    /**
+     * Notifies the view controller that its view was added to a view hierarchy.
+     */
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         requestData()
     }
     
@@ -68,11 +79,6 @@ class G01F00S02VC: ChildExtViewController {
      * Reset data
      */
     private func resetData() {
-//        _data.clearData()
-//        // Reset current search value
-//        self._page      = 0
-//        // Reload table
-//        _tblInfo.reloadData()
     }
     
     /**
@@ -97,6 +103,83 @@ class G01F00S02VC: ChildExtViewController {
      */
     public func setId(id: String) {
         self._id = id
+    }
+    
+    /**
+     * Handle open Medical record info screen
+     * - parameter id:  Customer id
+     */
+    func openMedicalRecordInfo(id: String) {
+        let view = G01F01S01VC(nibName: G01F01S01VC.theClassName,
+                               bundle: nil)
+        view.setId(id: id)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
+    }
+    
+    /**
+     * Handle open Treatment detail screen
+     * - parameter id:  Treatment schedules id
+     */
+    func openTreatmentDetail(id: String) {
+        
+    }
+    
+    /**
+     * Handle open Create new treatment schedule screen
+     */
+    func addNewTreatmentSchedule() -> Void {
+        
+    }
+    
+    /**
+     * Handle open Treatment history screen
+     */
+    func openTreatmentHistory() {
+        
+    }
+    
+    /**
+     * Handle open Medical history
+     */
+    func openMedicalHistory() {
+        let view = G01F01S02VC(nibName: G01F01S02VC.theClassName,
+                               bundle: nil)
+        for item in self._data.data {
+            if item.id == DomainConst.GROUP_MEDICAL_RECORD {
+                for child in item._dataExt {
+                    if child.id == DomainConst.ITEM_MEDICAL_HISTORY {
+                        view.setData(id: self._id, recordNumber: self.getData(id: DomainConst.ITEM_RECORD_NUMBER, groupId: DomainConst.GROUP_MEDICAL_RECORD), data: child.data)
+                        view.createNavigationBar(title: child.name)
+                    }
+                }
+            }
+        }
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
+    }
+    
+    /**
+     * Get data from id
+     * - parameter id:      Id of data
+     * - parameter groupId: Group id of data
+     * - returns:           Value of data
+     */
+    public func getData(id: String, groupId: String) -> String {
+        for item in self._data.data {
+            if item.id == groupId {
+                for child in item._dataExt {
+                    if child.id == id {
+                        return child.name
+                    }
+                }
+            }
+        }
+        return DomainConst.BLANK
     }
     
     // MARK: Layout
@@ -136,27 +219,145 @@ extension G01F00S02VC: UITableViewDataSource {
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sectionId = self._data.data[indexPath.section].id
+        if indexPath.row > self._data.data[indexPath.section]._dataExt.count {
+            return UITableViewCell()
+        }
+        let data = self._data.data[indexPath.section]._dataExt[indexPath.row]
         switch sectionId {
         case DomainConst.GROUP_MEDICAL_RECORD:
-            break
+            switch data.id {
+            case DomainConst.ITEM_NAME:                
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = data._dataStr
+                cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
+//                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+//                cell.detailTextLabel?.numberOfLines = 0
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                return cell
+            case DomainConst.ITEM_BIRTHDAY:                
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = data._dataStr
+                cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                return cell
+            case DomainConst.ITEM_MEDICAL_HISTORY:                
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.accessoryType = .detailDisclosureButton
+                return cell
+            case DomainConst.ITEM_UPDATE_DATA:                
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            default:
+                break
+            }
         case DomainConst.GROUP_TREATMENT:
-            break
+            switch data.id {
+            case DomainConst.ITEM_UPDATE_DATA:
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            default:
+                let treatment = TreatmentBean(jsonData: data._dataObj)
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                cell.textLabel?.text = treatment.start_date
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = data.name
+                cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                cell.imageView?.image = ImageManager.getImage(named: DomainConst.VERSION_TYPE_ICON_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
         default: break
         }
         
         return UITableViewCell()
-    }
-    
-    /**
-     * Asks the delegate for the height to use for a row in a specified location.
-     */
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return GlobalConst.LABEL_H * 3
     }
 }
 
 // MARK: Protocol - UITableViewDelegate
 extension G01F00S02VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sectionId = self._data.data[indexPath.section].id
+        if indexPath.row > self._data.data[indexPath.section]._dataExt.count {
+            return
+        }
+        let data = self._data.data[indexPath.section]._dataExt[indexPath.row]
+        switch sectionId {
+        case DomainConst.GROUP_MEDICAL_RECORD:          // Medical record group
+            switch data.id {
+            case DomainConst.ITEM_MEDICAL_HISTORY:      // View medical history
+                openMedicalHistory()
+                break
+            case DomainConst.ITEM_UPDATE_DATA:          // Update data
+                openMedicalRecordInfo(id: self._id)
+                break
+            default: break
+            }
+        case DomainConst.GROUP_TREATMENT:               // Treatment group
+            switch data.id {
+            case DomainConst.ITEM_UPDATE_DATA:          // Add new treatment schedule
+                addNewTreatmentSchedule()
+                break
+            default:                                    // View detail info
+                openTreatmentDetail(id: data.id)        
+            }
+            break
+        default:
+            break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = CustomerInfoHeaderView.init(
+            frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: HEADER_HEIGHT))
+        header.setHeader(bean: _data.data[section])
+        header.delegate = self
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return HEADER_HEIGHT
+    }
+    
+    /**
+     * Asks the delegate for the height to use for a row in a specified location.
+     */
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+}
+
+// MARK: Protocol - UITableViewDelegate
+extension G01F00S02VC: CustomerInfoHeaderViewDelegate {    
+    func customerInfoHeaderViewDidSelect(object: ConfigExtBean) {
+        switch object.id {
+        case DomainConst.GROUP_MEDICAL_RECORD:
+            openMedicalRecordInfo(id: self._id)
+        case DomainConst.GROUP_TREATMENT:
+            openTreatmentHistory()
+            break
+        default:
+            break
+        }
     }
 }
