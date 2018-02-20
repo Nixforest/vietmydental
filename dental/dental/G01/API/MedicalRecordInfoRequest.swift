@@ -24,19 +24,20 @@ class MedicalRecordInfoRequest: BaseRequest {
     }
     
     /**
-     * Request generate OTP
+     * Request
      * - parameter action:      Action execute when finish this task
      * - parameter view:        Current view
      * - parameter id:          Customer id
+     * - parameter isShowLoading:   Flag show loading
      */
     public static func request(action: Selector, view: BaseViewController,
-                               id: String) {
+                               id: String, isShowLoading: Bool = true) {
         let request = MedicalRecordInfoRequest(
             url: G01Const.PATH_MEDICAL_RECORD_INFO,
             reqMethod: DomainConst.HTTP_POST_REQUEST,
             view: view)
         request.setData(id: id)
         NotificationCenter.default.addObserver(view, selector: action, name:NSNotification.Name(rawValue: request.theClassName), object: nil)
-        request.execute()
+        request.execute(isShowLoadingView: isShowLoading)
     }
 }

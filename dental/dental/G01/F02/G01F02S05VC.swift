@@ -1,20 +1,24 @@
 //
-//  G01F01S02VC.swift
+//  G01F02S05VC.swift
 //  dental
 //
-//  Created by SPJ on 2/16/18.
+//  Created by SPJ on 2/18/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
 
 import UIKit
 import harpyframework
 
-class G01F01S02VC: ChildExtViewController {
+class G01F02S05VC: ChildExtViewController {
     // MARK: Properties
-    /** Customer id */
+    /** Treatment id */
     var _id:                String                  = DomainConst.BLANK
-    /** Record number */
-    var _recordNumber:      String                  = DomainConst.BLANK
+    /** Diagnosis id */
+    var _diagnosisId:       String                  = DomainConst.BLANK
+    /** Pathological id */
+    var _pathologicalId:    String                  = DomainConst.BLANK
+    /** Status */
+    var _status:            String                  = DomainConst.BLANK
     /** Data */
     var _data:              [ConfigBean]            = [ConfigBean]()
     /** Information table view */
@@ -31,7 +35,6 @@ class G01F01S02VC: ChildExtViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.createNavigationBar(title: DomainConst.CONTENT00545)
         createRightNavigationItem(title: "+", action: #selector(addNew(_:)),
                                   target: self)
         createInfoTableView()
@@ -87,13 +90,21 @@ class G01F01S02VC: ChildExtViewController {
     /**
      * Set data for screen
      * - parameter id:              Customer id
-     * - parameter recordNumber:    Record number
      * - parameter data:            List data
+     * - parameter diagnosisId:     Diagnosis id
+     * - parameter pathologicalId:  Pathological id
+     * - parameter status:          Status
      */
-    public func setData(id: String, recordNumber: String, data: [ConfigBean]) {
+    public func setData(id: String,
+                        data: [ConfigBean],
+                        diagnosisId: String,
+                        pathologicalId: String,
+                        status: String) {
         setId(id: id)
         self._data = data
-        self._recordNumber = recordNumber
+        self._diagnosisId = diagnosisId
+        self._pathologicalId = pathologicalId
+        self._status = status
     }
     
     /**
@@ -125,13 +136,15 @@ class G01F01S02VC: ChildExtViewController {
         for item in self._data {
             arrData.append(item.id)
         }
-        let medicalHistory = String.init(format: "%@%@%@", "[", arrData.joined(separator: ","), "]")
-        MedicalRecordUpdateRequest.request(
+        let healthy = String.init(format: "%@%@%@", "[", arrData.joined(separator: ","), "]")
+        TreatmentUpdateRequest.request(
             action: #selector(finishUpdate(_:)),
             view: self,
             id: self._id,
-            recordNumber: self._recordNumber,
-            medicalHistory: medicalHistory,
+            diagnosis: self._diagnosisId,
+            pathological: self._pathologicalId,
+            healthy: healthy,
+            status: self._status,
             isShowLoading: isShowLoading)
     }
     
@@ -170,7 +183,7 @@ class G01F01S02VC: ChildExtViewController {
 }
 
 // MARK: Protocol - UITableViewDataSource
-extension G01F01S02VC: UITableViewDataSource {
+extension G01F02S05VC: UITableViewDataSource {
     /**
      * Tells the data source to return the number of rows in a given section of a table view.
      * - returns: List information count
@@ -203,7 +216,7 @@ extension G01F01S02VC: UITableViewDataSource {
 }
 
 // MARK: Protocol - UITableViewDelegate
-extension G01F01S02VC: UITableViewDelegate {    
+extension G01F02S05VC: UITableViewDelegate {    
     /**
      * Asks the delegate for the height to use for a row in a specified location.
      */

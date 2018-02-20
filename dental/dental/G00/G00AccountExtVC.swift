@@ -34,7 +34,7 @@ class G00AccountExtVC: BaseParentViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestData()
+        requestData(isShowLoading: false)
     }
     
     /**
@@ -133,9 +133,10 @@ class G00AccountExtVC: BaseParentViewController {
     /**
      * Request data
      */
-    internal func requestData() {
+    internal func requestData(isShowLoading: Bool = true) {
         UserProfileRequest.requestUserProfile(
-            action: #selector(setData(_:)), view: self)
+            action: #selector(setData(_:)), view: self,
+            isShowLoading: isShowLoading)
     }
     
     // MARK: Layout

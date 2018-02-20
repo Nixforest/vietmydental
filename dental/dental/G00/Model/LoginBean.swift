@@ -28,10 +28,14 @@ class LoginBean: ConfigBean {
     var menu:               [ConfigBean]    = [ConfigBean]()
     /** Pathological config */
     var pathological:       [ConfigBean]    = [ConfigBean]()
-    /** Treatment status config */
-    var status_treatment:   [ConfigBean]    = [ConfigBean]()
     /** Address config */
     var address_config:     [ConfigBean]    = [ConfigBean]()
+    /** Diagnosis config */
+    var diagnosis:          [ConfigBean]    = [ConfigBean]()
+    /** Treatment type config */
+    var treatment:          ListConfigBean  = ListConfigBean()
+    /** Teeth config */
+    var teeth:              [ConfigBean]    = [ConfigBean]()
     
     override public init() {
         super.init()
@@ -53,9 +57,15 @@ class LoginBean: ConfigBean {
         self.menu.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_MENU))
         // Pathological
         self.pathological.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_PATHOLOGICAL))
-        // Treatment status config
-        self.status_treatment.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_STATUS_TREATMENT))        // Address config
         self.address_config.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_ADDRESS_CONFIG))
+        // Diagnosis
+        self.diagnosis.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_DIAGNOSIS))
+        // Treatment
+        if let dataArr = jsonData[DomainConst.KEY_TREATMENT] as? [[String: AnyObject]] {
+            self.treatment = ListConfigBean.init(jsonData: dataArr)
+        }
+        // Teeth
+        self.teeth.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_TEETH))
     }
     
     /**
@@ -102,5 +112,26 @@ class LoginBean: ConfigBean {
                 }
             }
             return ConfigBean()
+    }
+    
+    /**
+     * Get diagnosis config value
+     * - parameter id:          Id of config
+     */
+    public func getDiagnosisConfig(id: String) -> String {
+        for item in self.data {
+            if item.id == id {
+                return item.name
+            }
+        }
+        return DomainConst.BLANK
+    }
+    
+    /**
+     * Get update text string
+     * - returns: String
+     */
+    public func getUpdateText() -> String {
+        return DomainConst.CONTENT00555
     }
 }

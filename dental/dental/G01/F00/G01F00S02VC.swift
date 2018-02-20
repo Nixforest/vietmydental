@@ -47,7 +47,8 @@ class G01F00S02VC: ChildExtViewController {
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestData()
+        requestData(action: #selector(setData(_:)),
+                    isShowLoading: false)
     }
     
     /**
@@ -68,11 +69,13 @@ class G01F00S02VC: ChildExtViewController {
     /**
      * Request data
      */
-    internal func requestData(action: Selector = #selector(setData(_:))) {
+    internal func requestData(action: Selector = #selector(setData(_:)),
+                              isShowLoading: Bool = true) {
         CustomerInfoRequest.request(
             action: action,
             view: self,
-            id: _id)
+            id: _id,
+            isShowLoading: isShowLoading)
     }
     
     /**
@@ -108,11 +111,13 @@ class G01F00S02VC: ChildExtViewController {
     /**
      * Handle open Medical record info screen
      * - parameter id:  Customer id
+     * - parameter title:  Screen title
      */
-    func openMedicalRecordInfo(id: String) {
+    func openMedicalRecordInfo(id: String, title: String) {
         let view = G01F01S01VC(nibName: G01F01S01VC.theClassName,
                                bundle: nil)
         view.setId(id: id)
+        view.createNavigationBar(title: title)
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(view,
                                                                 animated: true)
@@ -124,21 +129,50 @@ class G01F00S02VC: ChildExtViewController {
      * - parameter id:  Treatment schedules id
      */
     func openTreatmentDetail(id: String) {
-        
+        let view = G01F02S02VC(nibName: G01F02S02VC.theClassName,
+                               bundle: nil)
+        view.setId(id: id)
+//        view.createNavigationBar(title: title)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
     }
     
     /**
      * Handle open Create new treatment schedule screen
      */
     func addNewTreatmentSchedule() -> Void {
-        
+//        let alert = UIAlertController(style: .actionSheet, title: "Select date")
+//        alert.addDatePicker(mode: .dateAndTime, date: Date(), minimumDate: nil, maximumDate: nil) { date in
+//            // action with selected date
+//            self.showAlert(message: date.dateString())
+//        }
+////        alert.addAction(title: "OK", style: .cancel)
+//        // Add cancel action
+//        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
+//        alert.addAction(ok)
+//        self.present(alert, animated: true, completion: nil)
+        let view = G01F02S06VC(nibName: G01F02S06VC.theClassName,
+                               bundle: nil)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(
+                view, animated: true)
+        }
     }
     
     /**
      * Handle open Treatment history screen
      */
-    func openTreatmentHistory() {
-        
+    func openTreatmentHistory(title: String) {
+        let view = G01F02S01VC(nibName: G01F02S01VC.theClassName,
+                               bundle: nil)
+        view.setId(id: self._id)
+        view.createNavigationBar(title: title)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
     }
     
     /**
@@ -309,7 +343,7 @@ extension G01F00S02VC: UITableViewDelegate {
                 openMedicalHistory()
                 break
             case DomainConst.ITEM_UPDATE_DATA:          // Update data
-                openMedicalRecordInfo(id: self._id)
+                openMedicalRecordInfo(id: self._id, title: self._data.data[indexPath.section].name)
                 break
             default: break
             }
@@ -352,9 +386,9 @@ extension G01F00S02VC: CustomerInfoHeaderViewDelegate {
     func customerInfoHeaderViewDidSelect(object: ConfigExtBean) {
         switch object.id {
         case DomainConst.GROUP_MEDICAL_RECORD:
-            openMedicalRecordInfo(id: self._id)
+            openMedicalRecordInfo(id: self._id, title: object.name)
         case DomainConst.GROUP_TREATMENT:
-            openTreatmentHistory()
+            openTreatmentHistory(title: object.name)
             break
         default:
             break

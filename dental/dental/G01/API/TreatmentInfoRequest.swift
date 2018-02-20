@@ -1,18 +1,18 @@
 //
-//  CustomerInfoRequest.swift
+//  TreatmentInfoRequest.swift
 //  dental
-//  P0008_CustomerInfo_API
-//  Created by SPJ on 2/2/18.
+//  P0016_GetTreatmentInfo_API
+//  Created by SPJ on 2/17/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
 
 import UIKit
 import harpyframework
 
-class CustomerInfoRequest: BaseRequest {
+class TreatmentInfoRequest: BaseRequest {
     /**
      * Set data content
-     * - parameter id:        Customer id
+     * - parameter id:        Treatment id
      */
     func setData(id: String) {
         self.data = "q=" + String.init(
@@ -25,20 +25,19 @@ class CustomerInfoRequest: BaseRequest {
     
     /**
      * Request
-     * - parameter action:      Action execute when finish this task
-     * - parameter view:        Current view
-     * - parameter id:        Customer id
+     * - parameter action:          Action execute when finish this task
+     * - parameter view:            Current view
+     * - parameter id:              Treatment id
      * - parameter isShowLoading:   Flag show loading
      */
     public static func request(action: Selector, view: BaseViewController,
                                id: String, isShowLoading: Bool = true) {
-        let request = CustomerInfoRequest(
-            url: G01Const.PATH_CUSTOMER_INFO,
+        let request = TreatmentInfoRequest(
+            url: G01Const.PATH_TREATMENT_INFO,
             reqMethod: DomainConst.HTTP_POST_REQUEST,
             view: view)
         request.setData(id: id)
         NotificationCenter.default.addObserver(view, selector: action, name:NSNotification.Name(rawValue: request.theClassName), object: nil)
         request.execute(isShowLoadingView: isShowLoading)
     }
-
 }

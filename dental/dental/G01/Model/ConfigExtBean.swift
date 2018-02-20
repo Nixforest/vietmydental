@@ -11,9 +11,10 @@ import harpyframework
 
 class ConfigExtBean: ConfigBean {
     /** Data */
-    var _dataStr:           String              = DomainConst.BLANK
-    var _dataExt:           [ConfigExtBean]     = [ConfigExtBean]()
-    var _dataObj:           [String: AnyObject] = [String: AnyObject]()
+    var _dataStr:           String                  = DomainConst.BLANK
+    var _dataExt:           [ConfigExtBean]         = [ConfigExtBean]()
+    var _dataObj:           [String: AnyObject]     = [String: AnyObject]()
+    var _dataArrObj:        [[String: AnyObject]]   = [[String: AnyObject]]()
     
     /**
      * Initializer
@@ -33,6 +34,10 @@ class ConfigExtBean: ConfigBean {
         
         if let obj = jsonData[DomainConst.KEY_DATA] as? [String: AnyObject] {
             self._dataObj = obj
+        }
+        
+        if let arr = jsonData[DomainConst.KEY_DATA] as? [[String: AnyObject]] {
+            self._dataArrObj = arr
         }
     }
     
@@ -58,5 +63,8 @@ class ConfigExtBean: ConfigBean {
      */
     public func getListData() -> [ConfigExtBean] {
         return self._dataExt
+    }
+    override public init() {
+        super.init()
     }
 }

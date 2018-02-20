@@ -29,16 +29,17 @@ class MedicalRecordUpdateRequest: BaseRequest {
     }
     
     /**
-     * Request generate OTP
+     * Request
      * - parameter action:          Action execute when finish this task
      * - parameter view:            Current view
      * - parameter id:              Customer id
      * - parameter recordNumber:    Record number
      * - parameter medicalHistory:  Medical history
+     * - parameter isShowLoading:   Flag show loading
      */
     public static func request(action: Selector, view: BaseViewController,
                                id: String, recordNumber: String,
-                               medicalHistory: String) {
+                               medicalHistory: String, isShowLoading: Bool = true) {
         let request = MedicalRecordUpdateRequest(
             url: G01Const.PATH_MEDICAL_RECORD_UPDATE,
             reqMethod: DomainConst.HTTP_POST_REQUEST,
@@ -46,6 +47,6 @@ class MedicalRecordUpdateRequest: BaseRequest {
         request.setData(id: id, recordNumber: recordNumber,
                         medicalHistory: medicalHistory)
         NotificationCenter.default.addObserver(view, selector: action, name:NSNotification.Name(rawValue: request.theClassName), object: nil)
-        request.execute()
+        request.execute(isShowLoadingView: isShowLoading)
     }
 }

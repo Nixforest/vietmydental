@@ -17,8 +17,6 @@ class G01F01S01VC: ChildExtViewController {
     var _id:                String                  = DomainConst.BLANK
     /** Information table view */
     var _tblInfo:           UITableView             = UITableView()
-    /** Infor list */
-    var _listInfo:          [ConfigurationModel]    = [ConfigurationModel]()
     /** Refrest control */
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -37,7 +35,7 @@ class G01F01S01VC: ChildExtViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.createNavigationBar(title: DomainConst.CONTENT00544)
+//        self.createNavigationBar(title: DomainConst.CONTENT00544)
         createInfoTableView()
         self.view.addSubview(_tblInfo)
         requestData()
@@ -48,7 +46,8 @@ class G01F01S01VC: ChildExtViewController {
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestData()
+        requestData(action: #selector(setData(_:)),
+                    isShowLoading: false)
     }
     
     /**
@@ -69,11 +68,13 @@ class G01F01S01VC: ChildExtViewController {
     /**
      * Request data
      */
-    internal func requestData(action: Selector = #selector(setData(_:))) {
+    internal func requestData(action: Selector = #selector(setData(_:)),
+                              isShowLoading: Bool = true) {
         MedicalRecordInfoRequest.request(
             action: action,
             view: self,
-            id: _id)
+            id: _id,
+            isShowLoading: isShowLoading)
     }
     
     /**
@@ -150,6 +151,8 @@ class G01F01S01VC: ChildExtViewController {
             message = DomainConst.CONTENT00550
             value = getData(id: id)
         default:
+            placeHolder     = DomainConst.BLANK
+            keyboardType    = UIKeyboardType.default
             break
         }
         var tbxValue: UITextField?
@@ -177,7 +180,7 @@ class G01F01S01VC: ChildExtViewController {
             action -> Void in
             if let newValue = tbxValue?.text, !newValue.isEmpty {
                 self.setData(id: id, value: newValue)
-                self.requestUpdate()
+                self.requestUpdate(isShowLoading: false)
             } else {
                 self.showAlert(message: DomainConst.CONTENT00551,
                                okHandler: {
@@ -195,7 +198,7 @@ class G01F01S01VC: ChildExtViewController {
     /**
      * Handle request update data
      */
-    internal func requestUpdate() {
+    internal func requestUpdate(isShowLoading: Bool = true) {
         var arrData = [String]()
         for item in self._data.data {
             if item.id == DomainConst.ITEM_MEDICAL_HISTORY {
@@ -210,7 +213,8 @@ class G01F01S01VC: ChildExtViewController {
             view: self,
             id: self._id,
             recordNumber: getData(id: DomainConst.ITEM_RECORD_NUMBER),
-            medicalHistory: medicalHistory)
+            medicalHistory: medicalHistory,
+            isShowLoading: isShowLoading)
     }
     
     internal func finishUpdate(_ notification: Notification) {
@@ -331,9 +335,6 @@ extension G01F01S01VC: UITableViewDelegate {
      * Asks the delegate for the height to use for a row in a specified location.
      */
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if self._data.data[indexPath.row].id == DomainConst.ITEM_ADDRESS {
-//            return GlobalConst.LABEL_H * 3
-//        } else 
         if (self._data.data[indexPath.row].name.isEmpty) {
             if self._data.data[indexPath.row].id == DomainConst.ITEM_RECORD_NUMBER {
                 return UITableViewAutomaticDimension
