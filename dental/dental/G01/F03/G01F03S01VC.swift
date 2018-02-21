@@ -103,6 +103,15 @@ class G01F03S01VC: ChildExtViewController {
     }
     
     /**
+     * Check if current treatment schedule is in schedule status
+     * - returns: True if value of status item is Schedule, False otherwise
+     */
+    internal func isSchedule() -> Bool {
+        return (self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr
+            == DomainConst.TREATMENT_SCHEDULE_DETAIL_SCHEDULE)
+    }
+    
+    /**
      * Check if current treatment schedule can update data
      * - returns: True if value of can_update item is 1, False otherwise
      */
@@ -120,10 +129,7 @@ class G01F03S01VC: ChildExtViewController {
         view.setData(data: LoginBean.shared.diagnosis,
                      selectedValue: self._data.getData(
                         id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr)
-        if let controller = BaseViewController.getCurrentViewController() {
-            controller.navigationController?.pushViewController(view,
-                                                                animated: true)
-        }
+        self.push(view, animated: true)
     }
     
     /**
@@ -136,10 +142,7 @@ class G01F03S01VC: ChildExtViewController {
         view.setData(data: LoginBean.shared.teeth,
                      selectedValue: self._data.getData(
                         id: DomainConst.ITEM_TEETH_ID)._dataStr)
-        if let controller = BaseViewController.getCurrentViewController() {
-            controller.navigationController?.pushViewController(view,
-                                                                animated: true)
-        }
+        self.push(view, animated: true)
     }
     
     /**
@@ -151,10 +154,7 @@ class G01F03S01VC: ChildExtViewController {
         view.createNavigationBar(title: title)
         view.setDataExt(data: LoginBean.shared.treatment,
                         selectedValue: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)
-        if let controller = BaseViewController.getCurrentViewController() {
-            controller.navigationController?.pushViewController(view,
-                                                                animated: true)
-        }
+        self.push(view, animated: true)
     }
     
     internal func requestUpdate(isShowLoading: Bool = true) {
@@ -253,7 +253,17 @@ extension G01F03S01VC: UITableViewDataSource {
         if section == 0 {
             return self._data.count()
         } else {
-            return self._data.getData(id: DomainConst.ITEM_DETAILS)._dataExt.count
+            let data = self._data.getData(id: DomainConst.ITEM_DETAILS)._dataExt
+            if data.count > 1 {
+                return data.count
+            } else if data.count == 1 {
+                if data[0].id.isEmpty {
+                    return 0
+                } else {
+                    return 1
+                }
+            }
+            return 0
         }
     }
     
@@ -268,17 +278,24 @@ extension G01F03S01VC: UITableViewDataSource {
             }
             let data = self._data.getData()[indexPath.row]
             switch data.id {
-//            case DomainConst.ITEM_DETAILS:
-//                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-//                cell.textLabel?.text = data.name
-//                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-//                return cell
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
                  DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
+                return cell
+            case DomainConst.ITEM_NOTE,
+                 DomainConst.ITEM_TYPE:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                if !self.isSchedule() {
+                    cell.contentView.isHidden = true
+                } else {
+                    cell.textLabel?.text = data.name
+                    cell.textLabel?.font = GlobalConst.BASE_FONT
+                    cell.detailTextLabel?.text = data._dataStr
+                    cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                }
                 return cell
             case DomainConst.ITEM_END_DATE:
                 let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
@@ -317,6 +334,9 @@ extension G01F03S01VC: UITableViewDataSource {
 //                cell.detailTextLabel?.textColor = UIColor.red
 //            }
             cell.accessoryType = .disclosureIndicator
+            if data.id.isEmpty {
+                cell.isHidden = true
+            }
             return cell
         default:
             break
@@ -367,19 +387,33 @@ extension G01F03S01VC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            switch self._data.getData()[indexPath.row].id {
+            let data = self._data.getData()[indexPath.row]
+            switch data.id {
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
                  DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
                 return 0
             case DomainConst.ITEM_END_DATE:
-                if self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr == "3" {
+                if self.isCompleted() {
+                    return UITableViewAutomaticDimension
+                } else {
+                    return 0
+                }
+            case DomainConst.ITEM_NOTE,
+                 DomainConst.ITEM_TYPE:if self.isSchedule() {
                     return UITableViewAutomaticDimension
                 } else {
                     return 0
                 }
             default:
+                return UITableViewAutomaticDimension
+            }
+        case 1:
+            let data = self._data.getData(id: DomainConst.ITEM_DETAILS)._dataExt[indexPath.row]
+            if data.id.isEmpty {
+                return 0
+            } else {
                 return UITableViewAutomaticDimension
             }
         default:

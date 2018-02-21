@@ -125,7 +125,7 @@ class G01F04S02VC: ChildExtViewController {
                            value: date.dateString())
         self._tblInfo.reloadData()
         let alert = UIAlertController(style: .actionSheet,
-                                      title: "Chọn ngày")
+                                      title: DomainConst.CONTENT00559)
         alert.addDatePicker(mode: .date, date: date,
                             minimumDate: nil, maximumDate: nil,
                             action: {date in

@@ -126,6 +126,21 @@ class LoginBean: ConfigBean {
         }
         return DomainConst.BLANK
     }
+        
+    /**
+     * Get treatment config value
+     * - parameter id: Id of config
+     */
+    public func getTreatmentConfig(id: String) -> String {
+        for item in self.treatment.getData() {
+            for child in item._dataExt {
+                if child.id == id {
+                    return child.name
+                }
+            }
+        }
+        return DomainConst.BLANK
+    }
     
     /**
      * Get teeth config value

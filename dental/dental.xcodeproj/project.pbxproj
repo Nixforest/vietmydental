@@ -40,6 +40,7 @@
 		D79087B0203D1D5C000BD77E /* G01F04S02VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D79087AE203D1D5C000BD77E /* G01F04S02VC.xib */; };
 		D79087B3203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */; };
 		D79087B7203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */; };
+		D79087B9203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087B8203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift */; };
 		D7A253D9202F78DB00B64E8B /* logo_main_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7A253D8202F78DB00B64E8B /* logo_main_v2.png */; };
 		D7A2AC84202B59CC008C8580 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A2AC83202B59CC008C8580 /* Template.swift */; };
 		D7A2AC8C202B5C9D008C8580 /* CustomerInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A2AC8A202B5C9D008C8580 /* CustomerInfoHeaderView.swift */; };
@@ -282,6 +283,7 @@
 		D79087AE203D1D5C000BD77E /* G01F04S02VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F04S02VC.xib; path = G01/F04/G01F04S02VC.xib; sourceTree = "<group>"; };
 		D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleProcessCreateRequest.swift; path = G01/API/TreatmentScheduleProcessCreateRequest.swift; sourceTree = "<group>"; };
 		D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleProcessCreateRespBean.swift; path = G01/Model/TreatmentScheduleProcessCreateRespBean.swift; sourceTree = "<group>"; };
+		D79087B8203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleDetailCreateRequest.swift; path = G01/API/TreatmentScheduleDetailCreateRequest.swift; sourceTree = "<group>"; };
 		D7A253D8202F78DB00B64E8B /* logo_main_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_main_v2.png; path = Images/logo_main_v2.png; sourceTree = "<group>"; };
 		D7A2AC83202B59CC008C8580 /* Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		D7A2AC8A202B5C9D008C8580 /* CustomerInfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerInfoHeaderView.swift; path = G01/Custom/CustomerInfoHeaderView/CustomerInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -969,6 +971,7 @@
 				D706B04E203BCA6F004AE6D7 /* TreatmentScheduleDetailUpdateRequest.swift */,
 				D7E41400203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift */,
 				D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */,
+				D79087B8203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1274,6 +1277,7 @@
 				D7F4B1DE202B524F00EC7AB5 /* GreenTextField.swift in Sources */,
 				D7AAE66A2037FCA8001C3847 /* G01F02S01VC.swift in Sources */,
 				D7B43B2E2036930D00F59945 /* MedicalRecordRespBean.swift in Sources */,
+				D79087B9203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift in Sources */,
 				D70BCB542016EE7D00BCD90B /* ChangeProfileRequest.swift in Sources */,
 				D7B43B342036F82F00F59945 /* MedicalRecordUpdateRequest.swift in Sources */,
 				D7F4B1CA202B524F00EC7AB5 /* SingleLineTableViewCell.swift in Sources */,

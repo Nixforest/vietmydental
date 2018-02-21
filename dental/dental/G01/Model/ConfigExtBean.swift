@@ -64,15 +64,22 @@ class ConfigExtBean: ConfigBean {
     public func getListData() -> [ConfigExtBean] {
         return self._dataExt
     }
+    
     override public init() {
         super.init()
     }
     
+    /**
+     * Coopy contructor
+     * - parameter copy: Object to copy
+     */
     public init(copy: ConfigExtBean) {
         super.init(id: copy.id, name: copy.name)
         self._dataStr = copy._dataStr
         for item in copy._dataExt {
             self._dataExt.append(ConfigExtBean.init(copy: item))
-        }        
+        }
+        
+        // MARK: To do - Copy array
     }
 }

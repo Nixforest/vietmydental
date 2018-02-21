@@ -255,6 +255,18 @@ class G01F02S02VC: ChildExtViewController {
     func openCreateTreatmentScheduleDetail() -> Void {
         let view = G01F03S03VC(nibName: G01F03S03VC.theClassName,
                                bundle: nil)
+        let data = self.getData(id: DomainConst.ITEM_DETAILS)._dataExt
+        if !data.isEmpty {
+            var copyArr = [ConfigExtBean]()
+            for item in data[0]._dataExt {
+                let copyData = ConfigExtBean(copy: item)
+                copyArr.append(copyData)
+            }
+            
+            view.setData(bean: copyArr,
+                         scheduleId: self._id)
+            view.resetData()
+        }
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(
                 view, animated: true)
