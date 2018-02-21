@@ -67,4 +67,12 @@ class ConfigExtBean: ConfigBean {
     override public init() {
         super.init()
     }
+    
+    public init(copy: ConfigExtBean) {
+        super.init(id: copy.id, name: copy.name)
+        self._dataStr = copy._dataStr
+        for item in copy._dataExt {
+            self._dataExt.append(ConfigExtBean.init(copy: item))
+        }        
+    }
 }

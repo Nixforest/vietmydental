@@ -15,7 +15,7 @@ class G01F03S03VC: ChildExtViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        createNavigationBar(title: "Tạo mới chi tiết điều trị")
+        createNavigationBar(title: DomainConst.CONTENT00557)
     }
 
     override func didReceiveMemoryWarning() {

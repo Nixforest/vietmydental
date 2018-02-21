@@ -11,13 +11,18 @@ import harpyframework
 
 class G01F03S01VC: ChildExtViewController {
     // MARK: Properties
+    /** Treatment id */
+    var _treatmentId:                String                  = DomainConst.BLANK
     /** Data */
-    var _data:          ListConfigBean = ListConfigBean()
+    var _data:              ListConfigBean          = ListConfigBean()
     /** Information table view */
     var _tblInfo:           UITableView             = UITableView()
+    /** Create process flag */
+    var _flagCreate:        Bool                    = false
     
     // MARK: Static values
-    // MARK: Constant    
+    // MARK: Constant
+    var HEADER_HEIGHT:      CGFloat = GlobalConst.LABEL_H * 2
     
     // MARK: Override methods
     /**
@@ -62,6 +67,18 @@ class G01F03S01VC: ChildExtViewController {
                 break
             }
         }
+        if _flagCreate {
+            let data = BaseModel.shared.sharedString
+            if !data.isEmpty {
+                let model = TreatmentScheduleProcessCreateRespBean(jsonString: data)
+                if model.isSuccess() {
+                    self._data.getData(id: DomainConst.ITEM_DETAILS)._dataExt.append(model.data)
+                    self._tblInfo.reloadData()
+                }
+            }
+            
+            _flagCreate = false
+        }
         
         BaseModel.shared.sharedString = DomainConst.BLANK
     }
@@ -69,9 +86,11 @@ class G01F03S01VC: ChildExtViewController {
     /**
      * Set data
      * - parameter bean: Data to set
+     * - parameter treatmentId: Treatment id
      */
-    public func setData(bean: [ConfigExtBean]) {
+    public func setData(bean: [ConfigExtBean], treatmentId: String) {
         self._data.setData(data: bean)
+        self._treatmentId = treatmentId
     }
     
     /**
@@ -154,7 +173,7 @@ class G01F03S01VC: ChildExtViewController {
         let data = notification.object as! String
         let model = TreatmentInfoRespBean(jsonString: data)
         if model.isSuccess() {
-            self.setData(bean: model.data.getData())
+            self.setData(bean: model.data.getData(), treatmentId: self._treatmentId)
             _tblInfo.reloadData()
         }
     }
@@ -168,6 +187,35 @@ class G01F03S01VC: ChildExtViewController {
                                bundle: nil)
         view.createNavigationBar(title: bean.name)
         view.setData(bean: bean._dataExt)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(
+                view, animated: true)
+        }
+    }
+    
+    internal func addNew(_ sender: AnyObject) {
+        self._flagCreate = true
+        openCreateTreatmentScheduleProcess()
+    }
+    
+    /**
+     * Open create treatment schedule detail screen
+     */
+    func openCreateTreatmentScheduleProcess() -> Void {
+        let view = G01F04S02VC(nibName: G01F04S02VC.theClassName,
+                               bundle: nil)
+        let data = self._data.getData(id: DomainConst.ITEM_DETAILS)._dataExt
+        if !data.isEmpty {
+            var copyArr = [ConfigExtBean]()
+            for item in data[0]._dataExt {
+                let copyData = ConfigExtBean(copy: item)
+                copyArr.append(copyData)
+            }
+            
+            view.setData(bean: copyArr,
+                         detailId: self._data.getData(id: DomainConst.ITEM_ID)._dataStr)
+            view.resetData()
+        }
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(
                 view, animated: true)
@@ -220,15 +268,15 @@ extension G01F03S01VC: UITableViewDataSource {
             }
             let data = self._data.getData()[indexPath.row]
             switch data.id {
-            case DomainConst.ITEM_DETAILS:
-                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-                cell.textLabel?.text = data.name
-                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-                return cell
+//            case DomainConst.ITEM_DETAILS:
+//                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+//                cell.textLabel?.text = data.name
+//                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
+//                return cell
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
-                 DomainConst.ITEM_TREATMENT_TYPE_ID:
+                 DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
@@ -323,7 +371,7 @@ extension G01F03S01VC: UITableViewDelegate {
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
-                 DomainConst.ITEM_TREATMENT_TYPE_ID:
+                 DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
                 return 0
             case DomainConst.ITEM_END_DATE:
                 if self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr == "3" {
@@ -336,7 +384,37 @@ extension G01F03S01VC: UITableViewDelegate {
             }
         default:
             return UITableViewAutomaticDimension
+        }        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return nil
         }
-        
+        let header = CustomerInfoHeaderView.init(
+            frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: HEADER_HEIGHT))
+        header.setHeader(bean: self._data.getData(id: DomainConst.ITEM_DETAILS),
+                         actionText: DomainConst.CONTENT00065)
+        header.delegate = self
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
+        return HEADER_HEIGHT
+    }
+}
+
+// MARK: Protocol - UITableViewDelegate
+extension G01F03S01VC: CustomerInfoHeaderViewDelegate {    
+    func customerInfoHeaderViewDidSelect(object: ConfigExtBean) {
+        switch object.id {
+        case DomainConst.ITEM_DETAILS:
+            self.addNew(self)
+        default:
+            break
+        }
     }
 }

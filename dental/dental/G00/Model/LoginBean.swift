@@ -119,7 +119,20 @@ class LoginBean: ConfigBean {
      * - parameter id:          Id of config
      */
     public func getDiagnosisConfig(id: String) -> String {
-        for item in self.data {
+        for item in self.diagnosis {
+            if item.id == id {
+                return item.name
+            }
+        }
+        return DomainConst.BLANK
+    }
+    
+    /**
+     * Get teeth config value
+     * - parameter id:          Id of config
+     */
+    public func getTeethConfig(id: String) -> String {
+        for item in self.teeth {
             if item.id == id {
                 return item.name
             }

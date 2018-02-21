@@ -36,6 +36,10 @@
 		D78CD1682024C0A900C70FAE /* CustomerInfoRespBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78CD1672024C0A900C70FAE /* CustomerInfoRespBean.swift */; };
 		D78CD16A2024C45700C70FAE /* CustomerInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78CD1692024C45700C70FAE /* CustomerInfoRequest.swift */; };
 		D78CD16C2024CC8D00C70FAE /* TreatmentBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78CD16B2024CC8D00C70FAE /* TreatmentBean.swift */; };
+		D79087AF203D1D5C000BD77E /* G01F04S02VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087AD203D1D5C000BD77E /* G01F04S02VC.swift */; };
+		D79087B0203D1D5C000BD77E /* G01F04S02VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D79087AE203D1D5C000BD77E /* G01F04S02VC.xib */; };
+		D79087B3203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */; };
+		D79087B7203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */; };
 		D7A253D9202F78DB00B64E8B /* logo_main_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = D7A253D8202F78DB00B64E8B /* logo_main_v2.png */; };
 		D7A2AC84202B59CC008C8580 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A2AC83202B59CC008C8580 /* Template.swift */; };
 		D7A2AC8C202B5C9D008C8580 /* CustomerInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A2AC8A202B5C9D008C8580 /* CustomerInfoHeaderView.swift */; };
@@ -274,6 +278,10 @@
 		D78CD1672024C0A900C70FAE /* CustomerInfoRespBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerInfoRespBean.swift; path = G01/Model/CustomerInfoRespBean.swift; sourceTree = "<group>"; };
 		D78CD1692024C45700C70FAE /* CustomerInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerInfoRequest.swift; path = G01/API/CustomerInfoRequest.swift; sourceTree = "<group>"; };
 		D78CD16B2024CC8D00C70FAE /* TreatmentBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentBean.swift; path = G01/Model/TreatmentBean.swift; sourceTree = "<group>"; };
+		D79087AD203D1D5C000BD77E /* G01F04S02VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F04S02VC.swift; path = G01/F04/G01F04S02VC.swift; sourceTree = "<group>"; };
+		D79087AE203D1D5C000BD77E /* G01F04S02VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F04S02VC.xib; path = G01/F04/G01F04S02VC.xib; sourceTree = "<group>"; };
+		D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleProcessCreateRequest.swift; path = G01/API/TreatmentScheduleProcessCreateRequest.swift; sourceTree = "<group>"; };
+		D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleProcessCreateRespBean.swift; path = G01/Model/TreatmentScheduleProcessCreateRespBean.swift; sourceTree = "<group>"; };
 		D7A253D8202F78DB00B64E8B /* logo_main_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_main_v2.png; path = Images/logo_main_v2.png; sourceTree = "<group>"; };
 		D7A2AC83202B59CC008C8580 /* Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		D7A2AC8A202B5C9D008C8580 /* CustomerInfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerInfoHeaderView.swift; path = G01/Custom/CustomerInfoHeaderView/CustomerInfoHeaderView.swift; sourceTree = "<group>"; };
@@ -637,6 +645,8 @@
 			children = (
 				D7E413FC203CA51E002DBA96 /* G01F04S01VC.swift */,
 				D7E413FD203CA51E002DBA96 /* G01F04S01VC.xib */,
+				D79087AD203D1D5C000BD77E /* G01F04S02VC.swift */,
+				D79087AE203D1D5C000BD77E /* G01F04S02VC.xib */,
 			);
 			name = F04;
 			sourceTree = "<group>";
@@ -940,6 +950,7 @@
 				D7AAE678203890E0001C3847 /* TreatmentInfoRespBean.swift */,
 				D7C92A2C203967B2002EF00D /* TreatmentDetailBean.swift */,
 				D7E413F8203C963A002DBA96 /* TreatmentDetailUpdateResp.swift */,
+				D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -957,6 +968,7 @@
 				D7C92A3320397D20002EF00D /* TreatmentCreateRequest.swift */,
 				D706B04E203BCA6F004AE6D7 /* TreatmentScheduleDetailUpdateRequest.swift */,
 				D7E41400203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift */,
+				D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1061,6 +1073,7 @@
 				D7F4B1E3202B524F00EC7AB5 /* DialogInfoView.xib in Resources */,
 				D7F4B1ED202B524F00EC7AB5 /* GEmail.png in Resources */,
 				D7C73ADC20050787000B3CBC /* LaunchScreen.storyboard in Resources */,
+				D79087B0203D1D5C000BD77E /* G01F04S02VC.xib in Resources */,
 				D7F4B1F4202B524F00EC7AB5 /* GMenu.png in Resources */,
 				D7F4B207202B524F00EC7AB5 /* Refresh.png in Resources */,
 				D7F4B1F2202B524F00EC7AB5 /* GLeftArrow.png in Resources */,
@@ -1222,6 +1235,7 @@
 				D7C92A2D203967B2002EF00D /* TreatmentDetailBean.swift in Sources */,
 				D7C73AD420050787000B3CBC /* ViewController.swift in Sources */,
 				D7A2AC84202B59CC008C8580 /* Template.swift in Sources */,
+				D79087B3203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift in Sources */,
 				D7F4B1DC202B524F00EC7AB5 /* GreenLabel.swift in Sources */,
 				D7F4B216202B524F00EC7AB5 /* GreenStepField.swift in Sources */,
 				D7C92A3420397D20002EF00D /* TreatmentCreateRequest.swift in Sources */,
@@ -1283,6 +1297,7 @@
 				D7C92A3120397C5A002EF00D /* G01F00S03VC.swift in Sources */,
 				D7AAE6802038F82C001C3847 /* G01F02S03VC.swift in Sources */,
 				D7C73B0820052B7F000B3CBC /* LoginBean.swift in Sources */,
+				D79087B7203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift in Sources */,
 				D7C73B0A20052C94000B3CBC /* LoginRespBean.swift in Sources */,
 				D7F4B1CE202B524F00EC7AB5 /* GreenExtension+String.swift in Sources */,
 				D7AAE679203890E0001C3847 /* TreatmentInfoRespBean.swift in Sources */,
@@ -1296,6 +1311,7 @@
 				D7F4B1E1202B524F00EC7AB5 /* GreenDefine.swift in Sources */,
 				D7F4B227202B524F00EC7AB5 /* ServiceConfig.swift in Sources */,
 				D78CD1662024B6B600C70FAE /* ConfigExtBean.swift in Sources */,
+				D79087AF203D1D5C000BD77E /* G01F04S02VC.swift in Sources */,
 				D7F4B1E4202B524F00EC7AB5 /* GreenDialog.swift in Sources */,
 				D70BCB562016EEA700BCD90B /* G00Const.swift in Sources */,
 				D78CD16A2024C45700C70FAE /* CustomerInfoRequest.swift in Sources */,

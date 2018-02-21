@@ -144,6 +144,10 @@ class G00AddressSelectVC: ChildExtViewController {
         _searchController.dimsBackgroundDuringPresentation = false
         tblInfo.tableHeaderView = _searchController.searchBar
     }
+    
+    deinit {
+        self._searchController.view.removeFromSuperview()
+    }
 }
 
 // MARK: Protocol - UITableViewDataSource

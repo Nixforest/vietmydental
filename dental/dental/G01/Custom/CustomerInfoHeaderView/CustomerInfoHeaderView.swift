@@ -17,6 +17,7 @@ protocol CustomerInfoHeaderViewDelegate: class {
 class CustomerInfoHeaderView: GreenView {
 
     @IBOutlet weak var lbHeader: UILabel!
+    @IBOutlet weak var btnAction: UIButton!
     
     var delegate: CustomerInfoHeaderViewDelegate!
 //    var object: MasterObject!
@@ -31,10 +32,12 @@ class CustomerInfoHeaderView: GreenView {
 //        self.lbHeader.text = object.name
 //    }
     
-    func setHeader(bean: ConfigExtBean) {
+    func setHeader(bean: ConfigExtBean,
+                   actionText: String = DomainConst.CONTENT00125) {
         self.object = bean
-        self.lbHeader.text = bean.name
-        self.lbHeader.font = GlobalConst.BASE_FONT
+        self.lbHeader.text = " " + bean.name.uppercased()
+        self.lbHeader.font = GlobalConst.BASE_BOLD_FONT
+        self.btnAction.setTitle(actionText, for: UIControlState())
     }
 
     @IBAction func seeMoreAction(_ sender: Any) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import harpyframework
 
 class ListConfigBean: NSObject {
     // MARK: Properties
@@ -77,5 +78,14 @@ class ListConfigBean: NSObject {
     
     public override init() {
         
+    }
+    
+    /**
+     * Handle reset string value of all item
+     */
+    public func resetStrData() {
+        for item in self._data {
+            item._dataStr = DomainConst.BLANK
+        }
     }
 }

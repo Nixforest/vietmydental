@@ -192,6 +192,7 @@ class G01F01S01VC: ChildExtViewController {
         
         alert.addAction(cancel)
         alert.addAction(ok)
+        
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -25,7 +25,8 @@ class G01F02S02VC: ChildExtViewController {
     }()
     
     // MARK: Static values
-    // MARK: Constant    
+    // MARK: Constant
+    var HEADER_HEIGHT:      CGFloat = GlobalConst.LABEL_H * 2
     
     // MARK: Override methods
     /**
@@ -36,8 +37,8 @@ class G01F02S02VC: ChildExtViewController {
 
         // Do any additional setup after loading the view.
         self.createNavigationBar(title: DomainConst.CONTENT00552)
-        createRightNavigationItem(title: "+", action: #selector(addNew(_:)),
-                                  target: self)
+//        createRightNavigationItem(title: "+", action: #selector(addNew(_:)),
+//                                  target: self)
         createInfoTableView()
         self.view.addSubview(_tblInfo)
         requestData()
@@ -237,7 +238,7 @@ class G01F02S02VC: ChildExtViewController {
         let view = G01F03S01VC(nibName: G01F03S01VC.theClassName,
                                bundle: nil)
         view.createNavigationBar(title: bean.id)
-        view.setData(bean: bean._dataExt)
+        view.setData(bean: bean._dataExt, treatmentId: self._id)
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(
                 view, animated: true)
@@ -332,13 +333,14 @@ extension G01F02S02VC: UITableViewDataSource {
                 cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.accessoryType = .detailDisclosureButton
                 return cell
-            case DomainConst.ITEM_DETAILS:
-                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-                cell.textLabel?.text = data.name
-                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-                return cell
+//            case DomainConst.ITEM_DETAILS:
+//                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+//                cell.textLabel?.text = data.name
+//                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
+//                return cell
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
-                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID:
+                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID,
+                 DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
@@ -429,7 +431,8 @@ extension G01F02S02VC: UITableViewDelegate {
         case 0:
             switch self._data.data.getData()[indexPath.row].id {
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
-                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID:
+                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID,
+                 DomainConst.ITEM_DETAILS:
                 return 0
             case DomainConst.ITEM_END_DATE:
                 if self.isCompleted() {
@@ -444,6 +447,37 @@ extension G01F02S02VC: UITableViewDelegate {
             return UITableViewAutomaticDimension
         default:
             return UITableViewAutomaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return nil
+        }
+        let header = CustomerInfoHeaderView.init(
+            frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: HEADER_HEIGHT))
+        header.setHeader(bean: self.getData(id: DomainConst.ITEM_DETAILS),
+                         actionText: DomainConst.CONTENT00065)
+        header.delegate = self
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
+        return HEADER_HEIGHT
+    }
+}
+
+// MARK: Protocol - UITableViewDelegate
+extension G01F02S02VC: CustomerInfoHeaderViewDelegate {    
+    func customerInfoHeaderViewDidSelect(object: ConfigExtBean) {
+        switch object.id {
+        case DomainConst.ITEM_DETAILS:
+            self.addNew(self)
+        default:
+            break
         }
     }
 }
