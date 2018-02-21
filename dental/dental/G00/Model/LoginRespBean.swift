@@ -46,5 +46,6 @@ class LoginRespBean: BaseRespModel {
         LoginBean.shared.diagnosis          = data.data.diagnosis
         LoginBean.shared.teeth              = data.data.teeth
         LoginBean.shared.treatment          = data.data.treatment
+        LoginBean.shared.id                 = data.data.id
     }
 }

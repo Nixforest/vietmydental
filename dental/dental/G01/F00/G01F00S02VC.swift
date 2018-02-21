@@ -143,18 +143,9 @@ class G01F00S02VC: ChildExtViewController {
      * Handle open Create new treatment schedule screen
      */
     func addNewTreatmentSchedule() -> Void {
-//        let alert = UIAlertController(style: .actionSheet, title: "Select date")
-//        alert.addDatePicker(mode: .dateAndTime, date: Date(), minimumDate: nil, maximumDate: nil) { date in
-//            // action with selected date
-//            self.showAlert(message: date.dateString())
-//        }
-////        alert.addAction(title: "OK", style: .cancel)
-//        // Add cancel action
-//        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
-//        alert.addAction(ok)
-//        self.present(alert, animated: true, completion: nil)
         let view = G01F02S06VC(nibName: G01F02S06VC.theClassName,
                                bundle: nil)
+        view.setData(customerId: self._id)
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(
                 view, animated: true)

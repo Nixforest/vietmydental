@@ -283,6 +283,15 @@ class G01F02S02VC: ChildExtViewController {
     }
     
     /**
+     * Check if current treatment schedule is in schedule status
+     * - returns: True if value of status item is Schedule, False otherwise
+     */
+    internal func isSchedule() -> Bool {
+        return (self._data.data.getData(id: DomainConst.ITEM_STATUS)._dataStr
+            == DomainConst.TREATMENT_SCHEDULE_SCHEDULE)
+    }
+    
+    /**
      * Check if current treatment schedule can update data
      * - returns: True if value of can_update item is 1, False otherwise
      */
@@ -345,11 +354,6 @@ extension G01F02S02VC: UITableViewDataSource {
                 cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.accessoryType = .detailDisclosureButton
                 return cell
-//            case DomainConst.ITEM_DETAILS:
-//                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-//                cell.textLabel?.text = data.name
-//                cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-//                return cell
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID,
                  DomainConst.ITEM_DETAILS:

@@ -36,12 +36,18 @@ class ListConfigBean: NSObject {
      * - parameter id: Id of item
      * - parameter value: Value of item
      */
-    public func setData(id: String, value: String) {
+    public func setData(id: String, value: String, name: String = DomainConst.BLANK) {
         for item in self._data {
             if item.id == id {
                 item._dataStr = value
+                return
             }
         }
+        let data = ConfigExtBean()
+        data.id         = id
+        data._dataStr   = value
+        data.name       = name
+        self._data.append(data)
     }
     
     /**

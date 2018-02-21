@@ -31,15 +31,17 @@ class TreatmentListRequest: BaseRequest {
      * - parameter view:        Current view
      * - parameter page:        Page index
      * - parameter id:          Id of customer
+     * - parameter isShowLoading:   Flag show loading
      */
     public static func request(action: Selector, view: BaseViewController,
-                               page: String, id: String) {
+                               page: String, id: String,
+                               isShowLoading: Bool = true) {
         let request = TreatmentListRequest(
             url: G01Const.PATH_TREATMENT_LIST,
             reqMethod: DomainConst.HTTP_POST_REQUEST,
             view: view)
         request.setData(page: page, id: id)
         NotificationCenter.default.addObserver(view, selector: action, name:NSNotification.Name(rawValue: request.theClassName), object: nil)
-        request.execute()
+        request.execute(isShowLoadingView: isShowLoading)
     }
 }

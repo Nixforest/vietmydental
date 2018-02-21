@@ -46,7 +46,7 @@ class LoginBean: ConfigBean {
      * - parameter jsonData: List of data
      */
     public override init(jsonData: [String: AnyObject]) {
-        super.init()
+        super.init(jsonData: jsonData)
         // Token
         self.token = getString(json: jsonData, key: DomainConst.KEY_TOKEN)
         // Role id
@@ -161,5 +161,13 @@ class LoginBean: ConfigBean {
      */
     public func getUpdateText() -> String {
         return DomainConst.CONTENT00555
+    }
+    
+    /**
+     * Get user id
+     * - returns: User id
+     */
+    public func getUserId() -> String {
+        return self.id
     }
 }

@@ -46,6 +46,15 @@ class G01F02S01VC: ChildExtViewController {
     }
     
     /**
+     * Notifies the view controller that its view was added to a view hierarchy.
+     */
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        _data.clearData()
+        requestData(action: #selector(setData(_:)), isShowLoading: false)
+    }
+    
+    /**
      * Set data
      */
     override func setData(_ notification: Notification) {
@@ -63,11 +72,13 @@ class G01F02S01VC: ChildExtViewController {
     /**
      * Request data
      */
-    internal func requestData(action: Selector = #selector(setData(_:))) {
+    internal func requestData(action: Selector = #selector(setData(_:)),
+                              isShowLoading: Bool = true) {
         TreatmentListRequest.request(action: action,
                                      view: self,
                                      page: String(self._page),
-                                     id: self._id)
+                                     id: self._id,
+                                     isShowLoading: isShowLoading)
     }
     
     /**
@@ -129,6 +140,7 @@ class G01F02S01VC: ChildExtViewController {
     func openCreateTreatmentSchedule() -> Void {
         let view = G01F02S06VC(nibName: G01F02S06VC.theClassName,
                                bundle: nil)
+        view.setData(customerId: self._id)
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(
                 view, animated: true)
