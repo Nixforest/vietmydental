@@ -16,6 +16,8 @@ class TreatmentBean: ConfigBean {
     var end_date:               String              = DomainConst.BLANK
     /** Diagnosis */
     var diagnosis:              String              = DomainConst.BLANK
+    /** Status */
+    var status:                 String              = DomainConst.BLANK
     
     /**
      * Initializer
@@ -26,5 +28,6 @@ class TreatmentBean: ConfigBean {
         self.start_date = getString(json: jsonData, key: DomainConst.KEY_START_DATE)
         self.end_date = getString(json: jsonData, key: DomainConst.KEY_END_DATE)
         self.diagnosis = getString(json: jsonData, key: DomainConst.KEY_DIAGNOSIS)
+        self.status = getString(json: jsonData, key: DomainConst.KEY_STATUS)
     }
 }

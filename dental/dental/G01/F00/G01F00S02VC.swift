@@ -122,6 +122,14 @@ class G01F00S02VC: ChildExtViewController {
             controller.navigationController?.pushViewController(view,
                                                                 animated: true)
         }
+//        let view = G01F01S01ExtVC(nibName: G01F01S01ExtVC.theClassName,
+//                               bundle: nil)
+//        view.setId(id: self._id)
+//        view.createNavigationBar(title: title)
+//        if let controller = BaseViewController.getCurrentViewController() {
+//            controller.navigationController?.pushViewController(view,
+//                                                                animated: true)
+//        }
     }
     
     /**
@@ -248,8 +256,15 @@ extension G01F00S02VC: UITableViewDataSource {
             return UITableViewCell()
         }
         let data = self._data.data[indexPath.section]._dataExt[indexPath.row]
+        let imgMargin = GlobalConst.MARGIN * 2
         switch sectionId {
         case DomainConst.GROUP_MEDICAL_RECORD:
+            var imagePath = DomainConst.INFORMATION_IMG_NAME
+            if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                imagePath = img
+            }
+            let image = ImageManager.getImage(named: imagePath,
+                                              margin: imgMargin)
             switch data.id {
             case DomainConst.ITEM_NAME:                
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
@@ -257,9 +272,7 @@ extension G01F00S02VC: UITableViewDataSource {
                 cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.detailTextLabel?.text = data._dataStr
                 cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
-//                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
-//                cell.detailTextLabel?.numberOfLines = 0
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.image = image
                 cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             case DomainConst.ITEM_BIRTHDAY:                
@@ -268,14 +281,14 @@ extension G01F00S02VC: UITableViewDataSource {
                 cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.detailTextLabel?.text = data._dataStr
                 cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.image = image
                 cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             case DomainConst.ITEM_MEDICAL_HISTORY:                
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.textLabel?.text = data.name
                 cell.textLabel?.font = GlobalConst.BASE_FONT
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.image = image
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.accessoryType = .detailDisclosureButton
                 return cell
@@ -283,7 +296,7 @@ extension G01F00S02VC: UITableViewDataSource {
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.textLabel?.text = data.name
                 cell.textLabel?.font = GlobalConst.BASE_FONT
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.image = image
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.accessoryType = .disclosureIndicator
                 return cell
@@ -296,7 +309,8 @@ extension G01F00S02VC: UITableViewDataSource {
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.textLabel?.text = data.name
                 cell.textLabel?.font = GlobalConst.BASE_FONT
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                cell.imageView?.image = ImageManager.getImage(
+                    named: DomainConst.VMD_ADD1_ICON_IMG_NAME, margin: imgMargin)
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.accessoryType = .disclosureIndicator
                 return cell
@@ -307,7 +321,15 @@ extension G01F00S02VC: UITableViewDataSource {
                 cell.textLabel?.font = GlobalConst.BASE_FONT
                 cell.detailTextLabel?.text = data.name
                 cell.detailTextLabel?.font = GlobalConst.BASE_FONT
-                cell.imageView?.image = ImageManager.getImage(named: DomainConst.VERSION_TYPE_ICON_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+                var imgPath = DomainConst.BLANK
+                if treatment.status == DomainConst.TREATMENT_SCHEDULE_SCHEDULE {
+                    imgPath = DomainConst.VMD_STATUS_SCHEDULE_ICON_IMG_NAME
+                } else if treatment.status == DomainConst.TREATMENT_SCHEDULE_COMPLETED {
+                    imgPath = DomainConst.VMD_STATUS_TREATMENT_ICON_IMG_NAME
+                }
+                
+                cell.imageView?.image = ImageManager.getImage(
+                    named: imgPath, margin: imgMargin)
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.accessoryType = .disclosureIndicator
                 return cell

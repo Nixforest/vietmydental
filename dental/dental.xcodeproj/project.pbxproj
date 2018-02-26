@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		909E7F9920429A2C006745CE /* harpyframework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 909E7F9620429A07006745CE /* harpyframework.framework */; };
+		909E7F9A20429A2C006745CE /* harpyframework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 909E7F9620429A07006745CE /* harpyframework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CAB846C24394F5871EBDC0EB /* Pods_dental.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7ED4C39F2032FD07F14AA7 /* Pods_dental.framework */; };
 		D702C815203903CA0075D40B /* G01F02S04VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D702C813203903CA0075D40B /* G01F02S04VC.swift */; };
 		D702C816203903CA0075D40B /* G01F02S04VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D702C814203903CA0075D40B /* G01F02S04VC.xib */; };
@@ -75,8 +77,6 @@
 		D7C73AD720050787000B3CBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7C73AD520050787000B3CBC /* Main.storyboard */; };
 		D7C73AD920050787000B3CBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7C73AD820050787000B3CBC /* Assets.xcassets */; };
 		D7C73ADC20050787000B3CBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7C73ADA20050787000B3CBC /* LaunchScreen.storyboard */; };
-		D7C73AEC20051133000B3CBC /* harpyframework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7C73AE920051128000B3CBC /* harpyframework.framework */; };
-		D7C73AED20051133000B3CBC /* harpyframework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7C73AE920051128000B3CBC /* harpyframework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D7C73AF320051253000B3CBC /* BaseParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C73AF220051253000B3CBC /* BaseParentViewController.swift */; };
 		D7C73AF92005131C000B3CBC /* G00HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C73AF72005131C000B3CBC /* G00HomeVC.swift */; };
 		D7C73AFA2005131C000B3CBC /* G00HomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7C73AF82005131C000B3CBC /* G00HomeVC.xib */; };
@@ -96,10 +96,6 @@
 		D7E41401203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E41400203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift */; };
 		D7F4B117202B2A9700EC7AB5 /* G00ConfigVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F4B115202B2A9700EC7AB5 /* G00ConfigVC.swift */; };
 		D7F4B118202B2A9700EC7AB5 /* G00ConfigVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7F4B116202B2A9700EC7AB5 /* G00ConfigVC.xib */; };
-		D7F4B12D202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F4B12B202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.swift */; };
-		D7F4B12E202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7F4B12C202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.xib */; };
-		D7F4B1C4202B524F00EC7AB5 /* CommonObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F4B150202B524F00EC7AB5 /* CommonObjectView.swift */; };
-		D7F4B1C5202B524F00EC7AB5 /* CommonObjectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7F4B151202B524F00EC7AB5 /* CommonObjectView.xib */; };
 		D7F4B1C6202B524F00EC7AB5 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F4B153202B524F00EC7AB5 /* HUDView.swift */; };
 		D7F4B1C7202B524F00EC7AB5 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7F4B154202B524F00EC7AB5 /* HUDView.xib */; };
 		D7F4B1C8202B524F00EC7AB5 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F4B156202B524F00EC7AB5 /* NavigationView.swift */; };
@@ -210,23 +206,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D7C73AE820051128000B3CBC /* PBXContainerItemProxy */ = {
+		909E7F9520429A07006745CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */;
+			containerPortal = 909E7F9020429A07006745CE /* harpyframework.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D7BE044D1E0584D900D37740;
 			remoteInfo = harpyframework;
 		};
-		D7C73AEA20051128000B3CBC /* PBXContainerItemProxy */ = {
+		909E7F9720429A07006745CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */;
+			containerPortal = 909E7F9020429A07006745CE /* harpyframework.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D7BE04561E0584DA00D37740;
 			remoteInfo = harpyframeworkTests;
 		};
-		D7C73AEE20051133000B3CBC /* PBXContainerItemProxy */ = {
+		909E7F9B20429A2D006745CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */;
+			containerPortal = 909E7F9020429A07006745CE /* harpyframework.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D7BE044C1E0584D900D37740;
 			remoteInfo = harpyframework;
@@ -240,7 +236,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D7C73AED20051133000B3CBC /* harpyframework.framework in Embed Frameworks */,
+				909E7F9A20429A2C006745CE /* harpyframework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,6 +247,7 @@
 		0D7ED4C39F2032FD07F14AA7 /* Pods_dental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F37EADE40DAA51C3E99EE16 /* Pods-dental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dental.release.xcconfig"; path = "dental/Pods/Target Support Files/Pods-dental/Pods-dental.release.xcconfig"; sourceTree = "<group>"; };
 		8A1E31541A63C702C8C88F19 /* Pods-dental.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dental.debug.xcconfig"; path = "dental/Pods/Target Support Files/Pods-dental/Pods-dental.debug.xcconfig"; sourceTree = "<group>"; };
+		909E7F9020429A07006745CE /* harpyframework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = harpyframework.xcodeproj; path = ../../harpyframework_vietmy/harpyframework/harpyframework.xcodeproj; sourceTree = "<group>"; };
 		D702C813203903CA0075D40B /* G01F02S04VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F02S04VC.swift; path = G01/F02/G01F02S04VC.swift; sourceTree = "<group>"; };
 		D702C814203903CA0075D40B /* G01F02S04VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F02S04VC.xib; path = G01/F02/G01F02S04VC.xib; sourceTree = "<group>"; };
 		D702C818203904010075D40B /* G01F02S05VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F02S05VC.swift; path = G01/F02/G01F02S05VC.swift; sourceTree = "<group>"; };
@@ -321,7 +318,6 @@
 		D7C73AD820050787000B3CBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7C73ADB20050787000B3CBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7C73ADD20050787000B3CBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = harpyframework.xcodeproj; path = ../../harpyframeworkChangeMenu/harpyframework/harpyframework.xcodeproj; sourceTree = "<group>"; };
 		D7C73AF220051253000B3CBC /* BaseParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseParentViewController.swift; path = Common/BaseParentViewController.swift; sourceTree = "<group>"; };
 		D7C73AF72005131C000B3CBC /* G00HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G00HomeVC.swift; path = G00/G00HomeVC.swift; sourceTree = "<group>"; };
 		D7C73AF82005131C000B3CBC /* G00HomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G00HomeVC.xib; path = G00/G00HomeVC.xib; sourceTree = "<group>"; };
@@ -341,10 +337,6 @@
 		D7E41400203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TreatmentScheduleProcessUpdateRequest.swift; path = G01/API/TreatmentScheduleProcessUpdateRequest.swift; sourceTree = "<group>"; };
 		D7F4B115202B2A9700EC7AB5 /* G00ConfigVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G00ConfigVC.swift; path = G00/G00ConfigVC.swift; sourceTree = "<group>"; };
 		D7F4B116202B2A9700EC7AB5 /* G00ConfigVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G00ConfigVC.xib; path = G00/G00ConfigVC.xib; sourceTree = "<group>"; };
-		D7F4B12B202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerInfoTableViewCell.swift; path = G01/Custom/CustomerInfoCell/CustomerInfoTableViewCell.swift; sourceTree = "<group>"; };
-		D7F4B12C202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomerInfoTableViewCell.xib; path = G01/Custom/CustomerInfoCell/CustomerInfoTableViewCell.xib; sourceTree = "<group>"; };
-		D7F4B150202B524F00EC7AB5 /* CommonObjectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonObjectView.swift; sourceTree = "<group>"; };
-		D7F4B151202B524F00EC7AB5 /* CommonObjectView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonObjectView.xib; sourceTree = "<group>"; };
 		D7F4B153202B524F00EC7AB5 /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		D7F4B154202B524F00EC7AB5 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDView.xib; sourceTree = "<group>"; };
 		D7F4B156202B524F00EC7AB5 /* NavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
@@ -460,7 +452,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7C73AEC20051133000B3CBC /* harpyframework.framework in Frameworks */,
+				909E7F9920429A2C006745CE /* harpyframework.framework in Frameworks */,
 				CAB846C24394F5871EBDC0EB /* Pods_dental.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +467,15 @@
 				1F37EADE40DAA51C3E99EE16 /* Pods-dental.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		909E7F9120429A07006745CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				909E7F9620429A07006745CE /* harpyframework.framework */,
+				909E7F9820429A07006745CE /* harpyframeworkTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AED35F1128F3424FC1E1BDA4 /* Frameworks */ = {
@@ -548,7 +549,7 @@
 		D7C73AC520050786000B3CBC = {
 			isa = PBXGroup;
 			children = (
-				D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */,
+				909E7F9020429A07006745CE /* harpyframework.xcodeproj */,
 				D7C73AD020050787000B3CBC /* dental */,
 				D7C73ACF20050787000B3CBC /* Products */,
 				9077B657105C1131C4A2EDDD /* Pods */,
@@ -580,15 +581,6 @@
 				D7C73ADD20050787000B3CBC /* Info.plist */,
 			);
 			path = dental;
-			sourceTree = "<group>";
-		};
-		D7C73AE420051127000B3CBC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D7C73AE920051128000B3CBC /* harpyframework.framework */,
-				D7C73AEB20051128000B3CBC /* harpyframeworkTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D7C73AF12005122E000B3CBC /* Common */ = {
@@ -658,8 +650,6 @@
 			children = (
 				D7A2AC8A202B5C9D008C8580 /* CustomerInfoHeaderView.swift */,
 				D7A2AC8B202B5C9D008C8580 /* CustomerInfoHeaderView.xib */,
-				D7F4B12B202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.swift */,
-				D7F4B12C202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.xib */,
 				D7B43B372037739600F59945 /* SelectionVC.swift */,
 				D7B43B382037739600F59945 /* SelectionVC.xib */,
 			);
@@ -683,22 +673,12 @@
 		D7F4B14E202B524F00EC7AB5 /* CommonView */ = {
 			isa = PBXGroup;
 			children = (
-				D7F4B14F202B524F00EC7AB5 /* CommonObjectView */,
 				D7F4B152202B524F00EC7AB5 /* HUDView */,
 				D7F4B155202B524F00EC7AB5 /* NavigationView */,
 				D7F4B158202B524F00EC7AB5 /* SingleLineCell */,
 				D7F4B15B202B524F00EC7AB5 /* SubtitleCell */,
 			);
 			path = CommonView;
-			sourceTree = "<group>";
-		};
-		D7F4B14F202B524F00EC7AB5 /* CommonObjectView */ = {
-			isa = PBXGroup;
-			children = (
-				D7F4B150202B524F00EC7AB5 /* CommonObjectView.swift */,
-				D7F4B151202B524F00EC7AB5 /* CommonObjectView.xib */,
-			);
-			path = CommonObjectView;
 			sourceTree = "<group>";
 		};
 		D7F4B152202B524F00EC7AB5 /* HUDView */ = {
@@ -994,7 +974,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D7C73AEF20051133000B3CBC /* PBXTargetDependency */,
+				909E7F9C20429A2D006745CE /* PBXTargetDependency */,
 			);
 			name = dental;
 			productName = dental;
@@ -1031,8 +1011,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = D7C73AE420051127000B3CBC /* Products */;
-					ProjectRef = D7C73AE320051127000B3CBC /* harpyframework.xcodeproj */;
+					ProductGroup = 909E7F9120429A07006745CE /* Products */;
+					ProjectRef = 909E7F9020429A07006745CE /* harpyframework.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1043,18 +1023,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		D7C73AE920051128000B3CBC /* harpyframework.framework */ = {
+		909E7F9620429A07006745CE /* harpyframework.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = harpyframework.framework;
-			remoteRef = D7C73AE820051128000B3CBC /* PBXContainerItemProxy */;
+			remoteRef = 909E7F9520429A07006745CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D7C73AEB20051128000B3CBC /* harpyframeworkTests.xctest */ = {
+		909E7F9820429A07006745CE /* harpyframeworkTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = harpyframeworkTests.xctest;
-			remoteRef = D7C73AEA20051128000B3CBC /* PBXContainerItemProxy */;
+			remoteRef = 909E7F9720429A07006745CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1087,7 +1067,6 @@
 				D7F4B1FC202B524F00EC7AB5 /* GSelect.png in Resources */,
 				D7C73AD920050787000B3CBC /* Assets.xcassets in Resources */,
 				D7B43B3A2037739600F59945 /* SelectionVC.xib in Resources */,
-				D7F4B1C5202B524F00EC7AB5 /* CommonObjectView.xib in Resources */,
 				D7F4B205202B524F00EC7AB5 /* Panel.png in Resources */,
 				D7C92A3220397C5A002EF00D /* G01F00S03VC.xib in Resources */,
 				D7F4B1E9202B524F00EC7AB5 /* GClover.png in Resources */,
@@ -1103,7 +1082,6 @@
 				D7F4B211202B524F00EC7AB5 /* GreenInfoField.xib in Resources */,
 				D7F4B203202B524F00EC7AB5 /* InfoWarning.png in Resources */,
 				D7F4B1F0202B524F00EC7AB5 /* GHome.png in Resources */,
-				D7F4B12E202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.xib in Resources */,
 				D7F4B1E7202B524F00EC7AB5 /* GCancel.png in Resources */,
 				D7A2AC8D202B5C9D008C8580 /* CustomerInfoHeaderView.xib in Resources */,
 				D7B43B2A20368CE800F59945 /* G01F01S01VC.xib in Resources */,
@@ -1245,7 +1223,6 @@
 				D7F4B1D7202B524F00EC7AB5 /* GreenExtention+UITextView.swift in Sources */,
 				D7AAE67720388DE5001C3847 /* ListConfigBean.swift in Sources */,
 				D7C73AD220050787000B3CBC /* AppDelegate.swift in Sources */,
-				D7F4B1C4202B524F00EC7AB5 /* CommonObjectView.swift in Sources */,
 				D7F4B1E2202B524F00EC7AB5 /* DialogInfoView.swift in Sources */,
 				D7F4B1DA202B524F00EC7AB5 /* GCleanView.swift in Sources */,
 				D7FF1FC52024245700C2DF28 /* CustomerBean.swift in Sources */,
@@ -1305,7 +1282,6 @@
 				D7C73B0A20052C94000B3CBC /* LoginRespBean.swift in Sources */,
 				D7F4B1CE202B524F00EC7AB5 /* GreenExtension+String.swift in Sources */,
 				D7AAE679203890E0001C3847 /* TreatmentInfoRespBean.swift in Sources */,
-				D7F4B12D202B4FEA00EC7AB5 /* CustomerInfoTableViewCell.swift in Sources */,
 				D7B43B312036F74100F59945 /* G01F01S02VC.swift in Sources */,
 				D7FF1FBF2024228F00C2DF28 /* CustomerListRespBean.swift in Sources */,
 				D7F4B222202B524F00EC7AB5 /* MasterModel.swift in Sources */,
@@ -1325,10 +1301,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D7C73AEF20051133000B3CBC /* PBXTargetDependency */ = {
+		909E7F9C20429A2D006745CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = harpyframework;
-			targetProxy = D7C73AEE20051133000B3CBC /* PBXContainerItemProxy */;
+			targetProxy = 909E7F9B20429A2D006745CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

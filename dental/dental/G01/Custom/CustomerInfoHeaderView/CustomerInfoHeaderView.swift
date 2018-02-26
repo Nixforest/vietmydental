@@ -16,6 +16,8 @@ protocol CustomerInfoHeaderViewDelegate: class {
 
 class CustomerInfoHeaderView: GreenView {
 
+    @IBOutlet weak var btActionTrailing: NSLayoutConstraint!
+    @IBOutlet weak var lbHeaderLeading: NSLayoutConstraint!
     @IBOutlet weak var lbHeader: UILabel!
     @IBOutlet weak var btnAction: UIButton!
     
@@ -25,6 +27,11 @@ class CustomerInfoHeaderView: GreenView {
     
     override func initStyle() {
         self.backgroundColor = UIColor.white
+        if isIpad {
+            let scrW = UIScreen.main.bounds.width
+            lbHeaderLeading.constant = scrW/3
+            btActionTrailing.constant = scrW/3
+        }
     }
     
 //    func setHeader(object: MasterObject) {

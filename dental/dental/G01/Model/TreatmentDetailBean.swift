@@ -17,7 +17,7 @@ class TreatmentDetailBean: TreatmentBean {
     /** Note */
     var note:                   String              = DomainConst.BLANK
     /** Status */
-    var status:                 String              = DomainConst.BLANK
+//    var status:                 String              = DomainConst.BLANK
     /** Type */
     var type:                   String              = DomainConst.BLANK
     
@@ -30,7 +30,7 @@ class TreatmentDetailBean: TreatmentBean {
         self.teeth      = getString(json: jsonData, key: DomainConst.KEY_TEETH)
         self.treatment  = getString(json: jsonData, key: DomainConst.KEY_TREATMENT)
         self.note       = getString(json: jsonData, key: DomainConst.KEY_NOTE)
-        self.status     = getString(json: jsonData, key: DomainConst.KEY_STATUS)
+//        self.status     = getString(json: jsonData, key: DomainConst.KEY_STATUS)
         self.type       = getString(json: jsonData, key: DomainConst.KEY_TYPE)
     }
 }

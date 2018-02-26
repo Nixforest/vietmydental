@@ -243,6 +243,14 @@ class G01F01S01VC: ChildExtViewController {
 // MARK: Protocol - UITableViewDataSource
 extension G01F01S01VC: UITableViewDataSource {
     /**
+     * Asks the data source to return the number of sections in the table view.
+     * - returns: 1 section
+     */
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    /**
      * Tells the data source to return the number of rows in a given section of a table view.
      * - returns: List information count
      */
@@ -258,49 +266,45 @@ extension G01F01S01VC: UITableViewDataSource {
             return UITableViewCell()
         }
         let data = self._data.data[indexPath.row]
+        var imagePath = DomainConst.INFORMATION_IMG_NAME
+        if let img = DomainConst.VMD_IMG_LIST[data.id] {
+            imagePath = img
+        }
+        let image = ImageManager.getImage(named: imagePath,
+                                          margin: GlobalConst.MARGIN * 2)
         switch data.id {
         case DomainConst.ITEM_MEDICAL_HISTORY:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
             cell.textLabel?.text = data.name
             cell.textLabel?.font = GlobalConst.BASE_FONT
-            cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+            cell.imageView?.image = image
             cell.imageView?.contentMode = .scaleAspectFit
             cell.accessoryType = .detailDisclosureButton
             return cell
         case DomainConst.ITEM_ADDRESS:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
             cell.textLabel?.text = data.name
-            cell.textLabel?.font = GlobalConst.SMALL_FONT
-            cell.textLabel?.lineBreakMode = .byWordWrapping
-            cell.textLabel?.numberOfLines = 0
-            cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+            cell.textLabel?.font = GlobalConst.BASE_FONT
+            cell.imageView?.image = image
             cell.imageView?.contentMode = .scaleAspectFit
             return cell
         case DomainConst.ITEM_RECORD_NUMBER:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
             var value = data.name            
             if value.isEmpty {
-                value = "Bổ sung số bệnh án"
+                value = DomainConst.CONTENT00560
             }
             cell.textLabel?.text = value
             cell.textLabel?.textColor = UIColor.red
             cell.textLabel?.font = GlobalConst.BASE_FONT
-            cell.textLabel?.lineBreakMode = .byWordWrapping
-            cell.textLabel?.numberOfLines = 0
-            cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+            cell.imageView?.image = image
             cell.imageView?.contentMode = .scaleAspectFit
             return cell
         default:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
             cell.textLabel?.text = data.name
             cell.textLabel?.font = GlobalConst.BASE_FONT
-            cell.textLabel?.lineBreakMode = .byWordWrapping
-            cell.textLabel?.numberOfLines = 0
-            //        cell.detailTextLabel?.text = data._dataStr
-            //        cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
-            //                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
-            //                cell.detailTextLabel?.numberOfLines = 0
-            cell.imageView?.image = ImageManager.getImage(named: DomainConst.INFORMATION_IMG_NAME, margin: GlobalConst.MARGIN_CELL_X)
+            cell.imageView?.image = image
             cell.imageView?.contentMode = .scaleAspectFit
             return cell
         }
@@ -324,10 +328,12 @@ extension G01F01S01VC: UITableViewDelegate {
                 controller.navigationController?.pushViewController(view,
                                                                     animated: true)
             }
-            break
         case DomainConst.ITEM_RECORD_NUMBER:
             createInputAlert(id: data.id)
-            break
+        case DomainConst.ITEM_PHONE:
+            self.makeACall(phone: data.name)
+        case DomainConst.ITEM_ADDRESS:
+            showAlert(message: data.name, title: DomainConst.CONTENT00088)
         default: break
         }
     }
