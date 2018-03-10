@@ -36,6 +36,8 @@ class LoginBean: ConfigBean {
     var treatment:          ListConfigBean  = ListConfigBean()
     /** Teeth config */
     var teeth:              [ConfigBean]    = [ConfigBean]()
+    /** Timer config */
+    var timer:              [ConfigBean]    = [ConfigBean]()
     
     override public init() {
         super.init()
@@ -66,6 +68,8 @@ class LoginBean: ConfigBean {
         }
         // Teeth
         self.teeth.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_TEETH))
+        // Timer
+        self.timer.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_TIMER))
     }
     
     /**
@@ -169,5 +173,18 @@ class LoginBean: ConfigBean {
      */
     public func getUserId() -> String {
         return self.id
+    }
+    
+    /**
+     * Get timer config value
+     * - parameter id:          Id of config
+     */
+    public func getTimerConfig(id: String) -> String {
+        for item in self.timer {
+            if item.id == id {
+                return item.name
+            }
+        }
+        return DomainConst.BLANK
     }
 }

@@ -33,6 +33,9 @@ class G01F03S01VC: ChildExtViewController {
 
         // Do any additional setup after loading the view.
 //        self.createNavigationBar(title: DomainConst.CONTENT00554)
+        createRightNavigationItem(title: DomainConst.CONTENT00558,
+                                  action: #selector(handleFinish(_:)),
+                                  target: self)
         createInfoTableView()
         self.view.addSubview(_tblInfo)
     }
@@ -222,6 +225,38 @@ class G01F03S01VC: ChildExtViewController {
         }
     }
     
+    // MARK: Logic
+    /**
+     * Handle finish treatment schedule detail
+     */
+    internal func handleFinish(_ sender: AnyObject) {
+        showAlert(message: DomainConst.CONTENT00561,
+                  okHandler: {
+                    alert in
+                    // Request finish treatment schedule detail
+                    self.finishTreatmentScheduleDetail()
+        },
+                  cancelHandler: {
+                    alert in
+                    // Do nothing
+        })
+    }
+    
+    /**
+     * Request server finish treatment schedule detail
+     */
+    internal func finishTreatmentScheduleDetail() {
+        TreatmentScheduleDetailUpdateRequest.request(
+            action: #selector(finishUpdate(_:)),
+            view: self,
+            id: self._data.getData(id: DomainConst.ITEM_ID)._dataStr,
+            teeth_id: self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr,
+            diagnosis: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr,
+            treatment: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr,
+            status: DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED,
+            isShowLoading: false)
+    }
+    
     // MARK: Layout
     
     // MARK: Information table view
@@ -277,6 +312,12 @@ extension G01F03S01VC: UITableViewDataSource {
                 return UITableViewCell()
             }
             let data = self._data.getData()[indexPath.row]
+            var imagePath = DomainConst.INFORMATION_IMG_NAME
+            if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                imagePath = img
+            }
+            let image = ImageManager.getImage(named: imagePath,
+                                              margin: GlobalConst.MARGIN * 2)
             switch data.id {
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
@@ -295,6 +336,8 @@ extension G01F03S01VC: UITableViewDataSource {
                     cell.textLabel?.font = GlobalConst.BASE_FONT
                     cell.detailTextLabel?.text = data._dataStr
                     cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                    cell.imageView?.image = image
+                    cell.imageView?.contentMode = .scaleAspectFit
                 }
                 return cell
             case DomainConst.ITEM_END_DATE:
@@ -306,6 +349,8 @@ extension G01F03S01VC: UITableViewDataSource {
                     cell.textLabel?.font = GlobalConst.BASE_FONT
                     cell.detailTextLabel?.text = data._dataStr
                     cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                    cell.imageView?.image = image
+                    cell.imageView?.contentMode = .scaleAspectFit
                 }
                 return cell
             default:
@@ -320,6 +365,8 @@ extension G01F03S01VC: UITableViewDataSource {
                     cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
                     cell.detailTextLabel?.textColor = UIColor.red
                 }
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             }
         case 1:     // Section Treatment schedule process

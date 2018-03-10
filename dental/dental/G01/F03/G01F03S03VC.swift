@@ -236,6 +236,12 @@ extension G01F03S03VC: UITableViewDataSource {
                 return UITableViewCell()
             }
             let data = self._data.getData()[indexPath.row]
+            var imagePath = DomainConst.INFORMATION_IMG_NAME
+            if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                imagePath = img
+            }
+            let image = ImageManager.getImage(named: imagePath,
+                                              margin: GlobalConst.MARGIN * 2)
             switch data.id {
             case DomainConst.ITEM_ID,
                  DomainConst.ITEM_END_DATE,
@@ -262,6 +268,8 @@ extension G01F03S03VC: UITableViewDataSource {
                     cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
                     cell.detailTextLabel?.textColor = UIColor.red
                 }
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             }
         case 1:     // For future

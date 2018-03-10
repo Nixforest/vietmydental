@@ -198,6 +198,16 @@ extension G01F02S01VC: UITableViewDataSource {
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
         cell.detailTextLabel?.numberOfLines = 0
         cell.accessoryType = .disclosureIndicator
+        var imgPath = DomainConst.BLANK
+        let imgMargin = GlobalConst.MARGIN * 2
+        if treatment.status == DomainConst.TREATMENT_SCHEDULE_SCHEDULE {
+            imgPath = DomainConst.VMD_STATUS_SCHEDULE_ICON_IMG_NAME
+        } else if treatment.status == DomainConst.TREATMENT_SCHEDULE_COMPLETED {
+            imgPath = DomainConst.VMD_STATUS_TREATMENT_ICON_IMG_NAME
+        }
+        cell.imageView?.image = ImageManager.getImage(
+            named: imgPath, margin: imgMargin)
+        cell.imageView?.contentMode = .scaleAspectFit
         
         return cell
     }

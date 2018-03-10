@@ -138,9 +138,9 @@ extension G01F00S01VC: UITableViewDataSource {
         let data = self._data.getList()[indexPath.row]
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.textLabel?.text = data.name
-        cell.textLabel?.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
         cell.detailTextLabel?.text = data.address
-        cell.detailTextLabel?.font = GlobalConst.BASE_BOLD_FONT
+        cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
         cell.detailTextLabel?.numberOfLines = 0
         

@@ -57,9 +57,12 @@ class G01F02S06VC: ChildExtViewController {
      * - parameter customerId: Customer id
      */
     public func setData(customerId: String) {
+        self._data.setData(id: DomainConst.ITEM_TIME_ID,
+                           value: LoginBean.shared.timer[0].id,
+                           name: "Giờ hẹn")
         self._data.setData(id: DomainConst.ITEM_START_DATE,
                            value: "",
-                           name: "Thời gian")
+                           name: "Ngày hẹn")
         self._data.setData(id: DomainConst.ITEM_NOTE,
                            value: "",
                            name: "Hình thức")
@@ -82,7 +85,8 @@ class G01F02S06VC: ChildExtViewController {
             action: #selector(setData(_:)),
             view: self,
             customer_id: self._customerId,
-            time: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd hh:mm:ss"),
+            time: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr,
+            date: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd"),
             doctor_id: LoginBean.shared.getUserId(),
             type: self._data.getData(id: DomainConst.ITEM_TYPE)._dataStr,
             note: self._data.getData(id: DomainConst.ITEM_NOTE)._dataStr)
@@ -184,6 +188,17 @@ class G01F02S06VC: ChildExtViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    internal func createSelectScreenTimer(title: String) {
+        let view = G01F02S04VC(nibName: G01F02S04VC.theClassName, bundle: nil)
+        view.createNavigationBar(title: title)
+        view.setData(data: LoginBean.shared.timer,
+                     selectedValue: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
+    }
+    
     // MARK: Layout
     
     // MARK: Information table view
@@ -230,6 +245,12 @@ extension G01F02S06VC: UITableViewDataSource {
                 return UITableViewCell()
             }
             let data = self._data.getData()[indexPath.row]
+            var imagePath = DomainConst.INFORMATION_IMG_NAME
+            if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                imagePath = img
+            }
+            let image = ImageManager.getImage(named: imagePath,
+                                              margin: GlobalConst.MARGIN * 2)
             switch data.id {
             case DomainConst.ITEM_ID,
                  DomainConst.ITEM_END_DATE,
@@ -254,6 +275,8 @@ extension G01F02S06VC: UITableViewDataSource {
                     cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
                     cell.detailTextLabel?.textColor = UIColor.red
                 }
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             }
         case 1:     // For future
@@ -285,6 +308,8 @@ extension G01F02S06VC: UITableViewDelegate {
                  DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_DOCTOR:
                 return
+            case DomainConst.ITEM_TIME_ID:
+                createSelectScreenTimer(title: data.name)
             default:
                 break
             }
