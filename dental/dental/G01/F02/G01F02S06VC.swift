@@ -19,6 +19,8 @@ class G01F02S06VC: ChildExtViewController {
     var _tblInfo:           UITableView             = UITableView()
     /** Date */
     var _date:              Date                    = Date()
+    /** Time */
+    var _time:              String                  = DomainConst.BLANK
     
     // MARK: Static values
     // MARK: Constant    
@@ -40,6 +42,31 @@ class G01F02S06VC: ChildExtViewController {
     }
     
     /**
+     * Notifies the view controller that its view was added to a view hierarchy.
+     */
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Check if table view has selected item
+        if let selectedIndex = _tblInfo.indexPathForSelectedRow, selectedIndex.section == 0 {
+            // Get selected model
+            let data = self._data.getData()[selectedIndex.row]
+            switch data.id {
+            case DomainConst.ITEM_TIME_ID:
+                // Check temp value is not empty
+                if !BaseModel.shared.sharedString.isEmpty {
+                    self._time = BaseModel.shared.sharedString
+                    self._data.setData(id: data.id, value: LoginBean.shared.getTimerConfig(id: self._time))
+                    _tblInfo.reloadData()
+                }
+            default:
+                break
+            }
+        }
+        
+        BaseModel.shared.sharedString = DomainConst.BLANK
+    }
+    
+    /**
      * Set data
      */
     override func setData(_ notification: Notification) {
@@ -58,17 +85,17 @@ class G01F02S06VC: ChildExtViewController {
      */
     public func setData(customerId: String) {
         self._data.setData(id: DomainConst.ITEM_TIME_ID,
-                           value: LoginBean.shared.timer[0].id,
-                           name: "Giờ hẹn")
+                           value: "",
+                           name: DomainConst.CONTENT00562)
         self._data.setData(id: DomainConst.ITEM_START_DATE,
                            value: "",
-                           name: "Ngày hẹn")
+                           name: DomainConst.CONTENT00563)
         self._data.setData(id: DomainConst.ITEM_NOTE,
                            value: "",
-                           name: "Hình thức")
+                           name: DomainConst.CONTENT00564)
         self._data.setData(id: DomainConst.ITEM_TYPE,
                            value: "",
-                           name: "Chi tiết công việc")
+                           name: DomainConst.CONTENT00565)
         self._customerId = customerId
     }
     
@@ -85,7 +112,7 @@ class G01F02S06VC: ChildExtViewController {
             action: #selector(setData(_:)),
             view: self,
             customer_id: self._customerId,
-            time: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr,
+            time: self._time,
             date: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd"),
             doctor_id: LoginBean.shared.getUserId(),
             type: self._data.getData(id: DomainConst.ITEM_TYPE)._dataStr,
