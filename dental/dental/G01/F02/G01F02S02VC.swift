@@ -186,7 +186,7 @@ class G01F02S02VC: ChildExtViewController {
     public func createSelectScreenDiagnosis(title: String) {
         let view = G01F02S03VC(nibName: G01F02S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
-        view.setData(data: LoginBean.shared.diagnosis,
+        view.setData(data: LoginBean.shared.getDiagnosisConfigs(),
                      selectedValue: self._data.data.getData(
                         id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr)
         if let controller = BaseViewController.getCurrentViewController() {

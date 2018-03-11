@@ -113,7 +113,7 @@ class G01F02S06VC: ChildExtViewController {
             view: self,
             customer_id: self._customerId,
             time: self._time,
-            date: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd"),
+            date: CommonProcess.getDateString(date: self._date, format: DomainConst.DATE_TIME_FORMAT_2),
             doctor_id: LoginBean.shared.getUserId(),
             type: self._data.getData(id: DomainConst.ITEM_TYPE)._dataStr,
             note: self._data.getData(id: DomainConst.ITEM_NOTE)._dataStr)
@@ -136,12 +136,14 @@ class G01F02S06VC: ChildExtViewController {
         self._tblInfo.reloadData()
         let alert = UIAlertController(style: .actionSheet,
                                       title: DomainConst.CONTENT00559)
-        alert.addDatePicker(mode: .dateAndTime, date: date,
+        alert.addDatePicker(mode: .date, date: date,
                             minimumDate: nil, maximumDate: nil,
                             action: {date in
                                 self._date = date
-                                self._data.setData(id: DomainConst.ITEM_START_DATE,
-                                                   value: date.dateTimeString())
+                                self._data.setData(
+                                    id: DomainConst.ITEM_START_DATE,
+//                                  value: date.dateTimeString())
+                                    value: CommonProcess.getDateString(date: date, format: DomainConst.DATE_TIME_FORMAT_1))
                                 self._tblInfo.reloadData()
         })
         let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
@@ -215,11 +217,15 @@ class G01F02S06VC: ChildExtViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    /**
+     * Handle create select time screen
+     * - parameter title: Title of screen
+     */
     internal func createSelectScreenTimer(title: String) {
         let view = G01F02S04VC(nibName: G01F02S04VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
         view.setData(data: LoginBean.shared.timer,
-                     selectedValue: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr)
+                     selectedValue: self._time)
         if let controller = BaseViewController.getCurrentViewController() {
             controller.navigationController?.pushViewController(view,
                                                                 animated: true)

@@ -13,21 +13,24 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
     /**
      * Set data content
      * - parameter id:              Treatment schedule id
-     * - parameter time:            Schedule time
+     * - parameter time:            Time
+     * - parameter date:            Date
      * - parameter teeth_id:        Teeth id
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
      */
     func setData(id: String,
                  time: String,
+                 date: String,
                  teeth_id: String,
                  diagnosis: String,
                  treatment: String) {
         self.data = "q=" + String.init(
-            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
+            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
             DomainConst.KEY_TOKEN,              BaseModel.shared.getUserToken(),
             DomainConst.KEY_SCHEDULE_ID,        id,
             DomainConst.KEY_TIME,               time,
+            DomainConst.KEY_DATE,               date,
             DomainConst.KEY_TEETH_ID,           teeth_id,
             DomainConst.KEY_DIAGNOSIS_ID,       diagnosis,
             DomainConst.KEY_TREATMENT_TYPE_ID,  treatment,
@@ -40,7 +43,8 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
      * - parameter action:          Action execute when finish this task
      * - parameter view:            Current view
      * - parameter id:              Treatment schedule id
-     * - parameter time:            Schedule time
+     * - parameter time:            Time
+     * - parameter date:            Date
      * - parameter teeth_id:        Teeth id
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
@@ -49,6 +53,7 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
     public static func request(action: Selector, view: BaseViewController,
                                id: String,
                                time: String,
+                               date: String,
                                teeth_id: String,
                                diagnosis: String,
                                treatment: String,
@@ -59,6 +64,7 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
             view: view)
         request.setData(id: id,
                         time: time,
+                        date: date,
                         teeth_id: teeth_id,
                         diagnosis: diagnosis,
                         treatment: treatment)
