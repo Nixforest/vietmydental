@@ -65,3 +65,4 @@ class CustomerListRespBean: BaseRespModel {
         self.data._list.removeAll()
     }
 }
+

@@ -35,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         slide.delegate = firstVC
         self.window?.rootViewController = slide
         self.window?.makeKeyAndVisible()
+        
+        setStatusBarTextLightColor()
+        
         return true
     }
 
@@ -99,5 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    //MARK: - Status bar Text
+    func setStatusBarTextLightColor() {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    func setStatusBarTextDarkColor() {
+        UIApplication.shared.statusBarStyle = .default
+    }
 }
 

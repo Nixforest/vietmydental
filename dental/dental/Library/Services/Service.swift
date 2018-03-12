@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-
+import harpyframework
 
 class APIResponse: MasterModel {
     var status = 0
@@ -20,17 +20,112 @@ class APIResponse: MasterModel {
 }
 
 let  serviceInstance = Service.sharedInstance()
-
 class Service: NSObject {
-    
+
     static var instance: Service!
-    
+
     class func sharedInstance() -> Service {
         if(self.instance == nil) {
             self.instance = (self.instance ?? Service())
         }
         return self.instance
     }
+
+    private func processReponse(response: DataResponse<Any>) -> APIResponse {
+        if(response.result.isSuccess) {
+            let resp = APIResponse.init(dictionary: response.result.value as! NSDictionary)
+            if resp.data == nil {
+                resp.Error = true
+            } else {
+                resp.Error = false
+            }
+            return resp
+        } else {
+            return APIResponse.init()
+        }
+    }
+
+
+    private func getStringParam(parameter: Dictionary <String, AnyObject>) -> String {
+        var output = ""
+        for  (k,v) in  parameter {
+            output = output + "\"\(k)\": \"\(v)\","
+        }
+        output = "q={\(output) \"platform\":\"0\", \"token\": \"\(serviceConfig.token)\"}"
+        output = output.replacingOccurrences(of: "\"(", with: "[")
+        output = output.replacingOccurrences(of: ")\"", with: "]")
+        return output
+    }
+
+    func request(api: APIFunctions, method: HTTPMethod, parameter: Dictionary<String, AnyObject>, success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
+
+        let strParam = getStringParam(parameter: parameter)
+        var strURL = ""
+        strURL = serviceConfig.url.appending(api.rawValue)
+
+        print("=======request")
+        print(strURL)
+        print(strParam)
+
+        let serverUrl: URL = URL.init(string: strURL)!
+        var request = URLRequest(url: serverUrl)
+        request.httpMethod = method.rawValue
+        request.timeoutInterval = TimeInterval(30)
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        request.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
+        request.httpBody = strParam.data(using: String.Encoding.utf8)
+
+        Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
+            print("===========response")
+            print(response as Any)
+            let apiResponse = self.processReponse(response: response)
+            if (apiResponse.Error == false) {
+                success(apiResponse)
+            }
+            else {
+                failure(apiResponse)
+            }
+        }
+    }
+
+
+}
+
+
+extension BaseRequest {
+    func request(success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
+        
+        let strParam = self.data
+        var strURL = ""
+        strURL = self.url
+        
+        print("=======request")
+        print(strURL)
+        print(strParam)
+        
+        let serverUrl: URL = URL.init(string: strURL)!
+        var request = URLRequest(url: serverUrl)
+        request.httpMethod = self.reqMethod
+        request.timeoutInterval = TimeInterval(30)
+        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        request.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
+        request.httpBody = strParam.data(using: String.Encoding.utf8)
+        
+        
+        Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
+            print("===========response")
+            print(response as Any)
+            let apiResponse = self.processReponse(response: response)
+            if (apiResponse.Error == false) {
+                success(apiResponse)
+            }
+            else {
+                failure(apiResponse)
+            }
+        }
+        
+    }
+    
     
     private func processReponse(response: DataResponse<Any>) -> APIResponse {
         if(response.result.isSuccess) {
@@ -52,40 +147,11 @@ class Service: NSObject {
         for  (k,v) in  parameter {
             output = output + "\"\(k)\": \"\(v)\","
         }
-        output = "q={\(output) \"platform\":\"0\", \"token\": \"\(serviceConfig.token)\"}"
+        output = "q={\(output) \"platform\":\"0\", \"token\": \"\(BaseModel.shared.getUserToken())\"}"
         output = output.replacingOccurrences(of: "\"(", with: "[")
         output = output.replacingOccurrences(of: ")\"", with: "]")
         return output
     }
-    
-    func request(api: APIFunctions, method: HTTPMethod, parameter: Dictionary<String, AnyObject>, success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
-        
-        let strParam = getStringParam(parameter: parameter)
-        var strURL = ""
-        strURL = serviceConfig.url.appending(api.rawValue)
-        
-        print("=======request")
-        print(strURL)
-        print(strParam)
-        
-        let serverUrl: URL = URL.init(string: strURL)!
-        var request = URLRequest(url: serverUrl)
-        request.httpMethod = method.rawValue
-        request.timeoutInterval = TimeInterval(30)
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
-        request.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
-        request.httpBody = strParam.data(using: String.Encoding.utf8)
-        
-        Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
-            print("===========response")
-            print(response as Any)
-            let apiResponse = self.processReponse(response: response)
-            if (apiResponse.Error == false) {
-                success(apiResponse)
-            }
-            else {
-                failure(apiResponse)
-            }
-        }
-    }
 }
+
+
