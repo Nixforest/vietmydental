@@ -82,4 +82,18 @@ class ConfigExtBean: ConfigBean {
         
         // MARK: To do - Copy array
     }
+    
+    /**
+     * Get data by id
+     * - parameter id: Id of item
+     * - returns: Value of item
+     */
+    public func getData(id: String) -> String {
+        for item in self._dataExt {
+            if item.id == id {
+                return item._dataStr
+            }
+        }
+        return DomainConst.BLANK
+    }
 }

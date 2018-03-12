@@ -43,8 +43,6 @@ class G01F02S03VC: SelectionVC {
             cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
             cell.detailTextLabel?.text = arrData[2]
             cell.detailTextLabel?.font = GlobalConst.BASE_FONT
-//            cell.textLabel?.lineBreakMode = .byWordWrapping
-//            cell.textLabel?.numberOfLines = 0
             if !_selectedArray.isEmpty {
                 for item in _selectedArray {
                     if data.id == item.id {

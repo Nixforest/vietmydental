@@ -119,6 +119,22 @@ class LoginBean: ConfigBean {
     }
     
     /**
+     * Get diagnosis configs
+     * - returns: List config bean
+     */
+    public func getDiagnosisConfigs() -> [ConfigBean] {
+        var retVal = [ConfigBean]()
+        for item in self.diagnosis {
+            if !item.data.isEmpty {
+                for child in item.data {
+                    retVal.append(child)
+                }
+            }
+        }
+        return retVal
+    }
+    
+    /**
      * Get diagnosis config value
      * - parameter id:          Id of config
      */
@@ -126,6 +142,15 @@ class LoginBean: ConfigBean {
         for item in self.diagnosis {
             if item.id == id {
                 return item.name
+            } else {
+                // Find in children list
+                for child in item.data {
+                    if child.id == id {
+                        let arrData = child.name.components(separatedBy: " - ")
+                        
+                        return arrData[0] + " - " + arrData[1]
+                    }
+                }
             }
         }
         return DomainConst.BLANK

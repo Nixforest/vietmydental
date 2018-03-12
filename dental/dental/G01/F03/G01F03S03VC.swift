@@ -48,9 +48,9 @@ class G01F03S03VC: ChildExtViewController {
         if let selectedIndex = _tblInfo.indexPathForSelectedRow, selectedIndex.section == 0 {
             // Get selected model
             let data = self._data.getData()[selectedIndex.row]
+            let id = BaseModel.shared.sharedString
             switch data.id {
             case DomainConst.ITEM_DIAGNOSIS:
-                let id = BaseModel.shared.sharedString
                 if !id.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_DIAGNOSIS_ID, value: id)
                     self._data.setData(id: DomainConst.ITEM_DIAGNOSIS,
@@ -58,7 +58,6 @@ class G01F03S03VC: ChildExtViewController {
                     _tblInfo.reloadData()
                 }
             case DomainConst.ITEM_TEETH:
-                let id = BaseModel.shared.sharedString
                 if !id.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_TEETH_ID, value: id)
                     self._data.setData(id: DomainConst.ITEM_TEETH,
@@ -66,11 +65,17 @@ class G01F03S03VC: ChildExtViewController {
                     _tblInfo.reloadData()
                 }
             case DomainConst.ITEM_TREATMENT:
-                let id = BaseModel.shared.sharedString
                 if !id.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_TREATMENT_TYPE_ID, value: id)
                     self._data.setData(id: DomainConst.ITEM_TREATMENT,
                                        value: LoginBean.shared.getTreatmentConfig(id: id))
+                    _tblInfo.reloadData()
+                }
+            case DomainConst.ITEM_TIME:
+                // Check temp value is not empty
+                if !id.isEmpty {
+                    self._data.setData(id: DomainConst.ITEM_TIME_ID, value: id)
+                    self._data.setData(id: data.id, value: LoginBean.shared.getTimerConfig(id: id))
                     _tblInfo.reloadData()
                 }
             default:
@@ -100,8 +105,24 @@ class G01F03S03VC: ChildExtViewController {
      * - parameter scheduleId: Treatment schedule id
      */
     public func setData(bean: [ConfigExtBean], scheduleId: String) {
+//    public func setData(scheduleId: String) {
         self._data.setData(data: bean)
         self._scheduleId = scheduleId
+//        self._data.setData(id: DomainConst.ITEM_TIME_ID,
+//                           value: "",
+//                           name: DomainConst.CONTENT00562)
+//        self._data.setData(id: DomainConst.ITEM_START_DATE,
+//                           value: "",
+//                           name: DomainConst.CONTENT00563)
+//        self._data.setData(id: DomainConst.ITEM_TEETH_ID,
+//                           value: "",
+//                           name: DomainConst.CONTENT00566)
+//        self._data.setData(id: DomainConst.ITEM_DIAGNOSIS_ID,
+//                           value: "",
+//                           name: DomainConst.CONTENT00567)
+//        self._data.setData(id: DomainConst.ITEM_TREATMENT_TYPE_ID,
+//                           value: "",
+//                           name: DomainConst.CONTENT00568)
     }
     
     public func resetData() {
@@ -117,7 +138,8 @@ class G01F03S03VC: ChildExtViewController {
             action: #selector(setData(_:)),
             view: self,
             id: self._scheduleId,
-            time: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd hh:mm:ss"),
+            time: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr,
+            date: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd"),
             teeth_id: self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr,
             diagnosis: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr,
             treatment: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr,
@@ -141,12 +163,14 @@ class G01F03S03VC: ChildExtViewController {
         self._tblInfo.reloadData()
         let alert = UIAlertController(style: .actionSheet,
                                       title: DomainConst.CONTENT00559)
-        alert.addDatePicker(mode: .dateAndTime, date: date,
+        alert.addDatePicker(mode: .date, date: date,
                             minimumDate: nil, maximumDate: nil,
                             action: {date in
                                 self._date = date
-                                self._data.setData(id: DomainConst.ITEM_START_DATE,
-                                                   value: date.dateTimeString())
+                                self._data.setData(
+                                    id: DomainConst.ITEM_START_DATE,
+//                                    value: date.dateTimeString())
+                                    value: CommonProcess.getDateString(date: date, format: DomainConst.DATE_TIME_FORMAT_1))
                                 self._tblInfo.reloadData()
         })
         let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
@@ -173,7 +197,7 @@ class G01F03S03VC: ChildExtViewController {
     public func inputDiagnosis() {
         let view = G01F02S03VC(nibName: G01F02S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS).name)
-        view.setData(data: LoginBean.shared.diagnosis,
+        view.setData(data: LoginBean.shared.getDiagnosisConfigs(),
                      selectedValue: self._data.getData(
                         id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr)
         self.push(view, animated: true)
@@ -188,6 +212,21 @@ class G01F03S03VC: ChildExtViewController {
         view.setDataExt(data: LoginBean.shared.treatment,
                         selectedValue: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)
         self.push(view, animated: true)
+    }
+    
+    /**
+     * Handle create select time screen
+     * - parameter title: Title of screen
+     */
+    internal func createSelectScreenTimer(title: String) {
+        let view = G01F02S04VC(nibName: G01F02S04VC.theClassName, bundle: nil)
+        view.createNavigationBar(title: title)
+        view.setData(data: LoginBean.shared.timer,
+                     selectedValue: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr)
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view,
+                                                                animated: true)
+        }
     }
     
     // MARK: Layout
@@ -252,6 +291,7 @@ extension G01F03S03VC: UITableViewDataSource {
                  DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
@@ -304,6 +344,8 @@ extension G01F03S03VC: UITableViewDelegate {
                  DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_ID, DomainConst.ITEM_DOCTOR:
                 return
+            case DomainConst.ITEM_TIME:
+                createSelectScreenTimer(title: data.name)
             default:
                 break
             }
@@ -330,6 +372,7 @@ extension G01F03S03VC: UITableViewDelegate {
                  DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_DETAILS:
                 return 0
             default:

@@ -129,7 +129,7 @@ class G01F03S01VC: ChildExtViewController {
     public func createSelectScreenDiagnosis(title: String) {
         let view = G01F02S03VC(nibName: G01F02S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
-        view.setData(data: LoginBean.shared.diagnosis,
+        view.setData(data: LoginBean.shared.getDiagnosisConfigs(),
                      selectedValue: self._data.getData(
                         id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr)
         self.push(view, animated: true)
@@ -319,10 +319,15 @@ extension G01F03S01VC: UITableViewDataSource {
             let image = ImageManager.getImage(named: imagePath,
                                               margin: GlobalConst.MARGIN * 2)
             switch data.id {
-            case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
-                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
-                 DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
-                 DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
+            case DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_STATUS,
+                 DomainConst.ITEM_DIAGNOSIS_ID,
+                 DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_ID,
+                 DomainConst.ITEM_START_DATE,
+                 DomainConst.ITEM_TREATMENT_TYPE_ID,
+                 DomainConst.ITEM_TIME_ID,
+                 DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
@@ -436,10 +441,15 @@ extension G01F03S01VC: UITableViewDelegate {
         case 0:
             let data = self._data.getData()[indexPath.row]
             switch data.id {
-            case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
-                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_TEETH_ID,
-                 DomainConst.ITEM_ID, DomainConst.ITEM_START_DATE,
-                 DomainConst.ITEM_TREATMENT_TYPE_ID, DomainConst.ITEM_DETAILS:
+            case DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_STATUS,
+                 DomainConst.ITEM_DIAGNOSIS_ID,
+                 DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_ID,
+                 DomainConst.ITEM_START_DATE,
+                 DomainConst.ITEM_TREATMENT_TYPE_ID,
+                 DomainConst.ITEM_TIME_ID,
+                 DomainConst.ITEM_DETAILS:
                 return 0
             case DomainConst.ITEM_END_DATE:
                 if self.isCompleted() {

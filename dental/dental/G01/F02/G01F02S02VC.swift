@@ -186,7 +186,7 @@ class G01F02S02VC: ChildExtViewController {
     public func createSelectScreenDiagnosis(title: String) {
         let view = G01F02S03VC(nibName: G01F02S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
-        view.setData(data: LoginBean.shared.diagnosis,
+        view.setData(data: LoginBean.shared.getDiagnosisConfigs(),
                      selectedValue: self._data.data.getData(
                         id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr)
         if let controller = BaseViewController.getCurrentViewController() {
@@ -399,16 +399,28 @@ extension G01F02S02VC: UITableViewDataSource {
             }
         case 1:     // Section Treatment schedule detail
             let data = getData(id: DomainConst.ITEM_DETAILS)._dataExt[indexPath.row]
-            let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "- " + data.id
+            let status = data.getData(id: DomainConst.ITEM_STATUS)
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+            cell.textLabel?.text = data.id
             cell.textLabel?.font = GlobalConst.BASE_FONT
             cell.detailTextLabel?.text = data.name
-            cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+            cell.detailTextLabel?.font = GlobalConst.BASE_BOLD_FONT
             if data.name.isEmpty && self.canUpdate() {
                 cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
                 cell.detailTextLabel?.textColor = UIColor.red
             }
             cell.accessoryType = .disclosureIndicator
+            var imgPath = DomainConst.BLANK
+            let imgMargin = GlobalConst.MARGIN * 2
+            if status == DomainConst.TREATMENT_SCHEDULE_DETAIL_SCHEDULE
+                || status == DomainConst.TREATMENT_SCHEDULE_DETAIL_ACTIVE {
+                imgPath = DomainConst.VMD_STATUS_SCHEDULE_ICON_IMG_NAME
+            } else if status == DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED {
+                imgPath = DomainConst.VMD_STATUS_TREATMENT_ICON_IMG_NAME
+            }
+            cell.imageView?.image = ImageManager.getImage(
+                named: imgPath, margin: imgMargin)
+            cell.imageView?.contentMode = .scaleAspectFit
             return cell
         default:
             break
