@@ -15,14 +15,18 @@ class G01F03S01VC: ChildExtViewController {
     var _treatmentId:                String                  = DomainConst.BLANK
     /** Data */
     var _data:              ListConfigBean          = ListConfigBean()
-    /** Information table view */
-    var _tblInfo:           UITableView             = UITableView()
     /** Create process flag */
     var _flagCreate:        Bool                    = false
-    
+    /** constrain height footer view */
+    @IBOutlet weak var heightFooter: NSLayoutConstraint!
+    /** Information table view */
+    @IBOutlet weak var _tblInfo: UITableView!
     // MARK: Static values
     // MARK: Constant
+    let FOOTER_HEIGHT:      CGFloat                 = 40.0
     var HEADER_HEIGHT:      CGFloat = GlobalConst.LABEL_H * 2
+    
+    var footer: UIView!
     
     // MARK: Override methods
     /**
@@ -33,11 +37,9 @@ class G01F03S01VC: ChildExtViewController {
 
         // Do any additional setup after loading the view.
 //        self.createNavigationBar(title: DomainConst.CONTENT00554)
-        createRightNavigationItem(title: DomainConst.CONTENT00558,
-                                  action: #selector(handleFinish(_:)),
-                                  target: self)
-        createInfoTableView()
-        self.view.addSubview(_tblInfo)
+        _tblInfo.dataSource = self
+        _tblInfo.delegate = self
+        showFooter(isShow: !canUpdate())
     }
     
     /**
@@ -45,6 +47,12 @@ class G01F03S01VC: ChildExtViewController {
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        //check show button finish
+        if canShowBtnFinish() {
+            showBtnFinish()
+        }
+        
         // Check if table view has selected item
         if let selectedIndex = _tblInfo.indexPathForSelectedRow, selectedIndex.section == 0 {
             // Get selected model
@@ -94,33 +102,9 @@ class G01F03S01VC: ChildExtViewController {
     public func setData(bean: [ConfigExtBean], treatmentId: String) {
         self._data.setData(data: bean)
         self._treatmentId = treatmentId
+//        showFooter(isShow: !self.canUpdate())
     }
     
-    /**
-     * Check if current treatment schedule is in completed status
-     * - returns: True if value of status item is Completed, False otherwise
-     */
-    internal func isCompleted() -> Bool {
-        return (self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr
-            == DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED)
-    }
-    
-    /**
-     * Check if current treatment schedule is in schedule status
-     * - returns: True if value of status item is Schedule, False otherwise
-     */
-    internal func isSchedule() -> Bool {
-        return (self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr
-            == DomainConst.TREATMENT_SCHEDULE_DETAIL_SCHEDULE)
-    }
-    
-    /**
-     * Check if current treatment schedule can update data
-     * - returns: True if value of can_update item is 1, False otherwise
-     */
-    internal func canUpdate() -> Bool {
-        return self._data.getData(id: DomainConst.ITEM_CAN_UPDATE)._dataStr.isON()
-    }
     
     /**
      * Handle select diagnosis
@@ -178,8 +162,13 @@ class G01F03S01VC: ChildExtViewController {
         if model.isSuccess() {
             self.setData(bean: model.data.getData(), treatmentId: self._treatmentId)
             _tblInfo.reloadData()
+            self.showFooter(isShow: !self.canUpdate())
+            if self.isCompleted() {
+                self.openReceipt()
+            }
         }
     }
+    
     
     /**
      * Handle show treatment schedule process
@@ -226,6 +215,54 @@ class G01F03S01VC: ChildExtViewController {
     }
     
     // MARK: Logic
+    func canShowBtnFinish() -> Bool {
+        for item in self._data._data {
+            switch item.id {
+            case DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_DIAGNOSIS_ID,
+                 DomainConst.ITEM_TREATMENT_TYPE_ID:
+                if item.name.isBlank {
+                    return false
+                }
+            default:
+                break
+            }
+        }
+        if !canUpdate() {
+            return false
+        }
+        return true
+    }
+    func showBtnFinish() {
+        createRightNavigationItem(title: DomainConst.CONTENT00558,
+                                  action: #selector(handleFinish(_:)),
+                                  target: self)
+    }
+    /**
+     * Check if current treatment schedule is in completed status
+     * - returns: True if value of status item is Completed, False otherwise
+     */
+    internal func isCompleted() -> Bool {
+        return (self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr
+            == DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED)
+    }
+    
+    /**
+     * Check if current treatment schedule is in schedule status
+     * - returns: True if value of status item is Schedule, False otherwise
+     */
+    internal func isSchedule() -> Bool {
+        return (self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr
+            == DomainConst.TREATMENT_SCHEDULE_DETAIL_SCHEDULE)
+    }
+    
+    /**
+     * Check if current treatment schedule can update data
+     * - returns: True if value of can_update item is 1, False otherwise
+     */
+    internal func canUpdate() -> Bool {
+        return self._data.getData(id: DomainConst.ITEM_CAN_UPDATE)._dataStr.isON()
+    }
     /**
      * Handle finish treatment schedule detail
      */
@@ -259,14 +296,29 @@ class G01F03S01VC: ChildExtViewController {
     
     // MARK: Layout
     
-    // MARK: Information table view
-    private func createInfoTableView() {
-        _tblInfo.frame = CGRect(
-            x: 0, y: 0,
-            width: UIScreen.main.bounds.width,
-            height: UIScreen.main.bounds.height)
-        _tblInfo.dataSource = self
-        _tblInfo.delegate = self
+    
+    /**
+     * Show/hide footer view base on flag
+     * - parameter isShow: Flag show/hide footer view
+     */
+    private func showFooter(isShow: Bool) {
+        if isShow {
+            heightFooter.constant = FOOTER_HEIGHT
+            self.view.layoutIfNeeded()
+        } else {
+            heightFooter.constant = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    private func openReceipt() {
+        let vc = G01F03S04ViewController()
+        vc.amount = LoginBean.shared.getTreatmentConfig(id: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)._dataStr
+        vc.detailID = self._data.getData(id: DomainConst.ITEM_ID)._dataStr
+        vc.createNavigationBar(title: "Thanh toán")
+        self.push(vc, animated: true)
+    }
+    @IBAction func btnPayAction(_ sender: Any) {
+        openReceipt()
     }
 }
 

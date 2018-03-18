@@ -160,15 +160,15 @@ class LoginBean: ConfigBean {
      * Get treatment config value
      * - parameter id: Id of config
      */
-    public func getTreatmentConfig(id: String) -> String {
+    public func getTreatmentConfig(id: String) -> ConfigExtBean {
         for item in self.treatment.getData() {
             for child in item._dataExt {
                 if child.id == id {
-                    return child.name
+                    return child
                 }
             }
         }
-        return DomainConst.BLANK
+        return ConfigExtBean.init()
     }
     
     /**

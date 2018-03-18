@@ -91,26 +91,19 @@ class Service: NSObject {
 
 }
 
-
+/**
+ * Extension Base Request using Alamofire with completion block
+ */
 extension BaseRequest {
-    func request(success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
+    func execute(success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
         
-        let strParam = self.data
-        var strURL = ""
-        strURL = self.url
-        
-        print("=======request")
-        print(strURL)
-        print(strParam)
-        
-        let serverUrl: URL = URL.init(string: strURL)!
+        let serverUrl: URL = URL.init(string: self.url)!
         var request = URLRequest(url: serverUrl)
         request.httpMethod = self.reqMethod
         request.timeoutInterval = TimeInterval(30)
         request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
         request.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
-        request.httpBody = strParam.data(using: String.Encoding.utf8)
-        
+        request.httpBody = self.data.data(using: String.Encoding.utf8)
         
         Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
             print("===========response")
@@ -123,7 +116,6 @@ extension BaseRequest {
                 failure(apiResponse)
             }
         }
-        
     }
     
     

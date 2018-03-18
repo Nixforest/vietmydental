@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import harpyframework
 
 let  userInstance = UserInstance.sharedInstance()
 
@@ -54,6 +55,31 @@ class UserInstance: NSObject {
     func getKeyBusinessID(user: String) -> String {
         var output = ""
         output = KEY_BUSINESS_ID + user
+        return output
+    }
+    
+    func getStringFromDate(date: Date, withFormat format: String) -> String {
+        var output: String!
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        output = formatter.string(from: date)
+        return output
+    }
+    
+    func getCurrentDate() -> Date {
+        return Date().addingTimeInterval(25200)
+    }
+    
+    
+    func getStringBody(parameter: Dictionary <String, AnyObject>) -> String {
+        var output = ""
+        for  (k,v) in  parameter {
+            output = output + "\"\(k)\": \"\(v)\","
+        }
+        output = "q={\(output) \"platform\":\"0\", \"token\": \"\(BaseModel.shared.getUserToken())\"}"
+        output = output.replacingOccurrences(of: "\"(", with: "[")
+        output = output.replacingOccurrences(of: ")\"", with: "]")
         return output
     }
 }

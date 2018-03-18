@@ -68,7 +68,7 @@ class G01F03S03VC: ChildExtViewController {
                 if !id.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_TREATMENT_TYPE_ID, value: id)
                     self._data.setData(id: DomainConst.ITEM_TREATMENT,
-                                       value: LoginBean.shared.getTreatmentConfig(id: id))
+                                       value: LoginBean.shared.getTreatmentConfig(id: id).name)
                     _tblInfo.reloadData()
                 }
             case DomainConst.ITEM_TIME:
