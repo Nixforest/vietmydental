@@ -7,8 +7,17 @@
 //
 
 import UIKit
+protocol PropertyName {
+    func propertyNames() -> [String]
+}
 
-open class MasterModel: NSObject {
+extension PropertyName {
+    func propertyNames() -> [String] {
+        return Mirror(reflecting: self).children.flatMap {$0.label}
+    }
+}
+
+open class MasterModel: NSObject, PropertyName {
     public override init() {
         super.init()
     }
@@ -55,3 +64,4 @@ public extension MasterModel {
         return Mirror(reflecting: self).children.flatMap { $0.label }
     }
 }
+

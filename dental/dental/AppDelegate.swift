@@ -109,5 +109,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setStatusBarTextDarkColor() {
         UIApplication.shared.statusBarStyle = .default
     }
+    
+    //MARK: - TextInput
+    
+    func inputText(vc: UIViewController, bean: ConfigExtBean, completionHandler: @escaping((String)->Void)) {
+        var title           = DomainConst.BLANK
+        var message         = DomainConst.BLANK
+        var placeHolder     = DomainConst.BLANK
+        var keyboardType    = UIKeyboardType.default
+        var value           = DomainConst.BLANK
+        switch bean.id {
+        case DomainConst.ITEM_NAME:
+            title           = bean.name
+            value           = bean._dataStr
+            break
+        default:
+            title           = bean.name
+            value           = bean._dataStr
+            message         = DomainConst.BLANK
+            placeHolder     = DomainConst.BLANK
+            keyboardType    = UIKeyboardType.default
+            break
+        }
+        var tbxValue: UITextField?
+        
+        // Create alert
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        // Add textfield
+        alert.addTextField(configurationHandler: { textField -> Void in
+            tbxValue = textField
+            tbxValue?.placeholder       = placeHolder
+            tbxValue?.clearButtonMode   = .whileEditing
+            tbxValue?.returnKeyType     = .done
+            tbxValue?.keyboardType      = keyboardType
+            tbxValue?.text              = value
+            tbxValue?.textAlignment     = .center
+        })
+        
+        // Add cancel action
+        let cancel = UIAlertAction(title: DomainConst.CONTENT00202, style: .cancel, handler: nil)
+        
+        // Add ok action
+        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .default) {
+            action -> Void in
+            if let newValue = tbxValue?.text, !newValue.isEmpty {
+                completionHandler(newValue)
+            }
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        if let popVC = alert.popoverPresentationController {
+            popVC.sourceView = vc.view
+        }
+        vc.present(alert, animated: true, completion: nil)
+    }
 }
 

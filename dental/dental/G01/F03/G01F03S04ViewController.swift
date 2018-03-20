@@ -11,29 +11,61 @@ import harpyframework
 
 class G01F03S04ViewController: ChildExtViewController {
     
-    @IBOutlet weak var tvNote: UITextView!
-    @IBOutlet weak var btnOk: UIButton!
-    @IBOutlet weak var tfDiscount: UITextField!
-    @IBOutlet weak var lbAmount: UILabel!
     
-    var amount: String = ""
+    @IBOutlet weak var tbView: UITableView!
+    
+    var amount: String = "0"
     var detailID: String = ""
+    var receiptBean: ConfigExtBean!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        btnOk.drawRadius(4, color: GlobalConst.MAIN_COLOR_GAS_24H, thickness: 1)
-        tvNote.drawRadius(4, color: UIColor.lightGray, thickness: 0.5)
-        tfDiscount.delegate = self
-        tfDiscount.keyboardType = .numberPad;
-        tfDiscount.addTarget(self, action: #selector(textFieldChangeAmountValue(sender:)), for: .editingChanged)
-        lbAmount.text = amount
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyBoard))
-        self.view.addGestureRecognizer(tap)
+        tbView.delegate = self
+        tbView.dataSource = self
+        if receiptBean == nil {
+            receiptBean = createNilReceiptBean()
+            createRightNavigationItem(title: "D",
+                                      action: #selector(create(_:)),
+                                      target: self)
+        } else {
+            if canUpdate() {
+                createRightNavigationItem(title: "D",
+                                          action: #selector(create(_:)),
+                                          target: self)
+            }
+        }
+        tbView.reloadData()
     }
     
-    func hideKeyBoard() {
-        self.view.endEditing(true)
+    func canUpdate() -> Bool {
+        for bean in receiptBean.getListData() {
+            if bean.id == DomainConst.ITEM_CAN_UPDATE {
+                if bean._dataStr.toBool() == true {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func createNilReceiptBean() -> ConfigExtBean {
+        let output = ConfigExtBean()
+        output._dataExt = [ConfigExtBean]()
+        
+        var bean = ConfigExtBean()
+        
+        bean.id = DomainConst.ITEM_DISCOUNT
+        bean.name = "Giảm"
+        bean._dataStr = ""
+        output._dataExt.append(bean)
+        
+        bean = ConfigExtBean()
+        bean.id = DomainConst.ITEM_DESCRIPTION
+        bean.name = "Ghi chú"
+        bean._dataStr = ""
+        output._dataExt.append(bean)
+        
+        return output
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,34 +73,279 @@ class G01F03S04ViewController: ChildExtViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func getReceiptRequest() -> CreateReceipt_Request {
+        let output = CreateReceipt_Request()
+        output.date = CommonProcess.getDateString(date: Date(), format: DomainConst.DATE_TIME_FORMAT_2)
+        output.detail_id = self.detailID
+        for bean in receiptBean.getListData() {
+            switch bean.id {
+            case DomainConst.ITEM_DISCOUNT:
+                output.discount = bean._dataStr
+            case DomainConst.ITEM_DESCRIPTION:
+                output.note = bean._dataStr
+            default:
+                break
+            }
+        }
+        return output
+    }
+    
     //MARK: - Services
-    func createReceipt() {
-        let req = CreateReceipt_Request()
-        req.detail_id = self.detailID
-        req.discount = tfDiscount.text!
-        req.note = tvNote.text
-        req.date = CommonProcess.getDateString(date: Date(), format: "yyyy/MM/dd")
-        
-        serviceInstance.createReceipt(req: req, success: { (result) in
-            self.backButtonTapped(self)
-        }) { (error) in
-            self.showAlert(message: error.message)
+    func createReceipt(req: CreateReceipt_Request) {
+        serviceInstance.createReceipt(req: req) { (result) in
+            let str = CommonProcess.getJSONString(fromDictionary: result.data as NSDictionary)
+            
+            BaseModel.shared.sharedString = str
+            self.showAlert(message: result.message)
+        }
+    }
+    func create(_ sender: AnyObject) {
+        let req = getReceiptRequest()
+        createReceipt(req: req)
+    }
+    
+    
+    /**
+     * Handle input text
+     * - parameter bean: Data of item
+     */
+    internal func inputText(bean: ConfigExtBean) {
+        var title           = DomainConst.BLANK
+        var message         = DomainConst.BLANK
+        var placeHolder     = DomainConst.BLANK
+        var keyboardType    = UIKeyboardType.default
+        var value           = DomainConst.BLANK
+        switch bean.id {
+        case DomainConst.ITEM_NAME:
+            title           = bean.name
+            value           = bean._dataStr
+            break
+        default:
+            title           = bean.name
+            value           = bean._dataStr
+            message         = DomainConst.BLANK
+            placeHolder     = DomainConst.BLANK
+            keyboardType    = UIKeyboardType.default
+            break
+        }
+        var tbxValue: UITextField?
+
+        // Create alert
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        // Add textfield
+        alert.addTextField(configurationHandler: { textField -> Void in
+            tbxValue = textField
+            tbxValue?.placeholder       = placeHolder
+            tbxValue?.clearButtonMode   = .whileEditing
+            tbxValue?.returnKeyType     = .done
+            tbxValue?.keyboardType      = keyboardType
+            tbxValue?.text              = value
+            tbxValue?.textAlignment     = .center
+        })
+
+        // Add cancel action
+        let cancel = UIAlertAction(title: DomainConst.CONTENT00202, style: .cancel, handler: nil)
+
+        // Add ok action
+        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .default) {
+            action -> Void in
+            if let newValue = tbxValue?.text, !newValue.isEmpty {
+                for item in self.receiptBean.getListData() {
+                    if item.id == bean.id {
+                        bean._dataStr = newValue
+                        self.tbView.reloadData()
+                    }
+                }
+            } else {
+                self.showAlert(message: DomainConst.CONTENT00551,
+                               okHandler: {
+                                alert in
+                                self.inputText(bean: bean)
+                })
+            }
+        }
+
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        if let popVC = alert.popoverPresentationController {
+            popVC.sourceView = self.view
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func getCell(bean: ConfigExtBean) -> UITableViewCell {
+        var imagePath = DomainConst.INFORMATION_IMG_NAME
+        if let img = DomainConst.VMD_IMG_LIST[bean.id] {
+            imagePath = img
+        }
+        let image = ImageManager.getImage(named: imagePath,
+                                          margin: GlobalConst.MARGIN * 2)
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+        cell.textLabel?.text = bean.name
+        cell.textLabel?.font = GlobalConst.BASE_FONT
+        cell.detailTextLabel?.text = bean._dataStr
+        cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+        cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+        cell.detailTextLabel?.numberOfLines = 0
+        if bean._dataStr.isEmpty {
+            cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
+            cell.detailTextLabel?.textColor = UIColor.red
+        }
+        cell.imageView?.image = image
+        cell.imageView?.contentMode = .scaleAspectFit
+        return cell
+    }
+}
+
+// MARK: Protocol - UITableViewDataSource
+extension G01F03S04ViewController: UITableViewDataSource {
+    /**
+     * Asks the data source to return the number of sections in the table view.
+     * - returns: 1 section
+     */
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    /**
+     * Tells the data source to return the number of rows in a given section of a table view.
+     * - returns: List information count
+     */
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return self.receiptBean.getListData().count + 1
+        } else {
+            // For future
+            return 0
         }
     }
     
-    @IBAction func tbnOkAction(_ sender: Any) {
-        createReceipt()
+    /**
+     * Asks the data source for a cell to insert in a particular location of the table view.
+     */
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            if indexPath.row > self.receiptBean.getListData().count {
+                return UITableViewCell()
+            }
+            // dynamic cell for amount
+            if indexPath.row == 0 {
+                let data = ConfigExtBean()
+                data.id = receiptBean.id
+                data.name = "Tổng số tiền"
+                data._dataStr = amount
+                let cell = getCell(bean: data)
+                return cell
+            } else {
+                let data = self.receiptBean.getListData()[indexPath.row - 1]
+                var imagePath = DomainConst.INFORMATION_IMG_NAME
+                if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                    imagePath = img
+                }
+                let image = ImageManager.getImage(named: imagePath,
+                                                  margin: GlobalConst.MARGIN * 2)
+                switch data.id {
+                case DomainConst.ITEM_CUSTOMER_CONFIRMED,
+                     DomainConst.ITEM_NEED_APPROVE,
+                     DomainConst.ITEM_CAN_UPDATE,
+                     DomainConst.ITEM_START_DATE:
+                    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                    cell.contentView.isHidden = true
+                    return cell
+                default:
+                    let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                    cell.textLabel?.text = data.name
+                    cell.textLabel?.font = GlobalConst.BASE_FONT
+                    cell.detailTextLabel?.text = data._dataStr
+                    cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                    cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+                    cell.detailTextLabel?.numberOfLines = 0
+                    if data._dataStr.isEmpty {
+                        cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
+                        cell.detailTextLabel?.textColor = UIColor.red
+                    }
+                    cell.imageView?.image = image
+                    cell.imageView?.contentMode = .scaleAspectFit
+                    return cell
+                }
+            }
+        case 1:     // For future
+            break
+        default:
+            break
+        }
+        
+        return UITableViewCell()
+    }
+}
+
+// MARK: Protocol - UITableViewDelegate
+extension G01F03S04ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if canUpdate() {
+            switch indexPath.section {
+            case 0:
+                if (indexPath.row > self.receiptBean.getListData().count) ||
+                    (indexPath.row == 0) {
+                    return
+                }
+                let data = self.receiptBean.getListData()[indexPath.row - 1]
+                switch data.id {
+                case DomainConst.ITEM_DESCRIPTION,
+                     DomainConst.ITEM_DISCOUNT:
+                    inputText(bean: data)
+                default:
+                    break
+                }
+                break
+            default:
+                break
+            }
+        }
+        
     }
     
+    /**
+     * Asks the delegate for the height to use for a row in a specified location.
+     */
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            if indexPath.row == 0 {
+                return UITableViewAutomaticDimension
+            } else {
+                switch receiptBean.getListData()[indexPath.row - 1].id {
+                case DomainConst.ITEM_CUSTOMER_CONFIRMED,
+                     DomainConst.ITEM_NEED_APPROVE,
+                     DomainConst.ITEM_CAN_UPDATE,
+                     DomainConst.ITEM_START_DATE:
+                    return 0
+                default:
+                    return UITableViewAutomaticDimension
+                }
+            }
+        default:
+            return UITableViewAutomaticDimension
+        }
+        
+    }
 }
+
+
+
 
 extension G01F03S04ViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let nonNumberSet = NSCharacterSet(charactersIn: "0123456789.").inverted
-//        if (string.length == 0) && (range.length > 0) {
-//            textField.text = textField.text?.replacingCharacters(in: range as! RangeExpression, with: string)
-//            return true
-//        }
+        if let oldString = textField.text {
+            let newString = oldString.replacingCharacters(in: Range(range, in: oldString)!,
+                                                          with: string)
+            textField.text = newString
+        }
         if string.trimmingCharacters(in: nonNumberSet as CharacterSet).length > 0 {
             if (textField.text?.length)! >= 100 && (range.length == 0) {
                 return false
@@ -85,6 +362,7 @@ extension G01F03S04ViewController: UITextFieldDelegate {
         sender.text = strDecimal
     }
 }
+
 
 
 

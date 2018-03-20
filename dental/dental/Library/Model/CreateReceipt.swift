@@ -13,6 +13,7 @@ class CreateReceipt: MasterModel {
     var status = 0
     var code = 0
     var message = ""
+    var data: NSDictionary = NSDictionary()
 }
 class CreateReceipt_Request: MasterModel {
     var detail_id: String = ""
@@ -24,15 +25,14 @@ class CreateReceipt_Request: MasterModel {
 }
 
 extension Service {
-    func createReceipt(req: CreateReceipt_Request, success: @escaping((CreateReceipt) -> Void), failure: @escaping((APIResponse) -> Void)) {
+    func createReceipt(req: CreateReceipt_Request, completionHandler: @escaping((CreateReceipt) -> Void)) {
         let url = serviceConfig.url + "customer/createReceipt"
         let body = CommonProcess.getStringBody(parameter: req.dictionary() as Dictionary<String, AnyObject>)
         let baseReq = BaseRequest(url: url, method: DomainConst.HTTP_POST_REQUEST, body: body)
         
-        baseReq.execute(success: { (response) in
-            success(CreateReceipt(dictionary: response.data as! NSDictionary))
-        }) { (error) in
-            failure(error)
+        baseReq.execute { (response) in
+            let receipt = CreateReceipt(dictionary: response.result.value as! NSDictionary)
+            completionHandler(receipt)
         }
     }
     

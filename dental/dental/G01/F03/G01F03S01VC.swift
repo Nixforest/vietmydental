@@ -17,6 +17,8 @@ class G01F03S01VC: ChildExtViewController {
     var _data:              ListConfigBean          = ListConfigBean()
     /** Create process flag */
     var _flagCreate:        Bool                    = false
+    /** Open Receipt flag */
+    var _flagOpenReceipt:   Bool                    = false
     /** constrain height footer view */
     @IBOutlet weak var heightFooter: NSLayoutConstraint!
     /** Information table view */
@@ -89,9 +91,22 @@ class G01F03S01VC: ChildExtViewController {
             }
             
             _flagCreate = false
+            BaseModel.shared.sharedString = DomainConst.BLANK
         }
         
-        BaseModel.shared.sharedString = DomainConst.BLANK
+        if _flagOpenReceipt {
+            let data = BaseModel.shared.sharedString
+            if !data.isEmpty {
+                if let dict = CommonProcess.getDictionary(fromString: data) {
+                    let beanReceipt = ConfigExtBean(jsonData: dict as! [String : AnyObject])
+                    self._data.getData(id: DomainConst.ITEM_RECEIPT)._dataExt.append(beanReceipt)
+                    self._tblInfo.reloadData()
+                }
+            }
+            
+            _flagOpenReceipt = false
+            BaseModel.shared.sharedString = DomainConst.BLANK
+        }
     }
     
     /**
@@ -170,6 +185,7 @@ class G01F03S01VC: ChildExtViewController {
     }
     
     
+    
     /**
      * Handle show treatment schedule process
      * - parameter bean: Process data
@@ -221,7 +237,7 @@ class G01F03S01VC: ChildExtViewController {
             case DomainConst.ITEM_TEETH_ID,
                  DomainConst.ITEM_DIAGNOSIS_ID,
                  DomainConst.ITEM_TREATMENT_TYPE_ID:
-                if item.name.isBlank {
+                if item._dataStr.isBlank {
                     return false
                 }
             default:
@@ -313,11 +329,17 @@ class G01F03S01VC: ChildExtViewController {
     private func openReceipt() {
         let vc = G01F03S04ViewController()
         vc.amount = LoginBean.shared.getTreatmentConfig(id: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)._dataStr
+        for bean in _data._data {
+            if bean.id == DomainConst.ITEM_RECEIPT {
+                vc.receiptBean = bean
+            }
+        }
         vc.detailID = self._data.getData(id: DomainConst.ITEM_ID)._dataStr
         vc.createNavigationBar(title: "Thanh toán")
         self.push(vc, animated: true)
     }
     @IBAction func btnPayAction(_ sender: Any) {
+        _flagOpenReceipt = true
         openReceipt()
     }
 }
@@ -379,7 +401,8 @@ extension G01F03S01VC: UITableViewDataSource {
                  DomainConst.ITEM_START_DATE,
                  DomainConst.ITEM_TREATMENT_TYPE_ID,
                  DomainConst.ITEM_TIME_ID,
-                 DomainConst.ITEM_DETAILS:
+                 DomainConst.ITEM_DETAILS,
+                 DomainConst.ITEM_RECEIPT:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
@@ -501,7 +524,8 @@ extension G01F03S01VC: UITableViewDelegate {
                  DomainConst.ITEM_START_DATE,
                  DomainConst.ITEM_TREATMENT_TYPE_ID,
                  DomainConst.ITEM_TIME_ID,
-                 DomainConst.ITEM_DETAILS:
+                 DomainConst.ITEM_DETAILS,
+                 DomainConst.ITEM_RECEIPT:
                 return 0
             case DomainConst.ITEM_END_DATE:
                 if self.isCompleted() {

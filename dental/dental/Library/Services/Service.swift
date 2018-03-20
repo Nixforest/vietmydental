@@ -16,7 +16,15 @@ class APIResponse: MasterModel {
     var data : Any!
     var code  = 0
     var isDisconnected = false
-    var Error = true
+    var error: Bool = false
+    
+    override init() {
+        super.init()
+    }
+    
+    override init(dictionary: NSDictionary) {
+        super.init(dictionary: dictionary)
+    }
 }
 
 let  serviceInstance = Service.sharedInstance()
@@ -35,9 +43,9 @@ class Service: NSObject {
         if(response.result.isSuccess) {
             let resp = APIResponse.init(dictionary: response.result.value as! NSDictionary)
             if resp.data == nil {
-                resp.Error = true
+                resp.error = true
             } else {
-                resp.Error = false
+                resp.error = false
             }
             return resp
         } else {
@@ -79,7 +87,7 @@ class Service: NSObject {
             print("===========response")
             print(response as Any)
             let apiResponse = self.processReponse(response: response)
-            if (apiResponse.Error == false) {
+            if (apiResponse.error == false) {
                 success(apiResponse)
             }
             else {
@@ -95,7 +103,7 @@ class Service: NSObject {
  * Extension Base Request using Alamofire with completion block
  */
 extension BaseRequest {
-    func execute(success: @escaping((APIResponse) -> Void), failure: @escaping((APIResponse) -> Void)) {
+    func execute(completionHandler: @escaping((DataResponse<Any>) -> Void)) {
         
         let serverUrl: URL = URL.init(string: self.url)!
         var request = URLRequest(url: serverUrl)
@@ -108,13 +116,7 @@ extension BaseRequest {
         Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
             print("===========response")
             print(response as Any)
-            let apiResponse = self.processReponse(response: response)
-            if (apiResponse.Error == false) {
-                success(apiResponse)
-            }
-            else {
-                failure(apiResponse)
-            }
+            completionHandler(response)
         }
     }
     
@@ -123,9 +125,9 @@ extension BaseRequest {
         if(response.result.isSuccess) {
             let resp = APIResponse.init(dictionary: response.result.value as! NSDictionary)
             if resp.data == nil {
-                resp.Error = true
+                resp.error = true
             } else {
-                resp.Error = false
+                resp.error = false
             }
             return resp
         } else {
