@@ -91,7 +91,6 @@ class G01F03S01VC: ChildExtViewController {
             }
             
             _flagCreate = false
-            BaseModel.shared.sharedString = DomainConst.BLANK
         }
         
         if _flagOpenReceipt {
@@ -99,14 +98,26 @@ class G01F03S01VC: ChildExtViewController {
             if !data.isEmpty {
                 if let dict = CommonProcess.getDictionary(fromString: data) {
                     let beanReceipt = ConfigExtBean(jsonData: dict as! [String : AnyObject])
-                    self._data.getData(id: DomainConst.ITEM_RECEIPT)._dataExt.append(beanReceipt)
-                    self._tblInfo.reloadData()
+                    if isHaveReceipt() {
+                        self._data.getData(id: DomainConst.ITEM_RECEIPT)._dataExt = beanReceipt._dataExt
+                    } else {
+                        self._data._data.append(beanReceipt)
+                    }
                 }
             }
             
             _flagOpenReceipt = false
-            BaseModel.shared.sharedString = DomainConst.BLANK
         }
+        BaseModel.shared.sharedString = DomainConst.BLANK
+    }
+    
+    func isHaveReceipt() -> Bool {
+        for item in _data._data {
+            if item.id == DomainConst.ITEM_RECEIPT {
+                return true
+            }
+        }
+        return false
     }
     
     /**
