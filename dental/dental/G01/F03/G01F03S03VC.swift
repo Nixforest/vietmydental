@@ -292,6 +292,7 @@ extension G01F03S03VC: UITableViewDataSource {
                  DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_CAN_UPDATE,
                  DomainConst.ITEM_TIME_ID,
+                 DomainConst.ITEM_RECEIPT,
                  DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
@@ -373,6 +374,7 @@ extension G01F03S03VC: UITableViewDelegate {
                  DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_CAN_UPDATE,
                  DomainConst.ITEM_TIME_ID,
+                 DomainConst.ITEM_RECEIPT,
                  DomainConst.ITEM_DETAILS:
                 return 0
             default:

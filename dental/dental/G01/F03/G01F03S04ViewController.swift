@@ -24,12 +24,12 @@ class G01F03S04ViewController: ChildExtViewController {
         tbView.dataSource = self
         if receiptBean == nil {
             receiptBean = createNilReceiptBean()
-            createRightNavigationItem(title: "D",
+            createRightNavigationItem(title: DomainConst.CONTENT00558,
                                       action: #selector(create(_:)),
                                       target: self)
         } else {
             if canUpdate() {
-                createRightNavigationItem(title: "D",
+                createRightNavigationItem(title: DomainConst.CONTENT00558,
                                           action: #selector(create(_:)),
                                           target: self)
             }
@@ -40,12 +40,12 @@ class G01F03S04ViewController: ChildExtViewController {
     func canUpdate() -> Bool {
         for bean in receiptBean.getListData() {
             if bean.id == DomainConst.ITEM_CAN_UPDATE {
-                if bean._dataStr.toBool() == true {
-                    return true
+                if bean._dataStr == DomainConst.NUMBER_ZERO_VALUE {
+                    return false
                 }
             }
         }
-        return false
+        return true
     }
     
     func createNilReceiptBean() -> ConfigExtBean {
@@ -238,9 +238,14 @@ extension G01F03S04ViewController: UITableViewDataSource {
             if indexPath.row == 0 {
                 let data = ConfigExtBean()
                 data.id = receiptBean.id
-                data.name = "Tổng số tiền"
+                data.name = DomainConst.CONTENT00570
                 data._dataStr = amount
                 let cell = getCell(bean: data)
+                var imagePath = DomainConst.VMD_SUM_ICON_IMG_NAME
+                let image = ImageManager.getImage(named: imagePath,
+                                                  margin: GlobalConst.MARGIN * 2)
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             } else {
                 let data = self.receiptBean.getListData()[indexPath.row - 1]

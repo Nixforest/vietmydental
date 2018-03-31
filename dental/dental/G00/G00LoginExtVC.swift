@@ -344,12 +344,21 @@ class G00LoginExtVC: ChildExtViewController {
         if ((txtPhone.text?.isEmpty)! || (txtPassword.text?.isEmpty)!) {
             showAlert(message: DomainConst.CONTENT00023)
         } else {
-            BaseModel.shared.setCurrentUsername(username: txtPhone.text!)
-            LoginRequest.requestLogin(
-                action: #selector(finishLoginRequest(_:)),
-                view: self,
-                username: txtPhone.text!,
-                password: txtPassword.text!)
+            if let username = txtPhone.text {
+                BaseModel.shared.setCurrentUsername(username: username)
+                // Check if username account is appletest
+                if username.lowercased() == "appletest" {
+                    if !BaseModel.shared.checkTrainningMode() {
+                        BaseModel.shared.setTrainningMode(true)
+                    }
+                }
+                LoginRequest.requestLogin(
+                    action: #selector(finishLoginRequest(_:)),
+                    view: self,
+                    username: username,
+                    password: txtPassword.text!)
+            }
+            
         }
     }
     

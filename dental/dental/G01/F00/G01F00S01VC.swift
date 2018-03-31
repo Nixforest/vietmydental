@@ -185,6 +185,16 @@ extension G01F00S01VC: UITableViewDataSource {
         cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
         cell.detailTextLabel?.lineBreakMode = .byWordWrapping
         cell.detailTextLabel?.numberOfLines = 0
+        // Set image
+        var imgPath = DomainConst.VMD_PATIENT_ICON_IMG_NAME
+        let imgMargin = GlobalConst.MARGIN * 2
+        if data.gender != DomainConst.CONTENT00569 {
+            imgPath = DomainConst.VMD_PATIENT_FEMALE_ICON_IMG_NAME
+        }
+        cell.imageView?.image = ImageManager.getImage(
+            named: imgPath, margin: imgMargin)
+        cell.imageView?.contentMode = .scaleAspectFit
+        
         
         return cell
     }

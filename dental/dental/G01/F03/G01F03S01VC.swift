@@ -192,6 +192,10 @@ class G01F03S01VC: ChildExtViewController {
             if self.isCompleted() {
                 self.openReceipt()
             }
+            //check show button finish
+            if canShowBtnFinish() {
+                showBtnFinish()
+            }
         }
     }
     
@@ -228,6 +232,11 @@ class G01F03S01VC: ChildExtViewController {
             var copyArr = [ConfigExtBean]()
             for item in data[0]._dataExt {
                 let copyData = ConfigExtBean(copy: item)
+                if copyData.id == DomainConst.ITEM_TEETH_ID {
+                    copyData._dataStr = self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr
+                } else if copyData.id == DomainConst.ITEM_TEETH {
+                    copyData._dataStr = self._data.getData(id: DomainConst.ITEM_TEETH)._dataStr
+                }
                 copyArr.append(copyData)
             }
             

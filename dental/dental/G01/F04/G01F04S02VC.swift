@@ -89,7 +89,11 @@ class G01F04S02VC: ChildExtViewController {
     }
     
     public func resetData() {
+        let teeth = self._data.getData(id: DomainConst.ITEM_TEETH)._dataStr
+        let teethId = self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr 
         self._data.resetStrData()
+        self._data.setData(id: DomainConst.ITEM_TEETH, value: teeth)
+        self._data.setData(id: DomainConst.ITEM_TEETH_ID, value: teethId)
     }
     
     internal func addNew(_ sender: AnyObject) {

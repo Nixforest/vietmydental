@@ -51,6 +51,9 @@ class MenuVC: BaseMenuViewController {
 //        self.view.addSubview(lblAddress)
         self.view.addSubview(lblSeparator)
 //        self.view.addSubview(btnEdit)
+        if BaseModel.shared.checkTrainningMode() {
+            self.view.backgroundColor = ColorFromRGB().getRandomColor()
+        }
         self.view.makeComponentsColor()
     }
     
