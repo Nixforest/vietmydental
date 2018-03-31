@@ -11,10 +11,12 @@ import harpyframework
 
 class G01F00S01VC: BaseParentViewController {
     // MARK: Properties
+    @IBOutlet weak var searchBar: UISearchBar!
     /** Data */
     var _data:              CustomerListRespBean    = CustomerListRespBean()
     /** Information table view */
-    var _tblInfo:           UITableView             = UITableView()
+    @IBOutlet weak var _tblInfo: UITableView!
+    //    var _tblInfo:           UITableView             = UITableView()
     /** Current page */
     var _page:              Int                     = 0
     /** Refrest control */
@@ -25,6 +27,8 @@ class G01F00S01VC: BaseParentViewController {
     }()
     
     // MARK: Static values
+    let MAXIMUM_HEIGHT_SEARCH_VIEW: CGFloat = 30.0
+    let MINIMUM_HEIGHT_SEARCH_VIEW: CGFloat = 0.0
     // MARK: Constant
     
     // MARK: Override methods
@@ -38,8 +42,8 @@ class G01F00S01VC: BaseParentViewController {
         // Navigation
         self.createNavigationBar(title: DomainConst.CONTENT00541)
         createInfoTableView()
-        requestData()
-        self.view.addSubview(_tblInfo)
+        requestData(date: CommonProcess.getDateString(date: Date(), format: DomainConst.DATE_TIME_FORMAT_2))
+        searchBar.delegate = self
     }
     
     /**
@@ -51,6 +55,9 @@ class G01F00S01VC: BaseParentViewController {
         if model.isSuccess() {
             _data.updateData(bean: model.data)
             _tblInfo.reloadData()
+            searchBar.alpha = 1
+            let firstCellRect = CGRect(x: 0, y: 56, width: _tblInfo.frame.size.width, height: _tblInfo.frame.size.height)
+            _tblInfo.scrollRectToVisible(firstCellRect, animated: false)
         } else {
             showAlert(message: model.message)
         }
@@ -59,12 +66,14 @@ class G01F00S01VC: BaseParentViewController {
     // MARK: Logic
     /**
      * Request data
+     * - add param strDate for function search by date
      */
-    internal func requestData(action: Selector = #selector(setData(_:))) {
+    internal func requestData(action: Selector = #selector(setData(_:)), date: String) {
         CustomerListRequest.request(
             action: action,
             view: self,
-            page: String(_page))
+            page: String(_page),
+            date: date)
     }
     
     /**
@@ -83,7 +92,8 @@ class G01F00S01VC: BaseParentViewController {
      */
     internal func handleRefresh(_ sender: AnyObject) {
         self.resetData()
-        requestData(action: #selector(finishHandleRefresh(_:)))
+        let strDate = ""
+        requestData(action: #selector(finishHandleRefresh(_:)), date: strDate)
     }
     
     /**
@@ -94,19 +104,51 @@ class G01F00S01VC: BaseParentViewController {
         refreshControl.endRefreshing()
     }
     
+    /**
+     * Handle input date
+     */
+    internal func inputDate() {
+        let alert = UIAlertController(style: .actionSheet,
+                                      title: DomainConst.CONTENT00559)
+        alert.addDatePicker(mode: .date, date: Date(), minimumDate: nil, maximumDate: nil, action: { date in
+            let str = CommonProcess.getDateString(date: date)
+            self.searchBar.text = str
+        })
+        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .default) { (action) in
+            self.resetData()
+            if let str = self.searchBar.text {
+                if let d = CommonProcess.getDate(fromString: str, withFormat: "dd/MM/yyyy") {
+                    self.requestData(date: CommonProcess.getDateString(date: d, format: DomainConst.DATE_TIME_FORMAT_2))
+                }
+            }
+        }
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+    }
     // MARK: Layout
     
     // MARK: Information table view
     private func createInfoTableView() {
-        _tblInfo.frame = CGRect(
-            x: 0, y: 0,
-            width: UIScreen.main.bounds.width,
-            height: UIScreen.main.bounds.height)
+//        _tblInfo.frame = CGRect(
+//            x: 0, y: 0,
+//            width: UIScreen.main.bounds.width,
+//            height: UIScreen.main.bounds.height)
         _tblInfo.dataSource = self
         _tblInfo.delegate = self
         _tblInfo.rowHeight = UITableViewAutomaticDimension
         _tblInfo.estimatedRowHeight = 150
         _tblInfo.addSubview(refreshControl)
+        searchBar.alpha = 0
+    }
+}
+
+extension G01F00S01VC: UISearchBarDelegate {
+    /**
+     *  show DatePicker to searchBar instead of keyboard
+     */
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        inputDate()
+        return false
     }
 }
 
@@ -185,7 +227,8 @@ extension G01F00S01VC: UITableViewDelegate {
                 self._page += 1
                 // Page less than total page
                 if self._page <= _data.data.getTotalPage() {
-                    self.requestData()
+                    let strDate = CommonProcess.getDateString(date: Date())
+                    self.requestData(date: strDate)
                 }
             }
         }

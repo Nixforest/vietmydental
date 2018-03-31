@@ -19,6 +19,7 @@ class CreateReceipt_Request: MasterModel {
     var detail_id: String = ""
     var date: String = ""
     var discount: String = ""
+    var final: String = ""
     var customer_confirm: String = "0"
     var note: String = ""
     var receiptionist_id: String = "0"

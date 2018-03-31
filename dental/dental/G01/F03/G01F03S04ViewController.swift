@@ -83,6 +83,8 @@ class G01F03S04ViewController: ChildExtViewController {
                 output.discount = bean._dataStr
             case DomainConst.ITEM_DESCRIPTION:
                 output.note = bean._dataStr
+            case DomainConst.ITEM_FINAL:
+                output.final = bean._dataStr
             default:
                 break
             }
@@ -296,7 +298,8 @@ extension G01F03S04ViewController: UITableViewDelegate {
                 let data = self.receiptBean.getListData()[indexPath.row - 1]
                 switch data.id {
                 case DomainConst.ITEM_DESCRIPTION,
-                     DomainConst.ITEM_DISCOUNT:
+                     DomainConst.ITEM_DISCOUNT,
+                     DomainConst.ITEM_FINAL:
                     inputText(bean: data)
                 default:
                     break

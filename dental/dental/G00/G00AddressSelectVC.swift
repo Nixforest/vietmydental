@@ -30,7 +30,6 @@ class G00AddressSelectVC: ChildExtViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         //self.createNavigationBar(title: DomainConst.CONTENT00442)
     }
@@ -120,9 +119,15 @@ class G00AddressSelectVC: ChildExtViewController {
     // MARK: Layout
     // MARK: Information table view
     private func createInfoTableView() {
-        tblInfo.frame = CGRect(x: 0, y: 0,
-                               width: UIScreen.main.bounds.width,
-                               height: UIScreen.main.bounds.height)
+        if (self.navigationController?.isNavigationBarHidden)! {
+            tblInfo.frame = CGRect(x: 0, y: 0,
+                                   width: UIScreen.main.bounds.width,
+                                   height: UIScreen.main.bounds.height)
+        } else {
+            tblInfo.frame = CGRect(x: 0, y: 0,
+                                   width: UIScreen.main.bounds.width,
+                                   height: UIScreen.main.bounds.height - GlobalConst.NAVIGATION_BAR_HEIGHT)
+        }
         tblInfo.dataSource = self
         tblInfo.delegate = self
         tblInfo.reloadData()
