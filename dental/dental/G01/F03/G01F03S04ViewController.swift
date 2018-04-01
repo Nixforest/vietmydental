@@ -55,13 +55,19 @@ class G01F03S04ViewController: ChildExtViewController {
         var bean = ConfigExtBean()
         
         bean.id = DomainConst.ITEM_DISCOUNT
-        bean.name = "Giảm"
+        bean.name = DomainConst.CONTENT00572
+        bean._dataStr = ""
+        output._dataExt.append(bean)
+        
+        bean = ConfigExtBean()
+        bean.id = DomainConst.ITEM_FINAL
+        bean.name = DomainConst.CONTENT00573
         bean._dataStr = ""
         output._dataExt.append(bean)
         
         bean = ConfigExtBean()
         bean.id = DomainConst.ITEM_DESCRIPTION
-        bean.name = "Ghi chú"
+        bean.name = DomainConst.CONTENT00081
         bean._dataStr = ""
         output._dataExt.append(bean)
         
@@ -98,7 +104,8 @@ class G01F03S04ViewController: ChildExtViewController {
             let str = CommonProcess.getJSONString(fromDictionary: result.data as NSDictionary)
             
             BaseModel.shared.sharedString = str
-            self.showAlert(message: result.message)
+//            self.showAlert(message: result.message)
+            self.backButtonTapped(self)
         }
     }
     func create(_ sender: AnyObject) {

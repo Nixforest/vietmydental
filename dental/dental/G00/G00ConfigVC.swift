@@ -178,7 +178,8 @@ extension G00ConfigVC: UITableViewDelegate {
         case 0:
             switch indexPath.row {
             case 0: break
-            case 1: break
+            case 1:
+                self.updateVersionAppStore()
             default:
                 break
             }
