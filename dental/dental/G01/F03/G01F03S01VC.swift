@@ -426,12 +426,13 @@ extension G01F03S01VC: UITableViewDataSource {
                  DomainConst.ITEM_TREATMENT_TYPE_ID,
                  DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_DETAILS,
+                 DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_RECEIPT:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
-            case DomainConst.ITEM_NOTE,
-                 DomainConst.ITEM_TYPE:
+            case DomainConst.ITEM_NOTE:
+//                 DomainConst.ITEM_TYPE:
                 let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
                 if !self.isSchedule() {
                     cell.contentView.isHidden = true
@@ -549,6 +550,7 @@ extension G01F03S01VC: UITableViewDelegate {
                  DomainConst.ITEM_TREATMENT_TYPE_ID,
                  DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_DETAILS,
+                 DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_RECEIPT:
                 return 0
             case DomainConst.ITEM_END_DATE:
