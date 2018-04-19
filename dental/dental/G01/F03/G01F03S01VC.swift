@@ -346,7 +346,12 @@ class G01F03S01VC: ChildExtViewController {
             self.view.layoutIfNeeded()
         }
     }
+    /**
+     *  Open G01F03S04VC - Detail treatment process controller
+     *  turn on _flagOpenReceipt
+     */
     private func openReceipt() {
+        _flagOpenReceipt = true
         let vc = G01F03S04ViewController()
         vc.amount = LoginBean.shared.getTreatmentConfig(id: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)._dataStr
         for bean in _data._data {
@@ -359,7 +364,6 @@ class G01F03S01VC: ChildExtViewController {
         self.push(vc, animated: true)
     }
     @IBAction func btnPayAction(_ sender: Any) {
-        _flagOpenReceipt = true
         openReceipt()
     }
 }

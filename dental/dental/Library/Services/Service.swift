@@ -104,7 +104,8 @@ class Service: NSObject {
  */
 extension BaseRequest {
     func execute(completionHandler: @escaping((DataResponse<Any>) -> Void)) {
-        
+        print("===== URL REQUEST =====")
+        print(self.url)
         let serverUrl: URL = URL.init(string: self.url)!
         var request = URLRequest(url: serverUrl)
         request.httpMethod = self.reqMethod
