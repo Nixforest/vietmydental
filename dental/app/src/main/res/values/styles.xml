@@ -1,0 +1,91 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="text_hint_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/layout_margin_horizontal</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_horizontal</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/layout_margin_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="text_hint_inner_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_layout_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_horizontal</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_horizontal</item>
+    </style>
+
+    <style name="base_button_level_2_style" parent="base_button_level_1_style">
+        <item name="android:layout_marginLeft">@dimen/layout_margin_horizontal_large</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_horizontal_large</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="base_button_level_2_no_bottom_style" parent="base_button_level_2_style">
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="base_button_inner_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_smallest</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="loading_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#55000000</item>
+        <item name="android:clickable">true</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="base_button_level_1_style" parent="margin_level_1_style">
+        <item name="android:background">@drawable/selector_btn_red</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_height">@dimen/layout_button_height</item>
+        <item name="android:layout_marginBottom">@dimen/layout_margin_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="margin_level_1_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_horizontal</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_horizontal</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

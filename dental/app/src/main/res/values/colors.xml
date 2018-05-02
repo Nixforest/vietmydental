@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorMain">#2D7DF5</color>
+
+    <color name="brand_color_1">#ff4611</color>
+    <color name="brand_color_2">#E53C2E</color>
+    <color name="brand_color_3">#FF9E15</color>
+
+    <color name="red">#E53C2E</color>
+
+    <color name="main_color_1">#FF9E19</color>
+    <color name="main_color_2">#f00</color>
+    <color name="main_color_3">#333</color>
+    <color name="main_color_4">#999</color>
+    <color name="main_color_5">#390</color>
+    <color name="main_color_indicator">#adadad</color>
+    <color name="gray">#e4e4e4</color>
+    <color name="stoke_radius_color">#abe5ff</color>
+    <color name="v2_gray">#efefef</color>
+    <color name="v2_dark">#666</color>
+    <color name="main_title">#ed1a3b</color>
+    <color name="popup_promotion">#1f70a5</color>
+
+    <color name="gas_booking_button_main_color">#ed1a3b</color>
+    <color name="gas_booking_button_1_color">#faa61a</color>
+    <color name="gas_booking_button_2_color">#ed1164</color>
+    <color name="gas_booking_button_3_color">#36b639</color>
+    <color name="gas_booking_text_refund_color">#fc4513</color>
+    <color name="gas_booking_text_complete_color">#5674c1</color>
+    <color name="cycle_image_indicator">#ff9e19</color>
+
+    <color name="flat_color_1">#919191</color>
+    <color name="flat_color_2">#666666</color>
+    <color name="flat_color_3">#c10b0b</color>
+    <color name="flat_color_4">#c7861a</color>
+    <color name="flat_color_5">#faa61a</color>
+
+    <!--For Gas Remain-->
+    <color name="gas_remain_color_1">#999999</color>
+    <color name="gas_remain_color_2">#f89c27</color>
+    <color name="gas_remain_color_3">#33cc00</color>
+</resources>

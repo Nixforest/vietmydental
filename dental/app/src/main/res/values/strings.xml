@@ -1,0 +1,511 @@
+<resources>
+    <string name="app_name">VietMy Dental</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    // For never ask message
+    <string name="permission_call_phone_neverask">Bạn đã cấm app sử dụng chức năng gọi điện thoại. Vui lòng vào setting để bật lại để sử dụng!</string>
+    <string name="permission_camera_neverask">Bạn đã cấm app sử dụng chức năng camera. Vui lòng vào setting để bật lại để sử dụng!</string>
+    <string name="permission_denied">Bạn đã cấm quyền truy cập. Vui lòng cho phép ứng dụng quyền này để tiếp tục sử dụng!</string>
+    <string name="CONTENT00001">Harpy Framework</string>
+    <string name="CONTENT00002">Chưa chọn khách hàng!</string>
+    <string name="CONTENT00003">Chưa chọn nguyên nhân!</string>
+    <string name="CONTENT00004">Chưa nhập tiêu đề!</string>
+    <string name="CONTENT00005">Chưa nhập nội dung!</string>
+    <string name="CONTENT00006">Bạn chỉ được thêm tối đa %1$d hình!</string>
+    <string name="CONTENT00007">Vui lòng kiểm tra lại dữ liệu!</string>
+    <string name="CONTENT00008">OK</string>
+    <string name="CONTENT00009">Cancel</string>
+    <string name="CONTENT00010">Bạn chắc chắn muốn close Issue?</string>
+    <string name="CONTENT00011">Bạn chắc chắn muốn Reopen Issue?</string>
+    <string name="CONTENT00012">Mã số:</string>
+    <string name="CONTENT00013">Khách hàng:</string>
+    <string name="CONTENT00014">NV kinh doanh:</string>
+    <string name="CONTENT00015">Địa chỉ:</string>
+    <string name="CONTENT00016">Tiêu đề:</string>
+    <string name="CONTENT00017">Người tạo:</string>
+    <string name="CONTENT00018">Ngày tạo:</string>
+    <string name="CONTENT00019">Trạng thái:</string>
+    <string name="CONTENT00020">Nguyên nhân:</string>
+    <string name="CONTENT00021">Điện thoại:</string>
+    <string name="CONTENT00022">Người liên hệ:</string>
+    <string name="CONTENT00023">Tài khoản và mật khẩu không được trống!</string>
+    <string name="CONTENT00024">(%1$s)</string>
+    <string name="CONTENT00025">Bạn vui lòng điền đầy đủ thông tin!</string>
+    <string name="CONTENT00026">Mật khẩu nhập lại không chính xác!</string>
+    <string name="CONTENT00027">Chưa chọn NV bảo trì!</string>
+    <string name="CONTENT00028">Chưa chọn loại sự cố!</string>
+    <string name="CONTENT00029">Chưa nhập người liên hệ!</string>
+    <string name="CONTENT00030">Chưa nhập số điện thoại!</string>
+    <string name="CONTENT00031">Nội dung: \n</string>
+    <string name="CONTENT00032">Liên hệ:</string>
+    <string name="CONTENT00033">Sự cố:</string>
+    <string name="CONTENT00034">Mức độ:</string>
+    <string name="CONTENT00035">Ngày bảo trì:</string>
+    <string name="CONTENT00036">Lịch bảo trì:</string>
+    <string name="CONTENT00037">Nhân viên bảo trì:</string>
+    <string name="CONTENT00038">Điện thoại:</string>
+    <string name="CONTENT00039">Báo cáo kết quả: \n</string>
+    <string name="CONTENT00040">Bảo trì định kỳ</string>
+    <string name="CONTENT00041">Yêu cầu bảo trì</string>
+    <string name="CONTENT00042">Thời gian xử lý:</string>
+    <string name="CONTENT00043">Chưa chọn trạng thái!</string>
+    <string name="CONTENT00044">Gas Service</string>
+    <string name="CONTENT00045">Nội dung:</string>
+    <string name="CONTENT00046">Mất kết nối mạng, vui lòng thử lại!</string>
+    <string name="CONTENT00047">Có lỗi xảy ra, vui lòng thử lại!</string>
+    <string name="CONTENT00048">Có lỗi xảy ra</string>
+    <string name="CONTENT00049">Tài khoản / Số điện thoại</string>
+    <string name="CONTENT00050">Mật khẩu</string>
+    <string name="CONTENT00051">Đăng nhập</string>
+    <string name="CONTENT00052">Đăng ký</string>
+    <string name="CONTENT00053">Welcome to gas app!</string>
+    <string name="CONTENT00054">Số điện thoại</string>
+    <string name="CONTENT00055">Họ và tên</string>
+    <string name="CONTENT00056">Nhập lại mật khẩu</string>
+    <string name="CONTENT00057">Số nhà</string>
+    <string name="CONTENT00058">Tên đường</string>
+    <string name="CONTENT00059">Title</string>
+    <string name="CONTENT00060">Tìm kiếm KH, nhập tối thiểu 3 ký tự</string>
+    <string name="CONTENT00061">Mã Khách Hàng</string>
+    <string name="CONTENT00062">Tiêu đề</string>
+    <string name="CONTENT00063">Nội dung</string>
+    <string name="CONTENT00064">Thêm hình</string>
+    <string name="CONTENT00065">Tạo mới</string>
+    <string name="CONTENT00066">Xóa hình</string>
+    <string name="CONTENT00067">Open</string>
+    <string name="CONTENT00068">Close</string>
+    <string name="CONTENT00069">Không có dữ liệu</string>
+    <string name="CONTENT00070">Gửi trả lời</string>
+    <string name="CONTENT00071">Lịch sử trả lời</string>
+    <string name="CONTENT00072">Thông tin</string>
+    <string name="CONTENT00073">Đóng lại</string>
+    <string name="CONTENT00074">Mới</string>
+    <string name="CONTENT00075">Đã xem</string>
+    <string name="CONTENT00076">Người liên hệ</string>
+    <string name="CONTENT00077">Bảo trì sự cố</string>
+    <string name="CONTENT00078">Bảo trì định kỳ</string>
+    <string name="CONTENT00079">Tên khách hàng</string>
+    <string name="CONTENT00080">Báo sai sự cố</string>
+    <string name="CONTENT00081">Ghi chú</string>
+    <string name="CONTENT00082">Ghi chú nội bộ</string>
+    <string name="CONTENT00083">Mật khẩu cũ</string>
+    <string name="CONTENT00084">Mật khẩu mới</string>
+    <string name="CONTENT00085">Xác nhận mật khẩu mới</string>
+    <string name="CONTENT00086">Lưu</string>
+    <string name="CONTENT00087">Họ Tên</string>
+    <string name="CONTENT00088">Địa chỉ</string>
+    <string name="CONTENT00089">&#160;&#160;&#160;&#160;&#160;&#160;Đổi mật khẩu&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="CONTENT00090">Thoát</string>
+    <string name="CONTENT00091">Mã:</string>
+    <string name="CONTENT00092">Trạng thái</string>
+    <string name="CONTENT00093">Nguyên nhân</string>
+    <string name="CONTENT00094">Nhân viên sale</string>
+    <string name="CONTENT00095">Người tạo</string>
+    <string name="CONTENT00096">Ngày tạo</string>
+    <string name="CONTENT00097">Mở lại</string>
+    <string name="CONTENT00098">Đánh giá dịch vụ</string>
+    <string name="CONTENT00099">Danh sách Bảo trì</string>
+    <string name="CONTENT00100">Tài khoản</string>
+    <string name="CONTENT00101">Chưa chọn hình ảnh!</string>
+    <string name="CONTENT00102">Hiện mật khẩu</string>
+    <string name="CONTENT00103">Nội dung cần đánh giá &amp; góp ý</string>
+    <string name="CONTENT00104">Khách hàng: %1$s</string>
+    <string name="CONTENT00105">Ngày tạo: $1%s</string>
+    <string name="CONTENT00106">%1$s ID:%2$s</string>
+    <string name="CONTENT00107">%1$s - %2$s</string>
+    <string name="CONTENT00108">Gas Service</string>
+    <string name="CONTENT00109">Số serial bình</string>
+    <string name="CONTENT00110">Loại định kỳ:</string>
+    <string name="CONTENT00111">Loại khách hàng:</string>
+    <string name="CONTENT00112">Vị trí:</string>
+    <string name="CONTENT00113">Số serial bình:</string>
+    <string name="CONTENT00114">Chưa cập nhật được vị trí hiện tại!</string>
+    <string name="CONTENT00115">Thương hiệu khách hàng đã dùng</string>
+    <string name="CONTENT00116">Tên dịch vụ đối thủ</string>
+    <string name="CONTENT00117">Thông tin thêm:</string>
+    <string name="CONTENT00118">Loại điểm:</string>
+    <string name="CONTENT00119">Thời gian dự kiến hết gas:</string>
+    <string name="CONTENT00120">Thương hiệu đối thủ:</string>
+    <string name="CONTENT00121">Tên đối thủ:</string>
+    <string name="CONTENT00122">Tạo Khách Hàng</string>
+    <string name="CONTENT00123">Điện thoại liên hệ</string>
+    <string name="CONTENT00124" formatted="false">Phiên bản %s \n Bạn đã cập nhật phiên bản mới nhất</string>
+    <string name="CONTENT00125">Xem thêm</string>
+    <string name="CONTENT00126">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Thoát&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="CONTENT00128">Cài đặt</string>
+    <string name="CONTENT00134">Một mã xác thực đã được gửi đến số điện thoại của bạn dưới dạng tin nhắn, hãy nhập nó vào ô bên dưới</string>
+    <string name="CONTENT00135">Mã xác thực</string>
+    <string name="CONTENT00136">Để sau</string>
+
+    <string name="CONTENT00140">vd: 0123456789-0908070605</string>
+    <string name="CONTENT00141">Cập nhật tài khoản</string>
+    <string name="CONTENT00142">Đã có phiên bản mới, vui lòng cập nhật!</string>
+
+    <string name="CONTENT00154">Cập nhật khách hàng</string>
+
+    <string name="CONTENT00162">Thông báo</string>
+    <string name="CONTENT00163">Đầu tư</string>
+    <string-array name="CONTENT00164">
+        <item>Chọn loại GAS</item>
+        <item>Quà khuyến mãi</item>
+    </string-array>
+    <string name="CONTENT00165">Bạn đang tắt GPS, vui lòng bật GPS khi sử dụng tính năng này!
+    </string>
+    <string name="CONTENT00166">Thiết bị đã cấm device truy xuất. Chức năng không thể hoạt động!\nBạn vui lòng vào setting -> permission và bật các quyền của ứng dụng để tiếp tục sử dụng.</string>
+    <string name="CONTENT00167">Bật</string>
+    <string name="CONTENT00168">Gửi báo cáo công việc</string>
+    <string name="CONTENT00169">Xác nhận vị trí</string>
+    <string name="CONTENT00170">Số điện thoại người nhận</string>
+    <string name="CONTENT00171">Số điện thoại người đặt</string>
+    <string name="CONTENT00172">Mua hàng ngay</string>
+    <string name="CONTENT00173">Vị trí hiện tại</string>
+    <string name="CONTENT00174">Vị trí đã chọn</string>
+    <string name="CONTENT00175"><![CDATA[Không tìm thấy đại lý quanh vị trí hiện tại? </br> Bạn có muốn tìm với khoảng cách rông hơn không?]]></string>
+    <string name="CONTENT00176">Không tìm thấy đại lý quanh vị trí hiện tại!</string>
+    <string name="CONTENT00179">Địa chỉ email</string>
+    <string name="CONTENT00192">Công ty cổ phần Dầu Khí Miền Nam</string>
+    <string name="CONTENT00193">spj.daukhimiennam.com</string>
+
+    <string name="CONTENT00211">Liên hệ ngay</string>
+    <string name="CONTENT00212">Mua hàng</string>
+    <string name="CONTENT00213" formatted="false">Cảm ơn quý khách đã tin dùng \ndịch vụ của chúng tôi!\n Nhân viên của chúng tôi tại \n %s \nsẽ liên lạc với quý khách qua số điện thoại\n %s \ntrong thời gian sớm nhất!</string>
+    <string name="CONTENT00214">Gas</string>
+    <string name="CONTENT00215">VIP</string>
+    <string name="CONTENT00216">Phụ Kiện</string>
+    <string name="CONTENT00217">Xác nhận</string>
+    <string name="CONTENT00218">Tổng cộng:</string>
+    <string name="CONTENT00219">Khuyến mãi:</string>
+    <string name="CONTENT00220">Hủy bỏ</string>
+    <string name="CONTENT00221">Giá thành:</string>
+    <string name="CONTENT00222">Thêm mã khuyến mãi/giới thiệu</string>
+    <string name="CONTENT00223">Thêm mã khuyến mãi hoặc mã giới thiệu</string>
+    <string name="CONTENT00224">Đại lý:</string>
+    <string name="CONTENT00225">Nhân viên giao hàng:</string>
+    <string name="CONTENT00226">Thông tin giao hàng</string>
+    <string name="CONTENT00227">Mã nhân viên</string>
+    <string name="CONTENT00228">Hết hạn vào:</string>
+    <string name="CONTENT00229">Gọi GAS:</string>
+    <string name="CONTENT00230">Hỗ trợ khách hàng:</string>
+    <string name="CONTENT00231">Email:</string>
+    <string name="CONTENT00232">Chiết khấu:</string>
+    <string name="CONTENT00233">Chọn quà tặng</string>
+    <string name="CONTENT00234">Không nhận quà</string>
+    <string name="CONTENT00235">Nhận giao hàng</string>
+    <string name="CONTENT00236">Hủy nhận giao hàng</string>
+
+    <string name="CONTENT00237">Thông tin trả vỏ</string>
+    <string name="CONTENT00238">Vỏ về hoặc phụ kiện</string>
+    <string name="CONTENT00239">Thao tác</string>
+    <string name="CONTENT00240">Thu tiền</string>
+    <string name="CONTENT00241">Hủy đơn hàng</string>
+    <string name="CONTENT00242">Xác nhận hoàn thành?</string>
+    <string name="CONTENT00243">Xác nhận hủy đơn hàng?</string>
+    <string name="CONTENT00244">Số tiền</string>
+    <string name="CONTENT00245">Quên mật khẩu?</string>
+    <string name="CONTENT00246">Đăng ký tài khoản mới</string>
+    <string name="CONTENT00247">Họ và tên:</string>
+
+    <string name="CONTENT00248">Nhân viên giao hàng</string>
+    <string name="CONTENT00249">Loại bán hàng</string>
+    <string name="CONTENT00250">Địa chỉ người nhận</string>
+    <string name="CONTENT00251">Chụp hình</string>
+    <string name="CONTENT00252">Loại chiết khấu</string>
+    <string name="CONTENT00253">Gửi Thông Tin</string>
+    <string name="CONTENT00254">Xác nhận hủy đơn hàng?</string>
+    <string name="CONTENT00254_2">Quý khách chắc chắn muốn hủy đơn hàng?</string>
+    <string name="CONTENT00255">Điện thoại khách hàng</string>
+    <string name="CONTENT00256">Bạn có muốn xóa?</string>
+    <string name="CONTENT00257">Bù vỏ:</string>
+    <string name="CONTENT00258">Đang gọi đến số:</string>
+    <string name="CONTENT00259">Tổng đài bảo trì</string>
+    <string name="CONTENT00260">Đặt hàng</string>
+    <string name="CONTENT00261">Bảo trì</string>
+    <string name="CONTENT00262">Thông tin đơn hàng</string>
+    <string name="CONTENT00263">Loại bình</string>
+    <string name="CONTENT00264">Số lượng</string>
+    <string name="CONTENT00265">Ghi chú</string>
+    <string name="CONTENT00266">Bình gas 6KG</string>
+    <string name="CONTENT00267">Bình gas 12KG</string>
+    <string name="CONTENT00268">Bình gas 45KG</string>
+    <string name="CONTENT00269">Bình gas 50KG</string>
+
+    <!--For agent booking-->
+    <string name="CONTENT00270">Địa chỉ</string>
+    <string name="CONTENT00271">Liên hệ</string>
+    <string name="CONTENT00272">Tiền Gas</string>
+    <string name="CONTENT00273">Tiền Gas dư</string>
+    <string name="CONTENT00274">Tổng thanh toán</string>
+    <string name="CONTENT00275">Thông tin đơn hàng</string>
+    <string name="CONTENT00276">Thông tin vỏ</string>
+    <string name="CONTENT00277">Tên vỏ</string>
+    <string name="CONTENT00278">Seri</string>
+    <string name="CONTENT00279">Vỏ</string>
+    <string name="CONTENT00280">Cân</string>
+    <string name="CONTENT00281">Loại gas</string>
+    <string name="CONTENT00282">SL</string>
+    <string name="CONTENT00283">Thực tế</string>
+    <string name="CONTENT00284">Lưu</string>
+    <string name="CONTENT00285">Hoàn thành</string>
+    <string name="CONTENT00286">Tìm kiếm vật tư</string>
+    <string name="CONTENT00287">Xác nhận hoàn thành đơn hàng?</string>
+    <string name="CONTENT00288">Khách hàng ghi chú</string>
+    <string name="CONTENT00289">Đơn hàng Mới</string>
+    <string name="CONTENT00290">Đã hoàn thành</string>
+    <string name="CONTENT00291">Dư</string>
+    <string name="CONTENT00292" formatted="false">%s: %d</string>
+    <string name="CONTENT00292_2" formatted="false">, gas dư: %.2f kg</string>
+
+    <string name="CONTENT00293">Nhập số điện thoại</string>
+    <string name="CONTENT00294">Gửi</string>
+    <string name="CONTENT00295">Nhập mã xác nhận</string>
+
+    <string name="CONTENT00296">Đánh giá của Khách Hàng</string>
+    <string name="CONTENT00297">Nhận xét của khách hàng</string>
+    <string name="CONTENT00298">Nhận xét</string>
+
+    <string name="CONTENT00299">Tên nhân viên</string>
+
+    <string name="CONTENT00300">Chú ý bạn chưa chọn vỏ về cho đơn hàng này!</string>
+
+    <string name="CONTENT00301">Loại thẻ khỏ</string>
+    <string name="CONTENT00302">Tìm thông tin</string>
+    <string name="CONTENT00303">Tên khách hàng</string>
+    <string name="CONTENT00304">Điện thoại</string>
+    <string name="CONTENT00305">Địa chỉ</string>
+    <string name="CONTENT00306">Xác nhận hủy thẻ kho?</string>
+    <string name="CONTENT00307">Tìm khách hàng</string>
+    <string name="CONTENT00308">Tìm đại lý</string>
+    <string name="CONTENT00309">Xóa thông tin</string>
+
+    <string name="CONTENT00310">Chi:</string>
+    <string name="CONTENT00311">Thu:</string>
+    <string name="CONTENT00312">Ngày nhập xuất</string>
+    <string name="CONTENT00313">Số tiền</string>
+    <string name="CONTENT00314">Xác nhận hủy thu chi?</string>
+    <string name="CONTENT00315">Chi</string>
+    <string name="CONTENT00316">Thu</string>
+    <string name="CONTENT00317">Tổng số</string>
+    <string name="CONTENT00318">Lỗi kết nối mạng. Vui lòng kiểm tra lại!</string>
+    <string name="CONTENT00319">Ngày giao hàng</string>
+    <string name="CONTENT00320">Lịch Thu</string>
+
+    <string name="CONTENT00321">Không tìm thấy thông tin</string>
+    <string name="CONTENT00322">Reset</string>
+    <string name="CONTENT00323">Xác nhận hoàn thành bảo trì HGD?</string>
+    <string name="CONTENT00324">Xác nhận hủy bỏ bảo trì HGD?</string>
+    <string name="CONTENT00325">Chọn loại hỗ trợ</string>
+    <string name="CONTENT00326">Loại hỗ trợ:</string>
+    <string-array name="ARRAY00001">
+        <item>Vật Tư</item>
+        <item>Doanh Thu</item>
+        <item>SL</item>
+        <item>Giá</item>
+        <item>Thành Tiền</item>
+        <item>Chiết Khấu</item>
+        <item>Bù Vỏ</item>
+    </string-array>
+    <string-array name="ARRAY00002">
+        <item>Vật Tư</item>
+        <item>T.Đầu</item>
+        <item>Nhập</item>
+        <item>Xuất</item>
+        <item>T.Cuối</item>
+    </string-array>
+    <string-array name="ARRAY00003">
+        <item>Loại</item>
+        <item>Khách hàng</item>
+        <item>SL</item>
+        <item>Thu</item>
+        <item>Chi</item>
+        <item>Tồn</item>
+    </string-array>
+    <string name="CONTENT00327">Tổng Doanh Thu</string>
+    <string name="CONTENT00328">Từ:</string>
+    <string name="CONTENT00329">Đến:</string>
+    <string name="CONTENT00330">Đại lý</string>
+    <string name="CONTENT00331">Chi Gas Dư</string>
+    <string name="CONTENT00332">Cập Nhật Phiên Bản</string>
+    <string name="CONTENT00333">Open</string>
+    <string name="CONTENT00334">Close</string>
+    <string name="CONTENT00335">Tiêu đề</string>
+    <string name="CONTENT00336">Chọn người xử lý</string>
+    <string name="CONTENT00337">Nội dung yêu cầu hỗ trợ</string>
+    <string name="CONTENT00338">Chọn người xử lý</string>
+    <string name="CONTENT00339">Đến : </string>
+    <string name="CONTENT00340">Trả lời : </string>
+    <string name="CONTENT00341">Tạo ticket hỗ trợ</string>
+    <string name="CONTENT00342">Close</string>
+    <string name="CONTENT00343">Trả lời</string>
+    <string name="CONTENT00344">Ngày gửi:</string>
+    <string name="CONTENT00345">Cập nhật thẻ kho hộ gia đình</string>
+    <string name="CONTENT00346">Xác nhận đóng ticket?</string>
+    <string name="CONTENT00347">Xác nhận thu tiền?</string>
+    <string name="CONTENT00348">Xác nhận chi gas dư?</string>
+    <string name="CONTENT00349">Đơn hàng nợ</string>
+    <string name="CONTENT00350">Xác nhận khách hàng nợ đơn hàng này?</string>
+    <string name="CONTENT00351">KH Nợ</string>
+    <string name="CONTENT00352">Xác nhận thu tiền khách hàng: %s</string>
+    <string name="CONTENT00353">Xác nhận chi gas dư: %s</string>
+    <string name="CONTENT00354">Đặc điểm KH</string>
+    <string name="CONTENT00355">KH đề xuất</string>
+    <string name="CONTENT00356">PTTT CODE</string>
+    <string name="CONTENT00357">PTTT Code:</string>
+    <string name="CONTENT00358">Thương hiệu vỏ</string>
+    <string name="CONTENT00359">ĐT:</string>
+    <string name="CONTENT00360">Cập nhật địa chỉ khách hàng</string>
+    <string name="CONTENT00361">Chọn nơi giao</string>
+    <string name="CONTENT00362">Vui lòng chọn nơi giao</string>
+    <string name="CONTENT00363">Nơi giao:</string>
+    <string name="CONTENT00364">Chuyển đại lý khác giao hàng</string>
+    <string name="CONTENT00365">SL</string>
+    <string name="CONTENT00366">Nhập số lượng:</string>
+    <string name="CONTENT00367">Vui lòng chọn đại lý khác</string>
+    <string name="CONTENT00368">Số KG thiếu</string>
+    <string name="CONTENT00369">Bạn có muốn xóa tất cả vỏ?</string>
+    <string name="CONTENT00370" formatted="false">%s: %s</string>
+    <string name="CONTENT00371">KG</string>
+    <string name="CONTENT00372">Giảm giá</string>
+    <string name="CONTENT00373">Nhập mã giới thiệu</string>
+    <string name="CONTENT00374">Mã giới thiệu của bạn:</string>
+    <string name="CONTENT00375">Khuyến mãi bạn đang có</string>
+    <string name="CONTENT00376" formatted="false">Bạn đã giới thiệu %d người sử dụng.</string>
+    <string name="CONTENT00377">Scan QR Code</string>
+    <string name="CONTENT00381" formatted="false">Mã giới thiệu %s đã được copy</string>
+    <string name="CONTENT00382" formatted="false">Chia sẻ mã giới thiệu của bạn: %s hoặc truy cập địa chỉ: %s</string>
+    <string name="CONTENT00383" formatted="false">http://spj.vn/app?code=%s</string>
+    <string name="CONTENT00384">Giảm giá</string>
+
+    <string name="CONTENT00540">Danh sách Đợt điều trị</string>
+    <string name="CONTENT00541">Danh sách Bệnh nhân</string>
+    <string name="CONTENT00543">Thông tin bệnh nhân</string>
+    <string name="CONTENT00544">Hồ sơ bệnh án</string>
+    <string name="CONTENT00545">Tiền sử bệnh</string>
+    <string name="CONTENT00546">Bạn muốn xoá bệnh lý này?</string>
+    <string name="CONTENT00547">Xoá</string>
+    <string name="CONTENT00548">Thêm tiền sử bệnh</string>
+    <string name="CONTENT00549">Số bệnh án</string>
+    <string name="CONTENT00550">Xin vui lòng nhập số bệnh án</string>
+    <string name="CONTENT00551">Thông tin không hợp lệ. Xin vui lòng nhập lại</string>
+    <string name="CONTENT00552">Thông tin đợt điều trị</string>
+    <string name="CONTENT00553">Tạo mới đợt điều trị</string>
+    <string name="CONTENT00554">Thông tin chi tiết đợt điều trị</string>
+    <string name="CONTENT00555">Đang cập nhật</string>
+    <string name="CONTENT00556">Tiến trình mới</string>
+    <string name="CONTENT00557">Chi tiết điều trị mới</string>
+    <string name="CONTENT00574">Thanh toán</string>
+
+    <!-- For discount view-->
+    <string name="discount_0001">Giới thiệu</string>
+    <string name="discount_0002">Sử dụng mã</string>
+    <string name="discount_0003">Bạn đã giới thiệu</string>
+    <string name="discount_0004">người sử dụng</string>
+    <string name="discount_0005">Chia sẻ mã giới thiệu</string>
+    <string name="discount_0006">Mã Code</string>
+    <string name="discount_0007">QR Code</string>
+    <string name="discount_0008">Thêm mã khuyến mãi</string>
+    <string name="discount_0009">Nhập mã</string>
+    <string name="discount_0010">Bạn đang có</string>
+    <string name="discount_0011">điểm thưởng</string>
+
+    <!--For gas booking view-->
+    <string name="gas_booking_0001">Chọn loại gas</string>
+    <string name="gas_booking_0002">Chọn quà</string>
+    <string name="gas_booking_0003">Hỗ trợ</string>
+    <string name="gas_booking_0004">Đặt gas</string>
+    <string name="gas_booking_0005">Chạm vào biểu tượng để đặt gas</string>
+    <string name="gas_booking_0006">Bạn có thể chọn loại Gas và Quà trước khi đặt Gas.\nHoặc chờ nhân viên Gas24h liên hệ để xác nhận</string>
+    <string name="gas_booking_0007">Đơn hàng của bạn đang được xử lý\nvui lòng chờ trong giây lát ...</string>
+    <string name="gas_booking_0008">Hủy đơn hàng</string>
+    <string name="gas_booking_0009">Qúy khách vui lòng chờ trong giây lát.\n Nhân viên Gas24h sẽ liên hệ Quý khách trong vài phút</string>
+    <string name="gas_booking_0010">NV giao gas</string>
+    <string name="gas_booking_0011">MSNV:</string>
+    <string name="gas_booking_0012">Chạm vào đơn hàng</string>
+    <string name="gas_booking_0013">để xem lại chi tiết.</string>
+    <string name="gas_booking_0014">Lộ trình giao hàng khoảng</string>
+    <string name="gas_booking_0015">Loại gas được chọn sẽ được mặc định trong đơn hàng \n nếu Quý khách không thay đổi</string>
+    <string name="gas_booking_0016">Chạm vào biểu tượng để xem hóa đơn.\n Cảm ơn Quý khách</string>
+    <string name="gas_booking_0017">Đơn hàng hoàn tất</string>
+    <string name="gas_booking_0018">Giới thiệu người thân\n cài đặt ứng dụng</string>
+    <string name="gas_booking_0019">Trạng thái đơn hàng</string>
+    <string name="gas_booking_0021">Đặt gas</string>
+    <string name="gas_booking_0022">Chờ\nxác nhận</string>
+    <string name="gas_booking_0023">Đã\nxác nhận</string>
+    <string name="gas_booking_0024">Đang\ngiao gas</string>
+    <string name="gas_booking_0025">Đơn hàng\nhoàn tất</string>
+    <string name="gas_booking_0026">Đơn hàng của bạn đã được xác nhận.\nChúng tôi sẽ gọi cho bạn trong giây lát!</string>
+    <string name="gas_booking_0027">Nhận mã giảm giá</string>
+    <string name="gas_booking_0028">Quý khách vừa hoàn tất đơn hàng</string>
+    <string name="gas_booking_0029">Xem trước đơn hàng</string>
+    <string name="gas_booking_0030">Thay đổi</string>
+    <string name="gas_booking_0031">Quà tặng:</string>
+    <string name="gas_booking_0032">Thông tin giao hàng</string>
+    <string name="gas_booking_0033">Hủy</string>
+    <string name="gas_booking_0034">Tiếp tục đơn hàng</string>
+    <string name="gas_booking_0035">Chia sẻ với bạn bè</string>
+    <string name="gas_booking_0036">Nội dung đang được cập nhật</string>
+    <string name="gas_booking_0037">Mã giới thiệu</string>
+    <string name="gas_booking_0038">Mã khuyến mãi</string>
+
+    <!--For customer order-->
+    <string name="customer_order_0001">Bình chọn</string>
+    <string name="customer_order_0002">Gas dư:</string>
+
+    <!--For login-->
+    <string name="login_0001">Đăng nhập</string>
+    <string name="login_0002">Số điện thoại</string>
+    <string name="login_0003">Nhập mã pin</string>
+    <string name="login_0004">Mã pin vừa được gửi đến số điện thoại</string>
+    <string name="login_0005">Vui lòng xem tin nhắn\n và nhập mã pin vào ô bên trên để \n hoàn tất đăng nhập sử dụng ứng dụng</string>
+    <string name="login_0006">Chưa nhận được mã PIN?</string>
+    <string name="login_0007">Gửi lại</string>
+    <string name="login_0008">Sai số điện thoại?</string>
+    <string name="login_0009">Trở về</string>
+    <string name="login_0010">Hỗ trợ</string>
+
+    <!--For gas du-->
+    <string name="gas_du_0001">Còn tồn</string>
+    <string name="gas_du_0002">Đã xuất</string>
+    <string name="gas_du_0003">Từ ngày</string>
+    <string name="gas_du_0004">Đến ngày</string>
+    <string name="gas_du_0005">Ngày tạo</string>
+    <string name="gas_du_0006">Khách hàng</string>
+    <string name="gas_du_0007">Lưu</string>
+    <string name="gas_du_0008">Hủy</string>
+    <string name="gas_du_0009">Xác nhận hủy nhập gas dư?</string>
+    <string name="gas_du_0010">Tên vỏ</string>
+    <string name="gas_du_0011">Seri</string>
+    <string name="gas_du_0012">KL Vỏ</string>
+    <string name="gas_du_0013">KL Cân</string>
+    <string name="gas_du_0014">Dư</string>
+    <string name="gas_du_0015">KL Vỏ:</string>
+    <string name="gas_du_0016">KL Cân:</string>
+    <string name="gas_du_0017">Còn tồn</string>
+    <string name="gas_du_0018">Đã xuất</string>
+    <string name="gas_du_0019">Nhập mã seri</string>
+    <string name="gas_du_0020">Chọn xe</string>
+
+    <!--For bao tri-->
+    <string name="uphold_0001">Mã bảo trì</string>
+    <string name="uphold_0002">Chọn chi nhánh</string>
+    <string name="uphold_0003">Chưa chọn chi nhánh!</string>
+
+    <!--For HGD list-->
+    <string name="hgd_0001">Tạo trả thẻ</string>
+    <string name="hgd_0002">Bạn có muốn trả thẻ cho đơn hàng hộ gia đình?</string>
+    <string name="title_activity_g00_home">Trang chủ</string>
+    <string name="title_activity_g00_login">Đăng nhập</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
