@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class ConfigBean implements Serializable {
     /** Id */
-    private String id;
+    protected String id;
     /** Name */
-    private String name;
+    protected String name;
     /** Data */
     private ArrayList<ConfigBean> data;
 

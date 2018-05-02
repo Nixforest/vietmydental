@@ -343,9 +343,11 @@ public class BaseNavigationComponent {
 
     /**
      * Open G01F00S02 screen
+     * @param id Id of customer
      */
-    public void openG01F00S02() {
+    public void openG01F00S02(String id) {
         BaseFragment fragment = new G01F00S02Fragment();
+        ((G01F00S02Fragment)fragment).setId(id);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 

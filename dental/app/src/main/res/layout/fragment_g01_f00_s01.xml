@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_light"
     tools:context="vietmydental.immortal.com.gate.g01.fragment.G01F00S01Fragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"/>
 
 </FrameLayout>

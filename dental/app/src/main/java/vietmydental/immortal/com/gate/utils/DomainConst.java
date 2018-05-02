@@ -272,6 +272,8 @@ public final class DomainConst {
      * Id
      */
     public static final String KEY_ID = "id";
+    /** Gender */
+    public static final String KEY_GENDER                        = "gender";
     /** Start date */
     public static final String KEY_START_DATE                    = "start_date";
     /** End date */
@@ -509,6 +511,10 @@ public final class DomainConst {
      */
     public static final String KEY_TOTAL_PAGE = "total_page";
     /**
+     * Total record
+     */
+    public static final String KEY_TOTAL_RECORD = "total_record";
+    /**
      * LIST_CHIEF_MONITOR
      */
     public static final String KEY_LIST_CHIEF_MONITOR = "LIST_CHIEF_MONITOR";
@@ -588,6 +594,8 @@ public final class DomainConst {
      * Address
      */
     public static final String KEY_ADDRESS = "address";
+    /** Key birthday */
+    public static final String KEY_BIRTHDAY                      = "birthday";
     /**
      * Image avatar
      */
@@ -702,8 +710,15 @@ public final class DomainConst {
      */
     public static final String KEY_AGENT_ID = "agent_id";
     public static final String KEY_AGENT_NAME = "agent_name";
+    public static final String KEY_AGENT = "agent";
     public static final String KEY_NAME = "name";
     public static final String KEY_CITY_ID = "city_id";
+    /** Age */
+    public static final String KEY_AGE                           = "age";
+    /** Career */
+    public static final String KEY_CAREER                        = "career";
+    /** Characteristics */
+    public static final String KEY_CHARACTERISTICS               = "characteristics";
     /**
      * List hgd type
      */

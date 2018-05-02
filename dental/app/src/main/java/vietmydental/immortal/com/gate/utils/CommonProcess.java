@@ -10,6 +10,7 @@ import android.text.Html;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,6 +20,7 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
+import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.vietmydental.R;
 
 public class CommonProcess {
@@ -155,6 +157,20 @@ public class CommonProcess {
     }
 
     /**
+     * Get json int value
+     * @param data Json object data
+     * @param key Key value
+     * @return Value of int
+     */
+    public static int getJsonInt(JsonObject data, String key) {
+        try {
+            return data.get(key).getAsInt();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    /**
      * Get list config
      * @param data Json object data
      * @param key Key value
@@ -166,6 +182,26 @@ public class CommonProcess {
             JsonArray array = data.getAsJsonArray(key);
             Gson gson = new Gson();
             retVal = gson.fromJson(array.toString(), new TypeToken<ArrayList<ConfigBean>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retVal;
+    }
+
+    /**
+     * Get list config
+     * @param data Json object data
+     * @param key Key value
+     * @return List of config bean object
+     */
+    public static ArrayList<ConfigExtBean> getListConfigExt(JsonObject data, String key) {
+        ArrayList<ConfigExtBean> retVal = new ArrayList<>();
+        try {
+            JsonArray array = data.getAsJsonArray(key);
+            for (JsonElement obj :
+                    array) {
+                retVal.add(new ConfigExtBean(obj.getAsJsonObject()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

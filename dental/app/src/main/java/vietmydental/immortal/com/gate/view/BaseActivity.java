@@ -317,9 +317,10 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * Open G01F00S02 screen
+     * @param id Id of customer
      */
-    public void openG01F00S02() {
-        this.navigator.openG01F00S02();
+    public void openG01F00S02(String id) {
+        this.navigator.openG01F00S02(id);
     }
 
 

@@ -101,7 +101,7 @@ public abstract class BaseRequest extends AsyncTask {
     protected JSONObject generateDefaultJSONObject() {
         JSONObject object = new JSONObject();
         try {
-            object.put(DomainConst.KEY_PLATFORM, "");
+            object.put(DomainConst.KEY_PLATFORM, "1");
             object.put(DomainConst.KEY_VERSION_CODE, "");
         } catch (JSONException e) {
             e.printStackTrace();

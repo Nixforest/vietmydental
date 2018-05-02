@@ -1,5 +1,6 @@
 package vietmydental.immortal.com.gate.api;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,7 +123,7 @@ public class BaseResponse {
                 e.printStackTrace();
             }
         }
-        return status == 1;
+        return status == API_RESPONSE_STATUS_SUCCESS;
     }
 
     /**
@@ -144,6 +145,24 @@ public class BaseResponse {
         if (currentData != null) {
             try {
                 data = currentData.getJSONObject(DomainConst.KEY_DATA);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return data;
+    }
+
+    /**
+     * Get array data
+     * @return JSONArray data
+     */
+    public JSONArray getArrayData() {
+        JSONObject currentData = getJsonData();
+        JSONArray data = null;
+        if (currentData != null) {
+            try {
+                data = currentData.getJSONArray(DomainConst.KEY_DATA);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
