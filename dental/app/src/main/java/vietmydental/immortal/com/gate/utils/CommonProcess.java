@@ -171,6 +171,20 @@ public class CommonProcess {
     }
 
     /**
+     * Get json object
+     * @param data Json object data
+     * @param key Key value
+     * @return Value of json object
+     */
+    public static JsonObject getJsonObject(JsonObject data, String key) {
+        try {
+            return data.get(key).getAsJsonObject();
+        } catch (Exception e) {
+            return new JsonObject();
+        }
+    }
+
+    /**
      * Get list config
      * @param data Json object data
      * @param key Key value

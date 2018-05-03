@@ -3,9 +3,11 @@ package vietmydental.immortal.com.gate.g01.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -64,6 +66,15 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
         View rootView = inflater.inflate(R.layout.fragment_g01_f00_s02, container, false);
         ButterKnife.bind(this, rootView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                ConfigExtBean bean = respData.getList().get(i);
+                Log.println(Log.ASSERT, "info", String.valueOf(i));
+
+            }
+        });
+
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         if (token != null) {
             this.parentActivity.showLoadingView(true);
@@ -104,13 +115,15 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
      */
     private void setDataForListView() {
         mAdapter = new G01F00S02ListAdapter(parentActivity);
+        int section = 0;
         for (ConfigExtBean item :
                 respData.getList()) {
-            mAdapter.addSectionHeaderItem(item);
+            mAdapter.addSectionHeaderItem(item, section);
             for (ConfigExtBean bean :
                     item.getDataExt()) {
-                mAdapter.addItem(bean);
+                mAdapter.addItem(bean, section);
             }
+            section++;
         }
 
 //        int y = 1;

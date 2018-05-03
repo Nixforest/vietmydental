@@ -16,6 +16,8 @@ public class ConfigExtBean extends ConfigBean {
     private String                          dataStr     = DomainConst.BLANK;
     /** Data ext */
     private ArrayList<ConfigExtBean>        dataExt     = new ArrayList<>();
+    /** Data object */
+    private JsonObject                      dataObj     = new JsonObject();
 
     /**
      * Constructor.
@@ -35,6 +37,7 @@ public class ConfigExtBean extends ConfigBean {
         this.name       = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NAME);
         this.dataStr    = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_DATA);
         this.dataExt    = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_DATA);
+        this.dataObj    = CommonProcess.getJsonObject(gsonObject, DomainConst.KEY_DATA);
     }
 
     /**
@@ -46,6 +49,7 @@ public class ConfigExtBean extends ConfigBean {
         this.name       = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NAME);
         this.dataStr    = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_DATA);
         this.dataExt    = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_DATA);
+        this.dataObj    = CommonProcess.getJsonObject(gsonObject, DomainConst.KEY_DATA);
     }
 
     public String getDataStr() {
@@ -54,5 +58,9 @@ public class ConfigExtBean extends ConfigBean {
 
     public ArrayList<ConfigExtBean> getDataExt() {
         return dataExt;
+    }
+
+    public JsonObject getDataObj() {
+        return dataObj;
     }
 }

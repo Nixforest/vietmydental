@@ -1,5 +1,13 @@
 package vietmydental.immortal.com.gate.utils;
 
+import android.util.Pair;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import vietmydental.immortal.com.vietmydental.R;
+
 public final class DomainConst {
     /**
      * Submit customer info
@@ -1225,4 +1233,104 @@ public final class DomainConst {
         public static final String FIRST_ORDERED = "FIRST_ORDERED";
         public static final String IS_INVITED_USER = "g24_can_input_invite_code";
     }
+
+    /** Group id */
+    public static final String GROUP_MEDICAL_RECORD              = "1";
+    public static final String GROUP_TREATMENT                   = "2";
+    /** Item id */
+    public static final String ITEM_UPDATE_DATA                  = "0";
+    public static final String ITEM_NAME                         = "1";
+    public static final String ITEM_BIRTHDAY                     = "2";
+    public static final String ITEM_MEDICAL_HISTORY              = "3";
+    public static final String ITEM_GENDER                       = "4";
+    public static final String ITEM_AGE                          = "5";
+    public static final String ITEM_PHONE                        = "6";
+    public static final String ITEM_ADDRESS                      = "7";
+    public static final String ITEM_EMAIL                        = "8";
+    public static final String ITEM_AGENT                        = "9";
+    public static final String ITEM_CAREER                       = "10";
+    public static final String ITEM_CHARACTERISTICS              = "11";
+    public static final String ITEM_RECORD_NUMBER                = "12";
+    public static final String ITEM_START_DATE                   = "13";
+    public static final String ITEM_END_DATE                     = "14";
+    public static final String ITEM_DIAGNOSIS                    = "15";
+    public static final String ITEM_PATHOLOGICAL                 = "16";
+    public static final String ITEM_DOCTOR                       = "17";
+    public static final String ITEM_HEALTHY                      = "18";
+    public static final String ITEM_STATUS                       = "19";
+    public static final String ITEM_DETAILS                      = "20";
+    public static final String ITEM_TEETH                        = "21";
+    public static final String ITEM_TREATMENT                    = "22";
+    public static final String ITEM_NOTE                         = "23";
+    public static final String ITEM_TYPE                         = "24";
+    public static final String ITEM_CAN_UPDATE                   = "25";
+    public static final String ITEM_ID                           = "26";
+    public static final String ITEM_DIAGNOSIS_ID                 = "27";
+    public static final String ITEM_PATHOLOGICAL_ID              = "28";
+    public static final String ITEM_TEETH_ID                     = "29";
+    public static final String ITEM_TREATMENT_TYPE_ID            = "30";
+    public static final String ITEM_DESCRIPTION                  = "31";
+    public static final String ITEM_TIME_ID                      = "32";
+    public static final String ITEM_TIME                         = "33";
+    /** Item id: Receipt */
+    public static final String ITEM_RECEIPT                      = "34";
+    /** Item id: Discount */
+    public static final String ITEM_DISCOUNT                     = "35";
+    /** Item id: Need approve */
+    public static final String ITEM_NEED_APPROVE                 = "36";
+    /** Item id: Customer confirmed */
+    public static final String ITEM_CUSTOMER_CONFIRMED           = "37";
+    /* Item id: Final */
+    public static final String ITEM_FINAL                        = "38";
+    /* Item id: Insurance */
+    public static final String ITEM_INSURANCE                    = "39";
+    // MARK: Status
+    public static final String TREATMENT_SCHEDULE_INACTIVE           = "0";
+    public static final String TREATMENT_SCHEDULE_ACTIVE             = "1";
+    public static final String TREATMENT_SCHEDULE_SCHEDULE           = "2";
+    public static final String TREATMENT_SCHEDULE_COMPLETED          = "3";
+    public static final String TREATMENT_SCHEDULE_DETAIL_INACTIVE    = "0";
+    public static final String TREATMENT_SCHEDULE_DETAIL_ACTIVE      = "1";
+    public static final String TREATMENT_SCHEDULE_DETAIL_COMPLETED   = "2";
+    public static final String TREATMENT_SCHEDULE_DETAIL_SCHEDULE    = "3";
+    public static final String TREATMENT_SCHEDULE_PROCESS_INACTIVE   = "0";
+    public static final String TREATMENT_SCHEDULE_PROCESS_ACTIVE     = "1";
+    public static final String TREATMENT_SCHEDULE_PROCESS_COMPLETED  = "2";
+
+    public static final Map<String, Integer> VMD_IMG_LIST = new HashMap<String, Integer>() {
+        {
+            put(ITEM_UPDATE_DATA,       R.drawable.update_info);
+            put(ITEM_NAME,              R.drawable.patient);
+            put(ITEM_BIRTHDAY,          R.drawable.birthday);
+            put(ITEM_MEDICAL_HISTORY,   R.drawable.medical_history_parent);
+            put(ITEM_GENDER,            R.drawable.vmd_gender);
+            put(ITEM_AGE,               R.drawable.age);
+            put(ITEM_PHONE,             R.drawable.phone);
+            put(ITEM_ADDRESS,           R.drawable.address);
+            put(ITEM_EMAIL,             R.drawable.email);
+            put(ITEM_AGENT,             R.drawable.agent);
+            put(ITEM_CAREER,            R.drawable.update_info);
+            put(ITEM_CHARACTERISTICS,   R.drawable.update_info);
+            put(ITEM_RECORD_NUMBER,     R.drawable.record_number);
+            put(ITEM_START_DATE,        R.drawable.start_date);
+            put(ITEM_END_DATE,          R.drawable.start_date);
+            put(ITEM_DIAGNOSIS,         R.drawable.diagnosis);
+            put(ITEM_PATHOLOGICAL,      R.drawable.sympton);
+            put(ITEM_DOCTOR,            R.drawable.update_info);
+            put(ITEM_HEALTHY,           R.drawable.healthy);
+            put(ITEM_STATUS,            R.drawable.update_info);
+            put(ITEM_DETAILS,           R.drawable.update_info);
+            put(ITEM_TEETH,             R.drawable.teeth);
+            put(ITEM_TREATMENT,         R.drawable.treatment);
+            put(ITEM_NOTE,              R.drawable.describe);
+            put(ITEM_TYPE,              R.drawable.type);
+            put(ITEM_ID,                R.drawable.update_info);
+            put(ITEM_DESCRIPTION,       R.drawable.work_detail);
+            put(ITEM_TIME_ID,           R.drawable.time);
+            put(ITEM_TIME,              R.drawable.time);
+            put(ITEM_DISCOUNT,          R.drawable.discount);
+            put(ITEM_FINAL,             R.drawable.actually_collected);
+            put(ITEM_INSURANCE,         R.drawable.insurance);
+        }
+    };
 }

@@ -131,6 +131,11 @@ public class G01F00S01Fragment extends BaseFragment<G00HomeActivity> {
 //    }
 
     // MARK: Logic
+
+    /**
+     * Parse data
+     * @param data Data object
+     */
     private void parseData(JSONObject data) {
         JsonParser jsonParser = new JsonParser();
         JsonObject gsonObject = (JsonObject) jsonParser.parse(data.toString());

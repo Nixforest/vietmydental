@@ -42,4 +42,5 @@
     <color name="gas_remain_color_1">#999999</color>
     <color name="gas_remain_color_2">#f89c27</color>
     <color name="gas_remain_color_3">#33cc00</color>
+    <color name="section_more_color">#2c7cf6</color>
 </resources>
