@@ -149,6 +149,7 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
      */
     private void setDataForListView() {
         mAdapter = new G01F00S02ListAdapter(parentActivity);
+        mData.clear();
         int section = 0;
         for (ConfigExtBean item :
                 respData.getList()) {

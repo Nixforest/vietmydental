@@ -149,6 +149,7 @@ public class G01F00S02ListAdapter extends BaseAdapter {
                     holder.textValue = (TextView) convertView.findViewById(R.id.textValue);
                     holder.textDetail = (TextView) convertView.findViewById(R.id.textDetail);
                     holder.imageView = (ImageView) convertView.findViewById(R.id.image);
+                    holder.imgNext = convertView.findViewById(R.id.imgNext);
                     break;
                 case TYPE_HEADER:
                     convertView = mInflater.inflate(R.layout.header_item_g01_f00_s02, null);
@@ -172,6 +173,7 @@ public class G01F00S02ListAdapter extends BaseAdapter {
                             holder.textView.setText(data.getName());
                             holder.textDetail.setText(data.getDataStr());
                             holder.textValue.setVisibility(View.GONE);
+                            holder.imgNext.setVisibility(View.GONE);
                             break;
                         case DomainConst.ITEM_BIRTHDAY:
                             imageId = DomainConst.VMD_IMG_LIST.get(DomainConst.ITEM_BIRTHDAY);
@@ -179,6 +181,7 @@ public class G01F00S02ListAdapter extends BaseAdapter {
                             holder.textView.setText(data.getName());
                             holder.textDetail.setText(data.getDataStr());
                             holder.textValue.setVisibility(View.GONE);
+                            holder.imgNext.setVisibility(View.GONE);
                             break;
                         case DomainConst.ITEM_MEDICAL_HISTORY:
                             imageId = DomainConst.VMD_IMG_LIST.get(DomainConst.ITEM_MEDICAL_HISTORY);
@@ -245,5 +248,6 @@ public class G01F00S02ListAdapter extends BaseAdapter {
         public TextView textDetail;
         public TextView textValue;
         public ImageView imageView;
+        public ImageView imgNext;
     }
 }

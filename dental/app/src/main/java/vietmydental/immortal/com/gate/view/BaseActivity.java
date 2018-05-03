@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -311,8 +312,15 @@ public class BaseActivity extends AppCompatActivity {
                 curFragment.onResume();
             }
         } else {
-            navigator.onBackPressed();
+//            navigator.onBackPressed();
 //            super.onBackPressed();
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                BaseFragment previousFragment = ((BaseFragment)curFragment).getPreviousFragment();
+                navigator.updateLeftRightMenu(previousFragment);
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

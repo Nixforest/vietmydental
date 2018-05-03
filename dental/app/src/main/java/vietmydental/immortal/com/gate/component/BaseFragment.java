@@ -26,6 +26,16 @@ public abstract class BaseFragment<T extends AppCompatActivity> extends Fragment
     @Nullable
     protected @BindView(R.id.edt_list_search)
     AutoCompleteTextView textSearch;
+    private BaseFragment previousFragment;
+
+    public BaseFragment getPreviousFragment() {
+        return previousFragment;
+    }
+
+    public void setPreviousFragment(BaseFragment previousFragment) {
+        this.previousFragment = previousFragment;
+    }
+
     /**
      * Title config object
      */

@@ -5,9 +5,15 @@
     tools:context="vietmydental.immortal.com.gate.g01.fragment.G01F01S02Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="@string/hello_blank_fragment" />-->
+    <ListView
+        android:id="@+id/listInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_gravity="start"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"/>
 </FrameLayout>

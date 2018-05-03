@@ -138,12 +138,12 @@ public class BaseNavigationComponent {
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            fragmentTransaction.replace(currentLayout, fragment);
+            fragmentTransaction.replace(currentLayout, fragment).addToBackStack(fragment.getClass().toString());
             fragmentTransaction.commit();
             // Update menu
             updateLeftRightMenu(fragment);
             if (currentFragment != null && currentFragment instanceof BaseFragment) {
-                backFragment = (BaseFragment) currentFragment;
+               fragment.setPreviousFragment((BaseFragment) currentFragment);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -206,7 +206,8 @@ public class BaseNavigationComponent {
      */
     public void onBackPressed() {
         if (backFragment != null) {
-            moveToFragment(backFragment, DomainConst.LAYOUT_LEVEL_1);
+//            moveToFragment(backFragment, DomainConst.LAYOUT_LEVEL_1);
+            fragmentManager.popBackStack();
         }
     }
 
@@ -375,7 +376,7 @@ public class BaseNavigationComponent {
      */
     public void openG01F01S02(ArrayList<ConfigExtBean> data) {
         BaseFragment fragment = new G01F01S02Fragment();
-//        ((G01F01S02Fragment)fragment).setData(data);
+        ((G01F01S02Fragment)fragment).setData(data);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 
