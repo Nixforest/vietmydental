@@ -1,7 +1,6 @@
 package vietmydental.immortal.com.gate.g01.component.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.g01.model.TreatmentBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
@@ -58,7 +55,6 @@ public class G01F00S02ListAdapter extends BaseAdapter {
      * @param item Section header data
      */
     public void addSectionHeaderItem(final ConfigExtBean item, int section) {
-//        mData.add(item);
         mData.add(new ArrayList<ConfigExtBean>());
         mData.get(section).add(item);
         int size = 0;
@@ -66,7 +62,6 @@ public class G01F00S02ListAdapter extends BaseAdapter {
                 mData) {
             size += iterator.size();
         }
-//        sectionHeader.add(mData.size() - 1);
         sectionHeader.add(size - 1);
         notifyDataSetChanged();
     }
@@ -88,7 +83,7 @@ public class G01F00S02ListAdapter extends BaseAdapter {
                 mData) {
             size += iterator.size();
         }
-//        return mData.size();
+
         return size;
     }
 
@@ -108,6 +103,12 @@ public class G01F00S02ListAdapter extends BaseAdapter {
         return new ConfigExtBean();
 //        return mData.get(position);
     }
+
+    /**
+     * Get section id string from position
+     * @param position Position
+     * @return Value of section id
+     */
     public String getSectionId(int position) {
         int index = -1;
         for (List<ConfigExtBean> iterator :
@@ -143,14 +144,14 @@ public class G01F00S02ListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.row_item, null);
+                    convertView = mInflater.inflate(R.layout.list_item_g01_f00_s02, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     holder.textValue = (TextView) convertView.findViewById(R.id.textValue);
                     holder.textDetail = (TextView) convertView.findViewById(R.id.textDetail);
                     holder.imageView = (ImageView) convertView.findViewById(R.id.image);
                     break;
                 case TYPE_HEADER:
-                    convertView = mInflater.inflate(R.layout.header_item, null);
+                    convertView = mInflater.inflate(R.layout.header_item_g01_f00_s02, null);
                     holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                     break;
             }

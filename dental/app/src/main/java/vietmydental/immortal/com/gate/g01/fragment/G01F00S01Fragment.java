@@ -94,7 +94,7 @@ public class G01F00S01Fragment extends BaseFragment<G00HomeActivity> {
         });
 
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
-        String date = "2018/05/02";
+        String date = CommonProcess.getCurrentDate("yyyy/MM/dd");
         if (token != null) {
             this.parentActivity.showLoadingView(true);
             CustomerListRequest request = new CustomerListRequest(

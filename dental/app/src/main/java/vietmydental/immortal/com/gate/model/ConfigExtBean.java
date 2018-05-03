@@ -27,6 +27,15 @@ public class ConfigExtBean extends ConfigBean {
     }
 
     /**
+     * Constructor.
+     * @param id Id
+     * @param name Name
+     */
+    public ConfigExtBean(String id, String name) {
+        super(id, name);
+    }
+
+    /**
      * Constructor
      * @param data JSONObject data
      */

@@ -14,7 +14,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
@@ -220,5 +223,16 @@ public class CommonProcess {
             e.printStackTrace();
         }
         return retVal;
+    }
+
+    /**
+     * Get current date string
+     * @param format Format string
+     * @return Date string
+     */
+    public static String getCurrentDate(String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        Calendar calendar = Calendar.getInstance();
+        return dateFormat.format(calendar.getTime());
     }
 }

@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +46,8 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
     private String id = "";
     /** Data */
     private CustomerInfoRespBean respData;
+    /** Visible data */
+    private List<List<ConfigExtBean>> mData = new ArrayList<>();
     /** ListView drawer list */
     @BindView(R.id.listView)
     protected ListView listView;
@@ -69,9 +72,40 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                ConfigExtBean bean = respData.getList().get(i);
-                Log.println(Log.ASSERT, "info", String.valueOf(i));
-
+                ConfigExtBean bean = getItem(i);
+                switch (getSectionId(i)) {
+                    case DomainConst.GROUP_MEDICAL_RECORD:          // Medical record group
+                        if (isSectionHeader(i)) {
+                            parentActivity.openG01F01S01(id);
+                        } else {
+                            switch (bean.getId()) {
+                                case DomainConst.ITEM_MEDICAL_HISTORY:      // View medical history
+                                    parentActivity.openG01F01S02(bean.getDataExt());
+                                    break;
+                                case DomainConst.ITEM_UPDATE_DATA:          // Update data
+                                    parentActivity.openG01F01S01(id);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        break;
+                    case DomainConst.GROUP_TREATMENT:               // Treatment group
+                        if (isSectionHeader(i)) {
+                            parentActivity.openG01F02S01(id);
+                        } else {
+                            switch (bean.getId()) {
+                                case DomainConst.ITEM_UPDATE_DATA:          // Update data
+                                    parentActivity.openG01F02S06(id);
+                                    break;
+                                default:
+                                    parentActivity.openG01F02S02(bean.getId());
+                                    break;
+                            }
+                        }
+                        break;
+                    default: break;
+                }
             }
         });
 
@@ -118,27 +152,99 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
         int section = 0;
         for (ConfigExtBean item :
                 respData.getList()) {
-            mAdapter.addSectionHeaderItem(item, section);
+            addSectionHeaderItem(item, section);
             for (ConfigExtBean bean :
                     item.getDataExt()) {
-                mAdapter.addItem(bean, section);
+                addItem(bean, section);
             }
             section++;
         }
 
-//        int y = 1;
-//        mAdapter.addSectionHeaderItem(new TransactionObject(("Header Item #" + y), 0));
-//        y = 2;
-//
-//        for (int i = 1; i < 30; i++) {
-//            mAdapter.addItem(new TransactionObject(("Row Item #" + i), i*5));
-//            if (i % 4 == 0) {
-//                mAdapter.addSectionHeaderItem(new TransactionObject(("Header Item #" + y), 0));
-//                y++;
-//            }
-//        }
-
         listView.setAdapter(mAdapter);
+    }
+
+    /**
+     * Add new section
+     * @param item Section header data
+     */
+    private void addSectionHeaderItem(ConfigExtBean item, int section) {
+        mData.add(new ArrayList<ConfigExtBean>());
+        mData.get(section).add(item);
+        mAdapter.addSectionHeaderItem(item, section);
+    }
+
+    /**
+     * Add new item
+     * @param item Item data
+     */
+    public void addItem(final ConfigExtBean item, int section) {
+        mData.get(section).add(item);
+        mAdapter.addItem(item, section);
+    }
+
+    /**
+     * Get item data
+     * @param position Position
+     * @return ConfigExtBean
+     */
+    public ConfigExtBean getItem(int position) {
+        int index = -1;
+        for (List<ConfigExtBean> iterator :
+                mData) {
+            for (ConfigExtBean bean :
+                    iterator) {
+                index++;
+                if (index == position) {
+                    return bean;
+                }
+            }
+        }
+        return new ConfigExtBean();
+    }
+
+    /**
+     * Get section id string from position
+     * @param position Position
+     * @return Value of section id
+     */
+    public String getSectionId(int position) {
+        int index = -1;
+        for (List<ConfigExtBean> iterator :
+                mData) {
+            for (ConfigExtBean bean :
+                    iterator) {
+                index++;
+                if (index == position) {
+                    return iterator.get(0).getId();
+                }
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Check if position is section header
+     * @param position Position
+     * @return True if position is first element of child array
+     */
+    public boolean isSectionHeader(int position) {
+        int index = -1;
+        for (List<ConfigExtBean> iterator :
+                mData) {
+            int childIdx = -1;
+            for (ConfigExtBean bean :
+                    iterator) {
+                index++;
+                childIdx++;
+                if (index == position) {
+                    if (childIdx == 0) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     /**

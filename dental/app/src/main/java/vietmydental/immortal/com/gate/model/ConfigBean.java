@@ -19,6 +19,7 @@ public class ConfigBean implements Serializable {
         this.name = "";
         this.data = new ArrayList<>();
     }
+
     /**
      * Constructor.
      * @param id Id

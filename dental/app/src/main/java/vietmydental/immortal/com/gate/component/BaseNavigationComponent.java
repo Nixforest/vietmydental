@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.api.BaseResponse;
@@ -20,8 +22,14 @@ import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
 import vietmydental.immortal.com.gate.g01.fragment.G01F00S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F00S02Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F01S01Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F01S02Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S01Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S02Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S06Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
+import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.gate.view.BaseActivity;
@@ -351,4 +359,53 @@ public class BaseNavigationComponent {
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 
+    /**
+     * Open G01F01S01 screen
+     * @param id Id of customer
+     */
+    public void openG01F01S01(String id) {
+        BaseFragment fragment = new G01F01S01Fragment();
+        ((G01F01S01Fragment)fragment).setId(id);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F01S02 screen
+     * @param data Data of screen
+     */
+    public void openG01F01S02(ArrayList<ConfigExtBean> data) {
+        BaseFragment fragment = new G01F01S02Fragment();
+//        ((G01F01S02Fragment)fragment).setData(data);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F02S06 screen
+     * @param id Id of customer
+     */
+    public void openG01F02S06(String id) {
+        BaseFragment fragment = new G01F02S06Fragment();
+//        ((G01F02S06Fragment)fragment).setId(id);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F02S01 screen
+     * @param id Id of customer
+     */
+    public void openG01F02S01(String id) {
+        BaseFragment fragment = new G01F02S01Fragment();
+//        ((G01F02S01Fragment)fragment).setId(id);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F02S02 screen
+     * @param id Id of treatment
+     */
+    public void openG01F02S02(String id) {
+        BaseFragment fragment = new G01F02S02Fragment();
+//        ((G01F02S02Fragment)fragment).setId(id);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
 }

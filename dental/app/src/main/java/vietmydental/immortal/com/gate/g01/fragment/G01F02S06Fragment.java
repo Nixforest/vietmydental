@@ -36,7 +36,7 @@ public class G01F02S06Fragment extends BaseFragment<G00HomeActivity> {
      */
     @Override
     public String getFragmentUUID() {
-        return getString(R.string.CONTENT00553);
+        return "Tạo mới đợt điều trị";
     }
 
     /**
