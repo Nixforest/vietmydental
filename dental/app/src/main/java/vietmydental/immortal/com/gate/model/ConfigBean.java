@@ -1,7 +1,15 @@
 package vietmydental.immortal.com.gate.model;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import vietmydental.immortal.com.gate.utils.CommonProcess;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class ConfigBean implements Serializable {
     /** Id */
@@ -9,7 +17,7 @@ public class ConfigBean implements Serializable {
     /** Name */
     protected String name;
     /** Data */
-    private ArrayList<ConfigBean> data;
+    protected ArrayList<ConfigBean> data;
 
     /**
      * Default constructor.
@@ -30,6 +38,7 @@ public class ConfigBean implements Serializable {
         this.name = name;
         this.data = new ArrayList<>();
     }
+
     /**
      * Constructor.
      * @param id Id
@@ -40,6 +49,28 @@ public class ConfigBean implements Serializable {
         this.id = id;
         this.name = name;
         this.data = data;
+    }
+
+    /**
+     * Constructor
+     * @param data JSONObject
+     */
+    public ConfigBean(JSONObject data) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject gsonObject = (JsonObject) jsonParser.parse(data.toString());
+        this.id         = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_ID);
+        this.name       = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NAME);
+        this.data       = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_DATA);
+    }
+
+    /**
+     * Constructor
+     * @param gsonObject JsonObject
+     */
+    public ConfigBean(JsonObject gsonObject) {
+        this.id         = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_ID);
+        this.name       = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NAME);
+        this.data       = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_DATA);
     }
 
     /**
@@ -77,5 +108,20 @@ public class ConfigBean implements Serializable {
      */
     public ArrayList<ConfigBean> getData() {
         return data;
+    }
+
+    /**
+     * Get value by id
+     * @param id Id of value
+     * @return Name value
+     */
+    public String getValueById(String id) {
+        for (ConfigBean item :
+                data) {
+            if (item.id.equals(id)) {
+                return item.name;
+            }
+        }
+        return "";
     }
 }

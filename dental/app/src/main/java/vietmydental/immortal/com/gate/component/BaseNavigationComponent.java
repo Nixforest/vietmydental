@@ -27,6 +27,8 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F01S02Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S02Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S06Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F03S01Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F03S03Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -43,8 +45,6 @@ public class BaseNavigationComponent {
     protected FragmentManager fragmentManager;
     /** Last fragment */
     private BaseFragment lastFragment;
-    /** Previous fragment */
-    private BaseFragment backFragment;
 
     // UI references.
     /** Header layout */
@@ -62,6 +62,9 @@ public class BaseNavigationComponent {
     /** Back button */
     @BindView(R.id.title_btn_back)
     public View btnBack;
+    /** Right button */
+    @BindView(R.id.btnFinish)
+    public View btnRight;
     /** Menu button */
     @BindView(R.id.title_btn_sliding_menu)
     public View btnMenu;
@@ -194,21 +197,12 @@ public class BaseNavigationComponent {
                 showTitle(true);
                 btnBack.setVisibility(titleConfig.isShowBack ? View.VISIBLE : View.GONE);
                 btnMenu.setVisibility(titleConfig.isShowMenu ? View.VISIBLE : View.GONE);
+                btnRight.setVisibility(titleConfig.isShowRightBtn ? View.VISIBLE : View.GONE);
             } else {
                 showTitle(false);
             }
         }
         lastFragment = fragment;
-    }
-
-    /**
-     * Handle back to previous fragment
-     */
-    public void onBackPressed() {
-        if (backFragment != null) {
-//            moveToFragment(backFragment, DomainConst.LAYOUT_LEVEL_1);
-            fragmentManager.popBackStack();
-        }
     }
 
     /**
@@ -386,7 +380,8 @@ public class BaseNavigationComponent {
      */
     public void openG01F02S06(String id) {
         BaseFragment fragment = new G01F02S06Fragment();
-//        ((G01F02S06Fragment)fragment).setId(id);
+        ((G01F02S06Fragment)fragment).setId(id);
+        ((G01F02S06Fragment)fragment).initData();
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 
@@ -396,7 +391,7 @@ public class BaseNavigationComponent {
      */
     public void openG01F02S01(String id) {
         BaseFragment fragment = new G01F02S01Fragment();
-//        ((G01F02S01Fragment)fragment).setId(id);
+        ((G01F02S01Fragment)fragment).setId(id);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 
@@ -406,7 +401,30 @@ public class BaseNavigationComponent {
      */
     public void openG01F02S02(String id) {
         BaseFragment fragment = new G01F02S02Fragment();
-//        ((G01F02S02Fragment)fragment).setId(id);
+        ((G01F02S02Fragment)fragment).setId(id);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F03S01 screen
+     * @param id Id of treatment schedule detail
+     * @param data Data of screen
+     */
+    public void openG01F03S01(String id, ConfigExtBean data) {
+        BaseFragment fragment = new G01F03S01Fragment();
+        ((G01F03S01Fragment)fragment).setId(id);
+        ((G01F03S01Fragment)fragment).setData(data);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F03S03 screen
+     * @param id Id of schedule
+     */
+    public void openG01F03S03(String id) {
+        BaseFragment fragment = new G01F03S03Fragment();
+        ((G01F03S03Fragment)fragment).setId(id);
+        ((G01F03S03Fragment)fragment).initData();
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 }

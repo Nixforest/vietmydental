@@ -31,7 +31,6 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
     /**
      * Constructor
      * @param token Token
-     * @param id Id
      * @param scheduleId
      * @param time
      * @param date
@@ -39,7 +38,7 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
      * @param diagnosisId Id of diagnosis
      * @param treatment Id of treatment type
      */
-    public TreatmentScheduleDetailCreateRequest(String token, String id, String scheduleId, String time, String date, String teethId, String diagnosisId, String treatment) {
+    public TreatmentScheduleDetailCreateRequest(String token, String scheduleId, String time, String date, String teethId, String diagnosisId, String treatment) {
         super(G01Const.PATH_TREATMENT_DETAIL_CREATE);
         this.token = token;
         this.scheduleId = scheduleId;

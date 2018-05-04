@@ -62,6 +62,8 @@ public class LoginBean extends ConfigBean {
     public void updateData(JSONObject data) {
         JsonParser jsonParser = new JsonParser();
         JsonObject gsonObject = (JsonObject) jsonParser.parse(data.toString());
+        this.id         = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_ID);
+        this.name       = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NAME);
         this.token              = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_TOKEN);
         this.role_id            = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_ROLE_ID);
         this.need_change_pass   = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_NEED_CHANGE_PASS);

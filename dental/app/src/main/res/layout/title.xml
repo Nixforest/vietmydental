@@ -72,6 +72,20 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/logo_main_v3"
                 android:visibility="invisible" />
+            <LinearLayout
+                android:id="@+id/btnFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="@dimen/layout_margin_horizontal_large">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/selector_btn_finish" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -83,16 +97,16 @@
         android:gravity="center"
         android:visibility="gone">
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_sub_title_header"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Title"-->
-            <!--android:textAlignment="center"-->
-            <!--android:textAllCaps="true"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:textSize="@dimen/text_sub_header_size"-->
-            <!--android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/txtRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_sub_header_size"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>

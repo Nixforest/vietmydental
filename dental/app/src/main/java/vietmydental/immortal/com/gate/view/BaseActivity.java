@@ -44,6 +44,7 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.RuntimePermissions;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
+import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 
@@ -260,6 +261,13 @@ public class BaseActivity extends AppCompatActivity {
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
+    /**
+     * Handle click on menu button
+     */
+    @OnClick(R.id.btnFinish)
+    public void onFinishClick(){
+        ((BaseFragment) navigator.getCurrentFragment()).onFinishClick();
+    }
 
     /**
      * Handle click on back button
@@ -301,19 +309,14 @@ public class BaseActivity extends AppCompatActivity {
             navigator.layoutLevel1.setVisibility(View.VISIBLE);
             navigator.layoutLevel2.setVisibility(View.GONE);
 
-//            curFragment = navigator.getCurrentFragment();
-
             // Back by default
             if (curFragment instanceof BaseFragment) {
-//                navigator.setTitle(((BaseFragment) curFragment).getFragmentUUID());
                 navigator.updateLeftRightMenu((BaseFragment) curFragment);
             }
             if (curFragment != null) {
                 curFragment.onResume();
             }
         } else {
-//            navigator.onBackPressed();
-//            super.onBackPressed();
             if (getFragmentManager().getBackStackEntryCount() > 0) {
                 BaseFragment previousFragment = ((BaseFragment)curFragment).getPreviousFragment();
                 navigator.updateLeftRightMenu(previousFragment);
@@ -370,5 +373,21 @@ public class BaseActivity extends AppCompatActivity {
      */
     public void openG01F02S02(String id) {
         navigator.openG01F02S02(id);
+    }
+
+    /**
+     * Open G01F03S01 screen
+     * @param data Data of screen
+     */
+    public void openG01F03S01(String id, ConfigExtBean data) {
+        navigator.openG01F03S01(id, data);
+    }
+
+    /**
+     * Open G01F03S03 screen
+     * @param id Id of schedule
+     */
+    public void openG01F03S03(String id) {
+        navigator.openG01F03S03(id);
     }
 }

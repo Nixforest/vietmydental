@@ -26,7 +26,10 @@ public abstract class BaseFragment<T extends AppCompatActivity> extends Fragment
     @Nullable
     protected @BindView(R.id.edt_list_search)
     AutoCompleteTextView textSearch;
+    /** Previous fragment */
     private BaseFragment previousFragment;
+    /** Title */
+    private String title;
 
     public BaseFragment getPreviousFragment() {
         return previousFragment;
@@ -48,6 +51,10 @@ public abstract class BaseFragment<T extends AppCompatActivity> extends Fragment
          * Flag show back button
          */
         public final boolean isShowBack;
+        /**
+         * Flag show right button
+         */
+        public final boolean isShowRightBtn;
 
         /**
          * Config to show item on title bar
@@ -58,6 +65,19 @@ public abstract class BaseFragment<T extends AppCompatActivity> extends Fragment
         public TitleConfigObject(boolean isShowMenu, boolean isShowBack) {
             this.isShowMenu = isShowMenu;
             this.isShowBack = isShowBack;
+            this.isShowRightBtn = false;
+        }
+
+        /**
+         * Config to show item on title bar
+         *
+         * @param isShowMenu menu action
+         * @param isShowBack back action
+         */
+        public TitleConfigObject(boolean isShowMenu, boolean isShowBack, boolean isShowRightBtn) {
+            this.isShowMenu = isShowMenu;
+            this.isShowBack = isShowBack;
+            this.isShowRightBtn = isShowRightBtn;
         }
     }
 
@@ -118,5 +138,9 @@ public abstract class BaseFragment<T extends AppCompatActivity> extends Fragment
     public void onSaveInstanceState(Bundle outState) {
         // https://stackoverflow.com/questions/7575921/illegalstateexception-can-not-perform-this-action-after-onsaveinstancestate-wit
         super.onSaveInstanceState(outState);
+    }
+
+    public void onFinishClick() {
+
     }
 }

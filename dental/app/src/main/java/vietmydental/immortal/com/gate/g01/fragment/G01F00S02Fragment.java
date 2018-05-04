@@ -3,22 +3,17 @@ package vietmydental.immortal.com.gate.g01.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +25,6 @@ import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.g01.api.CustomerInfoRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F00S02ListAdapter;
-import vietmydental.immortal.com.gate.g01.model.CustomerBean;
-import vietmydental.immortal.com.gate.g01.model.TransactionObject;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;

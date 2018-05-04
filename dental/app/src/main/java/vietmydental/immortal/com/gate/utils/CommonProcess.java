@@ -188,6 +188,20 @@ public class CommonProcess {
     }
 
     /**
+     * Get json array
+     * @param data Json object data
+     * @param key Key value
+     * @return Value of json array
+     */
+    public static JsonArray getJsonArray(JsonObject data, String key) {
+        try {
+            return data.get(key).getAsJsonArray();
+        } catch (Exception e) {
+            return new JsonArray();
+        }
+    }
+
+    /**
      * Get list config
      * @param data Json object data
      * @param key Key value
@@ -197,8 +211,12 @@ public class CommonProcess {
         ArrayList<ConfigBean> retVal = new ArrayList<>();
         try {
             JsonArray array = data.getAsJsonArray(key);
-            Gson gson = new Gson();
-            retVal = gson.fromJson(array.toString(), new TypeToken<ArrayList<ConfigBean>>(){}.getType());
+//            Gson gson = new Gson();
+//            retVal = gson.fromJson(array.toString(), new TypeToken<ArrayList<ConfigBean>>(){}.getType());
+            for (JsonElement obj :
+                    array) {
+                retVal.add(new ConfigBean(obj.getAsJsonObject()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -226,6 +244,22 @@ public class CommonProcess {
     }
 
     /**
+     * Get configext value by id
+     * @param list List to find
+     * @param id Id of item
+     * @return Value of data string
+     */
+    public static String getConfigExtValueById(ArrayList<ConfigExtBean> list, String id) {
+        for (ConfigExtBean item :
+                list) {
+            if (item.getId().equals(id)) {
+                return item.getDataStr();
+            }
+        }
+        return "";
+    }
+
+    /**
      * Get current date string
      * @param format Format string
      * @return Date string
@@ -234,5 +268,17 @@ public class CommonProcess {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         Calendar calendar = Calendar.getInstance();
         return dateFormat.format(calendar.getTime());
+    }
+
+    /**
+     * Get image id
+     * @param key Key value
+     * @return Image id
+     */
+    public static int getImageId(String key) {
+        if (DomainConst.VMD_IMG_LIST.get(key) != null) {
+            return DomainConst.VMD_IMG_LIST.get(key);
+        }
+        return 0;
     }
 }
