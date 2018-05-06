@@ -154,4 +154,22 @@ public class LoginBean extends ConfigBean {
         }
         return new ConfigExtBean();
     }
+
+    /**
+     * Get treatment by id
+     * @param id Id value
+     * @return Object
+     */
+    public ConfigExtBean getTreatment(String id) {
+        for (ConfigExtBean item :
+                treatment) {
+            for (ConfigExtBean child :
+                    item.getDataExt()) {
+                if (child.getId().equals(id)) {
+                    return child;
+                }
+            }
+        }
+        return null;
+    }
 }

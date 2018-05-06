@@ -25,4 +25,6 @@ public class G01Const {
     public static final String PATH_TREATMENT_PROCESS_CREATE             = "customer/createTreatmentScheduleProcess";
     /** Path to connect with PHP server */
     public static final String PATH_TREATMENT_DETAIL_CREATE              = "customer/createTreatmentScheduleDetail";
+    /** Path to connect with PHP server */
+    public static final String PATH_RECEIPT_CREATE                       = "customer/createReceipt";
 }

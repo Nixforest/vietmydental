@@ -30,6 +30,7 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F02S05Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S06Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S03Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F03S04Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -441,6 +442,29 @@ public class BaseNavigationComponent {
         BaseFragment fragment = new G01F03S03Fragment();
         ((G01F03S03Fragment)fragment).setId(id);
         ((G01F03S03Fragment)fragment).initData();
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F03S04 screen
+     * @param id Id of treatment detail
+     * @param amount Amount of money
+     */
+    public void openG01F03S04(String id, String amount) {
+        BaseFragment fragment = new G01F03S04Fragment();
+        ((G01F03S04Fragment)fragment).setId(id);
+        ((G01F03S04Fragment)fragment).initData(amount);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G01F03S04 screen
+     * @param id Id of treatment detail
+     * @param amount Amount of money
+     */
+    public void openG01F03S04(String id, String amount, String discount, String finalAmount, String description) {
+        BaseFragment fragment = new G01F03S04Fragment();
+        ((G01F03S04Fragment)fragment).setData(id, amount, discount, finalAmount, description);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 }

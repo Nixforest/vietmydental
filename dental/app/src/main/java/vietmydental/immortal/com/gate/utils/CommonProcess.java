@@ -165,6 +165,23 @@ public class CommonProcess {
     }
 
     /**
+     * Create input number alert
+     * @param context Context
+     * @param title Title of alert
+     * @param value Value of input text
+     * @return AlertDialog.Builder
+     */
+    public static AlertDialog.Builder createInputNumberAlert(Context context, String title, String value, EditText inputView) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        // Specify the type of input expected
+        inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        inputView.setText(value);
+        builder.setView(inputView);
+        return builder;
+    }
+
+    /**
      * Show selection alert
      * @param context Context
      * @param title Title of alert

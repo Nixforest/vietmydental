@@ -4,12 +4,14 @@ package vietmydental.immortal.com.gate.g01.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
@@ -20,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
@@ -59,6 +62,9 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
     private List<ArrayList<ConfigExtBean>> mData = new ArrayList<>();
     /** Adapter */
     private G01F02S02ListAdapter mAdapter;
+    /** Action receipt */
+    @BindView(R.id.btnAdd)
+    protected FloatingActionButton actionButton;
 
     /**
      * Default constructor
@@ -77,7 +83,7 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
 
         handleListViewClick();
         setDataForListView();
-
+        updateActionButton();
         return rootView;
     }
 
@@ -116,9 +122,20 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
 
     // MARK: Logic
     /**
+     * Update action button
+     */
+    private void updateActionButton() {
+        if (CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_STATUS).equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED)) {
+            actionButton.setVisibility(View.VISIBLE);
+        } else {
+            actionButton.setVisibility(View.GONE);
+        }
+    }
+    /**
      * Handle finish schedule detail
      */
     private void handleFinish() {
+        CommonProcess.setConfigExtDataStrById(detailData.getDataExt(), DomainConst.ITEM_STATUS, DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED);
         handleUpdate(DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED);
     }
 
@@ -126,6 +143,7 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
      * Handle finish schedule detail
      */
     private void handleUpdate(final String status) {
+        updateActionButton();
         String token = BaseModel.getInstance().getToken(parentActivity.getBaseContext());
         if (token != null) {
             parentActivity.showLoadingView(true);
@@ -191,7 +209,7 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
                         addItem(bean, section);
                     }
                 }
-            } else {
+            } else if (!item.getId().equals(DomainConst.ITEM_RECEIPT)) {
                 switch (item.getId()) {
                     case DomainConst.ITEM_HEALTHY:
                         addItem(item, section);
@@ -480,5 +498,25 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
      */
     private boolean canUpdate() {
         return CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_CAN_UPDATE).equals("1");
+    }
+
+    // MARK: Event handler
+    /**
+     * Handle click on add button
+     */
+    @OnClick(R.id.btnAdd)
+    public void btnAddClick() {
+        ConfigExtBean bean = LoginBean.getInstance().getTreatment(treatmentId);
+        ConfigExtBean receipt = CommonProcess.getConfigExtObjById(detailData.getDataExt(), DomainConst.ITEM_RECEIPT);
+        if (bean != null && receipt != null) {
+            if (receipt == null) {
+                parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), bean.getDataStr());
+            } else {
+                parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), bean.getDataStr(),
+                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DISCOUNT),
+                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_FINAL),
+                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DESCRIPTION));
+            }
+        }
     }
 }

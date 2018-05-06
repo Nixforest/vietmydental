@@ -672,7 +672,11 @@ public final class DomainConst {
     // List order status
     public static final String KEY_DISCOUNT_TYPE = "discount_type";
     // List order status
-    public static final String KEY_DISCOUNT_AMOUNT = "amount_discount";
+    public static final String KEY_DISCOUNT_AMOUNT      = "amount_discount";
+    public static final String KEY_DISCOUNT             = "discount";
+    public static final String KEY_FINAL                = "final";
+    public static final String KEY_CUSTOMER_CONFIRM     = "customer_confirm";
+    public static final String KEY_RECEIPTIONIST_ID     = "receiptionist_id";
     public static final String KEY_CHANGE_TO_AGENT = "change_to_agent";
     // List order status
     public static final String KEY_TYPE_AMOUNT = "type_amount";
@@ -1314,7 +1318,7 @@ public final class DomainConst {
             put(ITEM_EMAIL,             R.drawable.email);
             put(ITEM_AGENT,             R.drawable.agent);
             put(ITEM_CAREER,            R.drawable.update_info);
-            put(ITEM_CHARACTERISTICS,   R.drawable.update_info);
+            put(ITEM_CHARACTERISTICS,   R.drawable.sum);
             put(ITEM_RECORD_NUMBER,     R.drawable.record_number);
             put(ITEM_START_DATE,        R.drawable.start_date);
             put(ITEM_END_DATE,          R.drawable.start_date);

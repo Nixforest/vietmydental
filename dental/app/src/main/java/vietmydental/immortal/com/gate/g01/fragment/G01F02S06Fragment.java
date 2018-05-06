@@ -48,7 +48,7 @@ public class G01F02S06Fragment extends BaseFragment<G00HomeActivity> {
         // Required empty public constructor
     }
 
-
+    // MARK: Override methods
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

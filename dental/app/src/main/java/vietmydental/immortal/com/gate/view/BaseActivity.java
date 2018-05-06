@@ -402,4 +402,22 @@ public class BaseActivity extends AppCompatActivity {
     public void openG01F03S03(String id) {
         navigator.openG01F03S03(id);
     }
+
+    /**
+     * Open G01F03S04 screen
+     * @param id Id of treatment detail
+     * @param amount Amount of money
+     */
+    public void openG01F03S04(String id, String amount) {
+        navigator.openG01F03S04(id, amount);
+    }
+
+    /**
+     * Open G01F03S04 screen
+     * @param id Id of treatment detail
+     * @param amount Amount of money
+     */
+    public void openG01F03S04(String id, String amount, String discount, String finalAmount, String description) {
+        navigator.openG01F03S04(id, amount, discount, finalAmount, description);
+    }
 }
