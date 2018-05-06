@@ -368,9 +368,11 @@ public class BaseNavigationComponent {
      * Open G01F01S02 screen
      * @param data Data of screen
      */
-    public void openG01F01S02(ArrayList<ConfigExtBean> data) {
+    public void openG01F01S02(ArrayList<ConfigExtBean> data, String id, String recordNumber) {
         BaseFragment fragment = new G01F01S02Fragment();
         ((G01F01S02Fragment)fragment).setData(data);
+        ((G01F01S02Fragment)fragment).setId(id);
+        ((G01F01S02Fragment)fragment).setRecordNumber(recordNumber);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 

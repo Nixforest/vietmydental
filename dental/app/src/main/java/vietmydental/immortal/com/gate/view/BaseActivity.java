@@ -347,8 +347,8 @@ public class BaseActivity extends AppCompatActivity {
      * Open G01F01S02 screen
      * @param data Data of screen
      */
-    public void openG01F01S02(ArrayList<ConfigExtBean> data) {
-        navigator.openG01F01S02(data);
+    public void openG01F01S02(ArrayList<ConfigExtBean> data, String id, String recordNumber) {
+        navigator.openG01F01S02(data, id, recordNumber);
     }
 
     /**

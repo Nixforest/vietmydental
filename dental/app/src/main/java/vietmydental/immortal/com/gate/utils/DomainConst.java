@@ -1024,11 +1024,11 @@ public final class DomainConst {
     /**
      * Server URL (Training mode)
      */
-    public static final String SERVER_URL_TRAINING = "http://vietmy.immortal.vn/index.php/api/";
+    public static final String SERVER_URL_TRAINING  = "http://vietmy.immortal.vn/index.php/api/";
     /**
      * Server URL
      */
-    public static final String SERVER_URL = "http://vietmy.immortal.vn/index.php/api/";
+    public static final String SERVER_URL           = "http://nkvietmy.com/index.php/api/";
 
     /**
      * -----Define id of fragment-----

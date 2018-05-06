@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
@@ -87,7 +86,7 @@ public class LoginBean extends ConfigBean {
         this.menu.clear();
         this.menu.add(new ConfigBean(DomainConst.MENU_ID_LIST.LOGIN, "Đăng nhập"));
         this.menu.add(new ConfigBean(DomainConst.MENU_ID_LIST.CONFIGURATION, "Cài đặt"));
-        this.pathological.clear();
+        this.getPathological().clear();
         this.address_config.clear();
         this.diagnosis.clear();
         this.treatment.clear();
@@ -109,5 +108,13 @@ public class LoginBean extends ConfigBean {
      */
     public ArrayList<ConfigBean> getMenu() {
         return menu;
+    }
+
+    /**
+     * Get pathological value
+     * @return Pathological value
+     */
+    public ArrayList<ConfigBean> getPathological() {
+        return pathological;
     }
 }

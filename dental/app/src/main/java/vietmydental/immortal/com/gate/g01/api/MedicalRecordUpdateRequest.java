@@ -2,6 +2,7 @@ package vietmydental.immortal.com.gate.g01.api;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 import vietmydental.immortal.com.gate.api.BaseRequest;
 import vietmydental.immortal.com.gate.g01.G01Const;
+import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class MedicalRecordUpdateRequest extends BaseRequest {
@@ -20,7 +22,7 @@ public class MedicalRecordUpdateRequest extends BaseRequest {
     /** Record number */
     private final String recordNumber;
     /** Medical history */
-    private final String medicalHistory;
+    private final ArrayList<ConfigExtBean> medicalHistory;
 
     /**
      * Constructor
@@ -29,7 +31,7 @@ public class MedicalRecordUpdateRequest extends BaseRequest {
      * @param recordNumber Record number
      * @param medicalHistory Medical history
      */
-    public MedicalRecordUpdateRequest(String token, String id, String recordNumber, String medicalHistory) {
+    public MedicalRecordUpdateRequest(String token, String id, String recordNumber, ArrayList<ConfigExtBean> medicalHistory) {
         super(G01Const.PATH_MEDICAL_RECORD_UPDATE);
         this.token = token;
         this.id = id;
@@ -49,7 +51,12 @@ public class MedicalRecordUpdateRequest extends BaseRequest {
             object.put(DomainConst.KEY_TOKEN, token);
             object.put(DomainConst.KEY_ID, id);
             object.put(DomainConst.KEY_RECORD_NUMBER, recordNumber);
-            object.put(DomainConst.KEY_MEDICAL_HISTORY, medicalHistory);
+            JSONArray array = new JSONArray();
+            for (ConfigExtBean bean :
+                    medicalHistory) {
+                array.put(bean.getId());
+            }
+            object.put(DomainConst.KEY_MEDICAL_HISTORY, array);
         } catch (JSONException e) {
             e.printStackTrace();
         }

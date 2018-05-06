@@ -73,7 +73,7 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
                         } else {
                             switch (bean.getId()) {
                                 case DomainConst.ITEM_MEDICAL_HISTORY:      // View medical history
-                                    parentActivity.openG01F01S02(bean.getDataExt());
+                                    parentActivity.openG01F01S02(bean.getDataExt(), id, "");
                                     break;
                                 case DomainConst.ITEM_UPDATE_DATA:          // Update data
                                     parentActivity.openG01F01S01(id);

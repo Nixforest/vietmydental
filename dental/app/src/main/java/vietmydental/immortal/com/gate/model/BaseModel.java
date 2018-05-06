@@ -12,7 +12,8 @@ public class BaseModel {
     private static final String     DB_NAME             = "Share_DB";
 
     /** Current application mode */
-    private int                     mode                = DomainConst.MODE_TRAINING;
+//    private int                     mode                = DomainConst.MODE_TRAINING;
+    private int                     mode                = DomainConst.MODE_RUNNING;
 
     /**
      * Get singleton instance.
@@ -100,5 +101,28 @@ public class BaseModel {
      */
     public void setToken(Context ctx, String value) {
         setValue(ctx, DomainConst.KEY_TOKEN, value);
+    }
+
+    /**
+     * Set mode
+     * @param context Current context
+     * @param mode Mode to set
+     */
+    public void setMode(Context context, int mode) {
+        this.mode = mode;
+        setValue(context, "training_mode", String.valueOf(this.mode));
+    }
+
+    /**
+     * Get mode
+     * @param context Current context
+     * @return Current mode
+     */
+    public int getMode(Context context) {
+        String val = getValue(context, "training_mode");
+        if (val != null) {
+            this.mode = Integer.parseInt(val);
+        }
+        return this.mode;
     }
 }
