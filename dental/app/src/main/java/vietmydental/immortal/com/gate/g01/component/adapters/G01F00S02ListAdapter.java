@@ -188,14 +188,16 @@ public class G01F00S02ListAdapter extends BaseAdapter {
 
                             holder.textView.setText(data.getName());
                             holder.textDetail.setVisibility(View.GONE);
-                            holder.textValue.setVisibility(View.GONE);
+//                            holder.textValue.setVisibility(View.GONE);
+                            holder.textValue.setText("");
                             break;
                         case DomainConst.ITEM_UPDATE_DATA:
                             imageId = DomainConst.VMD_IMG_LIST.get(DomainConst.ITEM_UPDATE_DATA);
 
                             holder.textView.setText(data.getName());
                             holder.textDetail.setVisibility(View.GONE);
-                            holder.textValue.setVisibility(View.GONE);
+//                            holder.textValue.setVisibility(View.GONE);
+                            holder.textValue.setText("");
                             break;
                         default:
                             holder.textView.setText(data.getName());
@@ -209,7 +211,8 @@ public class G01F00S02ListAdapter extends BaseAdapter {
 
                             holder.textView.setText(data.getName());
                             holder.textDetail.setVisibility(View.GONE);
-                            holder.textValue.setVisibility(View.GONE);
+//                            holder.textValue.setVisibility(View.GONE);
+                            holder.textValue.setText("");
                             break;
                         default:
 //                            holder.textView.setText(data.getName());

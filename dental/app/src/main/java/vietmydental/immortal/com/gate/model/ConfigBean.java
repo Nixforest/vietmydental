@@ -8,10 +8,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import ir.mirrajabi.searchdialog.core.Searchable;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
-public class ConfigBean implements Serializable {
+public class ConfigBean implements Serializable, Searchable {
     /** Id */
     protected String id;
     /** Name */
@@ -103,6 +104,13 @@ public class ConfigBean implements Serializable {
     }
 
     /**
+     * Set name
+     * @param name Name value
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    /**
      * Get data.
      * @return Data
      */
@@ -123,5 +131,10 @@ public class ConfigBean implements Serializable {
             }
         }
         return "";
+    }
+
+    @Override
+    public String getTitle() {
+        return name;
     }
 }

@@ -29,6 +29,7 @@ import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 
 /**
@@ -44,8 +45,11 @@ public class G01F01S02Fragment extends BaseFragment<G00HomeActivity> {
     private String id = "";
     /** Record number */
     private String recordNumber = "";
+    /** Current selected index */
+    private int currentIndex = -1;
     /** Adapter */
     private G01F01S02ListAdapter mAdapter;
+
     /**
      * Constructor
      */
@@ -61,6 +65,7 @@ public class G01F01S02Fragment extends BaseFragment<G00HomeActivity> {
         View rootView = inflater.inflate(R.layout.fragment_g01_f01_s02, container, false);
         ButterKnife.bind(this, rootView);
         setListInfo();
+        handleListViewItemClick();
         return rootView;
     }
 
@@ -142,10 +147,27 @@ public class G01F01S02Fragment extends BaseFragment<G00HomeActivity> {
             listInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                    currentIndex = i;
+                    CommonProcess.ConfirmDialogCallback listener = new CommonProcess.ConfirmDialogCallback() {
+                        @Override
+                        public void onConfirmed() {
+                            handleRemoveItem();
+                        }
+                    };
+                    CommonProcess.showMessage(parentActivity,
+                            DomainConst.CONTENT00162,
+                            DomainConst.CONTENT00546, listener);
                 }
             });
         }
+    }
+
+    /**
+     * Handle remove item at index
+     */
+    public void handleRemoveItem() {
+        mData.remove(currentIndex);
+        updateDataToServer();
     }
 
     /**
@@ -167,16 +189,10 @@ public class G01F01S02Fragment extends BaseFragment<G00HomeActivity> {
      * Update data to server
      */
     private void updateDataToServer() {
-        List<String> arrData = new ArrayList<>();
-        for (ConfigExtBean bean :
-                mData) {
-            arrData.add(bean.getId());
-        }
-        String medicalHistory = "[" + TextUtils.join(",", arrData) + "]";
         String token = BaseModel.getInstance().getToken(parentActivity.getBaseContext());
         if (token != null) {
             MedicalRecordUpdateRequest request = new MedicalRecordUpdateRequest(
-                token, id, recordNumber, mData
+                    token, id, recordNumber, mData
             ) {
                 @Override
                 protected void onPostExecute(Object o) {

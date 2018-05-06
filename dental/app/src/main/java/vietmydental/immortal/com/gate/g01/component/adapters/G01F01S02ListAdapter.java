@@ -22,9 +22,12 @@ public class G01F01S02ListAdapter extends BaseAdapter {
         public TextView textView;
         @BindView(R.id.textDetail)
         public TextView textDetail;
-//        public TextView textValue;
+        @BindView(R.id.textValue)
+        public TextView textValue;
         @BindView(R.id.image)
         public ImageView imageView;
+        @BindView(R.id.imgNext)
+        public ImageView imgNext;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -76,6 +79,8 @@ public class G01F01S02ListAdapter extends BaseAdapter {
             }
             holder.textView.setText(item.getName());
             holder.textDetail.setVisibility(View.GONE);
+            holder.imgNext.setVisibility(View.GONE);
+            holder.textValue.setText("");
 //            int imageId = DomainConst.VMD_IMG_LIST.get(item.getId());
 //
 //            if (imageId != 0) {

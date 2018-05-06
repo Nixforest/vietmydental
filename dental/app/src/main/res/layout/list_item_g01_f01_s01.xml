@@ -40,6 +40,25 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_menu_size" />
         </LinearLayout>
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/textValue"
+            android:layout_weight="0.1"
+            android:gravity="center_vertical|end"
+            android:padding="5dp"
+            android:textColor="#FF000000"/>
 
+        <ImageView
+            android:id="@+id/imgNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/layout_menu_margin_height"
+            android:layout_gravity="center_vertical|right"
+            android:foregroundGravity="right"
+            android:src="@drawable/ic_next"
+            android:layout_alignParentRight="true" />
     </LinearLayout>
+
 </LinearLayout>

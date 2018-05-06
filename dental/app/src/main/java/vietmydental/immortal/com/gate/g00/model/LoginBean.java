@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import vietmydental.immortal.com.gate.model.ConfigBean;
+import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
@@ -28,11 +29,11 @@ public class LoginBean extends ConfigBean {
     /** Address config */
     private ArrayList<ConfigBean> address_config    = new ArrayList<>();
     /** Diagnosis config */
-    private ArrayList<ConfigBean> diagnosis         = new ArrayList<>();
+    private ArrayList<ConfigExtBean> diagnosis      = new ArrayList<>();
     /** Treatment type config */
-    private ArrayList<ConfigBean> treatment         = new ArrayList<>();
+    private ArrayList<ConfigExtBean> treatment      = new ArrayList<>();
     /** Teeth config */
-    private ArrayList<ConfigBean> teeth             = new ArrayList<>();
+    private ArrayList<ConfigExtBean> teeth          = new ArrayList<>();
     /** Timer config */
     private ArrayList<ConfigBean> timer             = new ArrayList<>();
 
@@ -71,9 +72,9 @@ public class LoginBean extends ConfigBean {
         this.menu.add(new ConfigBean(DomainConst.MENU_ID_LIST.LOGOUT, "Thoát"));
         this.pathological       = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_PATHOLOGICAL);
         this.address_config     = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_ADDRESS_CONFIG);
-        this.diagnosis          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_DIAGNOSIS);
-        this.treatment          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_TREATMENT);
-        this.teeth              = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_TEETH);
+        this.diagnosis          = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_DIAGNOSIS);
+        this.treatment          = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_TREATMENT);
+        this.teeth              = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_TEETH);
         this.timer              = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_TIMER);
     }
 
@@ -88,7 +89,7 @@ public class LoginBean extends ConfigBean {
         this.menu.add(new ConfigBean(DomainConst.MENU_ID_LIST.CONFIGURATION, "Cài đặt"));
         this.getPathological().clear();
         this.address_config.clear();
-        this.diagnosis.clear();
+        this.getDiagnosis().clear();
         this.treatment.clear();
         this.teeth.clear();
         this.timer.clear();
@@ -116,5 +117,41 @@ public class LoginBean extends ConfigBean {
      */
     public ArrayList<ConfigBean> getPathological() {
         return pathological;
+    }
+
+    public ArrayList<ConfigExtBean> getDiagnosis() {
+        return diagnosis;
+    }
+
+    public ArrayList<ConfigExtBean> getTooth() {
+        return teeth;
+    }
+
+    public ArrayList<ConfigExtBean> getTreatment() {
+        return treatment;
+    }
+
+    /**
+     * Get diagnosis by id
+     * @param id Id of item
+     * @return Object
+     */
+    public ConfigExtBean getDiagnosis(String id) {
+        for (ConfigExtBean item :
+                diagnosis) {
+            if (id.equals(item.getId())) {
+                return item;
+            } else {
+                if (!item.getDataExt().isEmpty()) {
+                    for (ConfigExtBean child :
+                            item.getDataExt()) {
+                        if (id.equals(child.getId())) {
+                            return child;
+                        }
+                    }
+                }
+            }
+        }
+        return new ConfigExtBean();
     }
 }

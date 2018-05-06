@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import ir.mirrajabi.searchdialog.core.Searchable;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
@@ -77,6 +78,9 @@ public class ConfigExtBean extends ConfigBean {
 
     public String getDataStr() {
         return dataStr;
+    }
+    public void setDataStr(String value) {
+        this.dataStr = value;
     }
 
     public ArrayList<ConfigExtBean> getDataExt() {

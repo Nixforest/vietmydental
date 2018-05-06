@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
@@ -115,6 +116,16 @@ public class G01F02S01Fragment extends BaseFragment<G00HomeActivity> {
     @Override
     public TitleConfigObject getTitleConfig() {
         return new BaseFragment.TitleConfigObject(false, true);
+    }
+
+    // MARK: Event handler
+    /**
+     * Handle click on add button
+     */
+    @OnClick(R.id.btnAdd)
+    public void btnAddClick() {
+//        CommonProcess.showErrorMessage(parentActivity, "123");
+        parentActivity.openG01F02S06(id);
     }
 
     // MARK: Logic

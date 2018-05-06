@@ -39,6 +39,8 @@ import vietmydental.immortal.com.gate.g00.fragment.HomeFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
 import vietmydental.immortal.com.gate.g01.fragment.G01F00S01Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S02Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S05Fragment;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -376,11 +378,21 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * Open G01F02S05 screen
+     * @param id Id of treatment
+     * @param data Data of treatment
+     * @param diagnosisId Id of diagnosis
+     * @param pathologicalId Id of pathological
+     */
+    public void openG01F02S05(String id, G01F02S02Fragment.TreatmentInfoRespBean data, String diagnosisId, String pathologicalId) {
+        navigator.openG01F02S05(id, data, diagnosisId, pathologicalId);
+    }
+    /**
      * Open G01F03S01 screen
      * @param data Data of screen
      */
-    public void openG01F03S01(String id, ConfigExtBean data) {
-        navigator.openG01F03S01(id, data);
+    public void openG01F03S01(ConfigExtBean data) {
+        navigator.openG01F03S01(data);
     }
 
     /**

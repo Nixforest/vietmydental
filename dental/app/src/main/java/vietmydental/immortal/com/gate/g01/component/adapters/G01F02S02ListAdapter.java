@@ -223,7 +223,8 @@ public class G01F02S02ListAdapter extends BaseAdapter {
 
                             holder.textView.setText(data.getName());
                             holder.textDetail.setVisibility(View.GONE);
-                            holder.textValue.setVisibility(View.GONE);
+//                            holder.textValue.setVisibility(View.GONE);
+                            holder.textValue.setText("");
                             break;
                         case DomainConst.ITEM_TEETH:
                             imageId = CommonProcess.getImageId(DomainConst.ITEM_TEETH);
@@ -286,7 +287,8 @@ public class G01F02S02ListAdapter extends BaseAdapter {
                         holder.textDetail.setText(data.getName());
                     }
 
-                    holder.textValue.setVisibility(View.GONE);
+//                    holder.textValue.setVisibility(View.GONE);
+                    holder.textValue.setText("");
                     String status = data.getValueByIdExt(DomainConst.ITEM_STATUS);
                     if (status.equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_SCHEDULE)
                         || status.equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_ACTIVE)) {

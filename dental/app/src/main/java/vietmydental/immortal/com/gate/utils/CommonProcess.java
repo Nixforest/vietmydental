@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Html;
+import android.text.InputType;
+import android.widget.EditText;
 
 
 import com.google.gson.Gson;
@@ -146,6 +148,38 @@ public class CommonProcess {
     }
 
     /**
+     * Create input text alert
+     * @param context Context
+     * @param title Title of alert
+     * @param value Value of input text
+     * @return AlertDialog.Builder
+     */
+    public static AlertDialog.Builder createInputTextAlert(Context context, String title, String value, EditText inputView) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        // Specify the type of input expected
+        inputView.setInputType(InputType.TYPE_CLASS_TEXT);
+        inputView.setText(value);
+        builder.setView(inputView);
+        return builder;
+    }
+
+    /**
+     * Show selection alert
+     * @param context Context
+     * @param title Title of alert
+     * @param values Value of list selection
+     * @param listener Listener when click item
+     */
+    public static void showSelectionAlert(Context context, String title, String[] values, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setItems(values, listener);
+        builder.setNegativeButton(DomainConst.CONTENT00202, null);
+        builder.show();
+    }
+
+    /**
      * Get json string
      * @param data Json object data
      * @param key Key value
@@ -257,6 +291,58 @@ public class CommonProcess {
             }
         }
         return "";
+    }
+
+    /**
+     * Get configext object by id
+     * @param list List to find
+     * @param id Id of item
+     * @return Value of data string
+     */
+    public static ConfigExtBean getConfigExtObjById(ArrayList<ConfigExtBean> list, String id) {
+        for (ConfigExtBean item :
+                list) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Set name for configext Object
+     * @param list List to find
+     * @param id Id of item
+     * @param name Name value
+     * @return True if set name success, False otherwise
+     */
+    public static boolean setConfigExtNameById(ArrayList<ConfigExtBean> list, String id, String name) {
+        for (ConfigExtBean item :
+                list) {
+            if (item.getId().equals(id)) {
+                item.setName(name);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Set data str for configext Object
+     * @param list List to find
+     * @param id Id of item
+     * @param value Value
+     * @return True if set name success, False otherwise
+     */
+    public static boolean setConfigExtDataStrById(ArrayList<ConfigExtBean> list, String id, String value) {
+        for (ConfigExtBean item :
+                list) {
+            if (item.getId().equals(id)) {
+                item.setDataStr(value);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

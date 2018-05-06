@@ -1,6 +1,8 @@
 package vietmydental.immortal.com.gate.g01.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,12 +23,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
+import ir.mirrajabi.searchdialog.SimpleSearchFilter;
+import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
+import ir.mirrajabi.searchdialog.core.SearchResultListener;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
+import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.g01.api.TreatmentInfoRequest;
+import vietmydental.immortal.com.gate.g01.api.TreatmentUpdateRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F02S02ListAdapter;
 import vietmydental.immortal.com.gate.model.BaseModel;
+import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
@@ -41,10 +51,14 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
 
     /** Id of treatment */
     private String id = "";
+    /** Id of pathological */
+    private String pathologicalId = "";
+    /** Id of diagnosis */
+    private String diagnosisId = "";
     /** Data */
     private TreatmentInfoRespBean respData;
     /** Visible data */
-    private List<List<ConfigExtBean>> mData = new ArrayList<>();
+    private List<ArrayList<ConfigExtBean>> mData = new ArrayList<>();
     /** Adapter */
     private G01F02S02ListAdapter mAdapter;
 
@@ -124,6 +138,33 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
     }
 
     /**
+     * Update data to server
+     */
+    private void updateDataToServer() {
+        String token = BaseModel.getInstance().getToken(parentActivity.getBaseContext());
+        ArrayList<ConfigExtBean> data = respData.getList();
+        ConfigExtBean healthy = CommonProcess.getConfigExtObjById(data, DomainConst.ITEM_HEALTHY);
+        String status = CommonProcess.getConfigExtValueById(data, DomainConst.ITEM_STATUS);
+        if (token != null && healthy != null && status != null) {
+            TreatmentUpdateRequest request = new TreatmentUpdateRequest(
+                    token, id, diagnosisId, pathologicalId, healthy.getDataExt(), status
+            ) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    BaseResponse resp = getResponse();
+                    if ((resp != null) && resp.isSuccess()) {
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        parentActivity.showLoadingView(false);
+                        CommonProcess.showErrorMessage(parentActivity, resp);
+                    }
+                }
+            };
+            request.execute();
+        }
+    }
+
+    /**
      * Parse data from response.
      * @param data JSONObject data
      */
@@ -131,6 +172,15 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
         JsonParser jsonParser = new JsonParser();
         JsonArray gsonObject = (JsonArray) jsonParser.parse(data.toString());
         respData = new TreatmentInfoRespBean(gsonObject);
+        ArrayList<ConfigExtBean> listData = respData.getList();
+        ConfigExtBean diagnosis = CommonProcess.getConfigExtObjById(listData, DomainConst.ITEM_DIAGNOSIS_ID);
+        if (diagnosis != null) {
+            diagnosisId = diagnosis.getDataStr();
+        }
+        ConfigExtBean pathological = CommonProcess.getConfigExtObjById(listData, DomainConst.ITEM_PATHOLOGICAL_ID);
+        if (pathological != null) {
+            pathologicalId = pathological.getDataStr();
+        }
     }
 
     /**
@@ -194,12 +244,12 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
                             switch (bean.getId()) {
                                 case DomainConst.ITEM_DIAGNOSIS:
                                     if (canUpdate()) {
-                                        updateDiagnosis();
+                                        updateDiagnosis(bean.getName());
                                     }
                                     break;
                                 case DomainConst.ITEM_PATHOLOGICAL:
                                     if (canUpdate()) {
-                                        updatePathological();
+                                        updatePathological(bean.getName());
                                     }
                                     break;
                                 case DomainConst.ITEM_HEALTHY:
@@ -227,7 +277,7 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
      * @param bean Data treatment schedule detail
      */
     private void openTreatmentScheduleDetail(ConfigExtBean bean) {
-        parentActivity.openG01F03S01(bean.getId(), bean);
+        parentActivity.openG01F03S01(bean);
     }
 
     /**
@@ -325,6 +375,7 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
      * Open healthy information screen
      */
     private void openHealthyInfo() {
+        parentActivity.openG01F02S05(id, respData, diagnosisId, pathologicalId);
     }
 
     /**
@@ -337,14 +388,75 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
 
     /**
      * Update diagnosis
+     * @param title Title of alert
      */
-    private void updateDiagnosis() {
+    private void updateDiagnosis(String title) {
+        final ArrayList<String> diagnosis = new ArrayList<>();
+        for (ConfigExtBean bean :
+                LoginBean.getInstance().getDiagnosis()) {
+            diagnosis.add(bean.getName());
+            if (!bean.getDataExt().isEmpty()) {
+                for (ConfigExtBean child :
+                        bean.getDataExt()) {
+                    diagnosis.add(child.getName());
+                }
+            }
+        }
+        String[] simpleArray = new String[ diagnosis.size() ];
+        diagnosis.toArray(simpleArray);
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                ConfigBean selectedItem = LoginBean.getInstance().getPathological().get(i);
+//                CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_PATHOLOGICAL, selectedItem.getName());
+//                pathologicalId = selectedItem.getId();
+//                mAdapter.notifyDataSetChanged();
+            }
+        };
+//        CommonProcess.showSelectionAlert(parentActivity, title, simpleArray, listener);
+        new SimpleSearchDialogCompat(parentActivity, title,
+                "Tìm kiếm", null, LoginBean.getInstance().getDiagnosis(),
+                new SearchResultListener<ConfigExtBean>() {
+                    @Override
+                    public void onSelected(BaseSearchDialogCompat dialog,
+                                           ConfigExtBean item, int position) {
+                        String[] arrValue = item.getName().split("-");
+                        if (arrValue.length == 3) {
+                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, arrValue[1]);
+                        } else {
+                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, item.getName());
+                        }
+                        diagnosisId = item.getId();
+                        dialog.dismiss();
+                        updateDataToServer();
+                    }
+                }).show();
     }
 
     /**
      * Update pathological
+     * @param title Title of alert
      */
-    private void updatePathological() {
+    private void updatePathological(String title) {
+        final ArrayList<String> pathological = new ArrayList<>();
+        for (ConfigBean bean :
+                LoginBean.getInstance().getPathological()) {
+            pathological.add(bean.getName());
+        }
+        String[] simpleArray = new String[ pathological.size() ];
+        pathological.toArray(simpleArray);
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ConfigBean selectedItem = LoginBean.getInstance().getPathological().get(i);
+                CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_PATHOLOGICAL, selectedItem.getName());
+                pathologicalId = selectedItem.getId();
+                updateDataToServer();
+            }
+        };
+        CommonProcess.showSelectionAlert(parentActivity, title, simpleArray, listener);
     }
 
     /**

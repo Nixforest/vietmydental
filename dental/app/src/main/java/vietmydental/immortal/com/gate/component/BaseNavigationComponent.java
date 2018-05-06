@@ -26,6 +26,7 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F01S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F01S02Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S02Fragment;
+import vietmydental.immortal.com.gate.g01.fragment.G01F02S05Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S06Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S03Fragment;
@@ -377,6 +378,20 @@ public class BaseNavigationComponent {
     }
 
     /**
+     * Open G01F02S05 screen
+     * @param id Id of treatment
+     * @param data Data of treatment
+     * @param diagnosisId Id of diagnosis
+     * @param pathologicalId Id of pathological
+     */
+    public void openG01F02S05(String id, G01F02S02Fragment.TreatmentInfoRespBean data, String diagnosisId, String pathologicalId) {
+        BaseFragment fragment = new G01F02S05Fragment();
+        ((G01F02S05Fragment)fragment).setData(id, diagnosisId, pathologicalId);
+        ((G01F02S05Fragment)fragment).setData(data);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
      * Open G01F02S06 screen
      * @param id Id of customer
      */
@@ -409,12 +424,11 @@ public class BaseNavigationComponent {
 
     /**
      * Open G01F03S01 screen
-     * @param id Id of treatment schedule detail
      * @param data Data of screen
      */
-    public void openG01F03S01(String id, ConfigExtBean data) {
+    public void openG01F03S01(ConfigExtBean data) {
         BaseFragment fragment = new G01F03S01Fragment();
-        ((G01F03S01Fragment)fragment).setId(id);
+//        ((G01F03S01Fragment)fragment).setId(id);
         ((G01F03S01Fragment)fragment).setData(data);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
