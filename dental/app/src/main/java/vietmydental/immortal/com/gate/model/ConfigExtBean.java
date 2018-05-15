@@ -108,4 +108,23 @@ public class ConfigExtBean extends ConfigBean {
         }
         return "";
     }
+//    @Override
+//    public String getTitle() {
+//        return dataStr;
+//    }
+
+    /**
+     * Check if 1 object contained inside dataExt list
+     * @param bean Object to check
+     * @return True if exist, false otherwise
+     */
+    public boolean contains(ConfigExtBean bean) {
+        for (ConfigExtBean item :
+                this.dataExt) {
+            if (item.id.equals(bean.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

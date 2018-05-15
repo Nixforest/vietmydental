@@ -11,17 +11,27 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
+import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
+import ir.mirrajabi.searchdialog.core.SearchResultListener;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
+import vietmydental.immortal.com.gate.g01.api.PathologicalCreateRequest;
 import vietmydental.immortal.com.gate.g01.api.TreatmentUpdateRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F01S02ListAdapter;
+import vietmydental.immortal.com.gate.g01.model.PathologicalCreateRespBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -100,6 +110,15 @@ public class G01F02S05Fragment extends BaseFragment<G00HomeActivity> {
      */
     @OnClick(R.id.btnAdd)
     public void btnAddClick() {
+//        handleAddItem();
+        handleAddItemWithSearchView("Thêm bệnh lý");
+    }
+
+    // MARK: Logic
+    /**
+     * Handle add item
+     */
+    private void handleAddItem() {
         ArrayList<String> pathological = new ArrayList<>();
         for (ConfigBean bean :
                 LoginBean.getInstance().getPathological()) {
@@ -123,9 +142,94 @@ public class G01F02S05Fragment extends BaseFragment<G00HomeActivity> {
         });
         builder.setNegativeButton("Huỷ", null);
         builder.show();
+
     }
 
-    // MARK: Logic
+    /**
+     * Handle add item with search dialog
+     * @param title Title of dialog
+     */
+    private void handleAddItemWithSearchView(String title) {
+        final SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(parentActivity, title, DomainConst.CONTENT00287, null,
+                LoginBean.getInstance().getPathological(), new SearchResultListener<ConfigBean>() {
+            @Override
+            public void onSelected(final BaseSearchDialogCompat baseSearchDialogCompat, ConfigBean item, int i) {
+                // Get selected item
+                ConfigExtBean data = new ConfigExtBean(item.getId(), item.getName());
+                // Check if current selected item is Create new item
+                if (item.getId().equals(DomainConst.ITEM_CREATE_NEW)) {
+                    // Get text from searchbox
+                    String newPathological = ((SimpleSearchDialogCompat)baseSearchDialogCompat).getSearchBox().getText().toString();
+                    // Normalization
+                    newPathological = CommonProcess.upperCaseAllFirst(newPathological);
+                    final String finalNewPathological = newPathological;
+                    CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                            "Bạn có chắc chắn muốn tạo mới Bệnh lý " + newPathological + " không?",
+                            new CommonProcess.ConfirmDialogCallback() {
+                                @Override
+                                public void onConfirmed() {
+                                    requestCreateNewPathological(finalNewPathological, baseSearchDialogCompat);
+                                }
+                            });
+                } else if (!isContain(data)) {
+                    mData.add(data);
+                    baseSearchDialogCompat.dismiss();
+                    updateDataToServer();
+                } else {
+                    baseSearchDialogCompat.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * Request create new pathological
+     * @param value New value
+     * @param baseSearchDialogCompat Current dialog
+     */
+    private void requestCreateNewPathological(String value, final BaseSearchDialogCompat baseSearchDialogCompat) {
+        String token = BaseModel.getInstance().getToken(parentActivity);
+        if (token != null) {
+            PathologicalCreateRequest request = new PathologicalCreateRequest(
+                    token, value, value) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    final BaseResponse resp = getResponse();
+                    // Request success
+                    if ((resp != null) && resp.isSuccess()) {
+                        // Get response data
+                        final PathologicalCreateRespBean respBean = parseData(resp.getData());
+                        // Save to login data
+                        LoginBean.getInstance().getPathological().add(respBean.getBean());
+                        CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                resp.getMessage(), new CommonProcess.ConfirmDialogCallback() {
+                                    @Override
+                                    public void onConfirmed() {
+                                        // Add to current data
+                                        mData.add(respBean.getBean());
+                                        // Reload load list view data
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                        baseSearchDialogCompat.dismiss();
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        CommonProcess.showErrorMessage(parentActivity, resp);
+                    }
+                }
+            };
+            request.execute();
+        }
+    }
+
+    private PathologicalCreateRespBean parseData(JSONObject data) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject gsonObj = (JsonObject) jsonParser.parse(data.toString());
+        PathologicalCreateRespBean retVal = new PathologicalCreateRespBean(gsonObj);
+        return retVal;
+    }
+
     /**
      * Set data for screen
      * @param data Array config extent bean

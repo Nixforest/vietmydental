@@ -2,6 +2,7 @@ package vietmydental.immortal.com.gate.g01.api;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 import vietmydental.immortal.com.gate.api.BaseRequest;
 import vietmydental.immortal.com.gate.g01.G01Const;
+import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
@@ -27,6 +29,8 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
     private final String diagnosisId;
     /** Treatment */
     private final String treatment;
+    /** Status */
+    private final ArrayList<ConfigExtBean> teeth_info;
 
     /**
      * Constructor
@@ -37,8 +41,9 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
      * @param teethId Id of teeth
      * @param diagnosisId Id of diagnosis
      * @param treatment Id of treatment type
+     * @param teeth_info
      */
-    public TreatmentScheduleDetailCreateRequest(String token, String scheduleId, String time, String date, String teethId, String diagnosisId, String treatment) {
+    public TreatmentScheduleDetailCreateRequest(String token, String scheduleId, String time, String date, String teethId, String diagnosisId, String treatment, ArrayList<ConfigExtBean> teeth_info) {
         super(G01Const.PATH_TREATMENT_DETAIL_CREATE);
         this.token = token;
         this.scheduleId = scheduleId;
@@ -47,6 +52,7 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
         this.teethId = teethId;
         this.diagnosisId = diagnosisId;
         this.treatment = treatment;
+        this.teeth_info = teeth_info;
     }
 
     /**
@@ -66,6 +72,12 @@ public class TreatmentScheduleDetailCreateRequest extends BaseRequest {
             object.put(DomainConst.KEY_TEETH_ID, teethId);
             object.put(DomainConst.KEY_DIAGNOSIS_ID, diagnosisId);
             object.put(DomainConst.KEY_TREATMENT_TYPE_ID, treatment);
+            JSONArray array = new JSONArray();
+            for (ConfigExtBean bean :
+                    teeth_info) {
+                array.put(bean.getId());
+            }
+            object.put(DomainConst.KEY_TEETH_INFO, array);
         } catch (JSONException e) {
             e.printStackTrace();
         }

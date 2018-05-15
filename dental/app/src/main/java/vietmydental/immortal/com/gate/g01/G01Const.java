@@ -27,4 +27,6 @@ public class G01Const {
     public static final String PATH_TREATMENT_DETAIL_CREATE              = "customer/createTreatmentScheduleDetail";
     /** Path to connect with PHP server */
     public static final String PATH_RECEIPT_CREATE                       = "customer/createReceipt";
+    /** Path to connect with PHP server */
+    public static final String PATH_PATHOLOGICAL_CREATE                  = "default/createPathological";
 }

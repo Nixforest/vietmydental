@@ -4,7 +4,6 @@ package vietmydental.immortal.com.gate.g01.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +25,9 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
-import vietmydental.immortal.com.gate.g01.api.TreatmentCreateRequest;
-import vietmydental.immortal.com.gate.g01.api.TreatmentInfoRequest;
 import vietmydental.immortal.com.gate.g01.api.TreatmentScheduleDetailUpdateRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F02S02ListAdapter;
+import vietmydental.immortal.com.gate.g01.model.SampleSearchModel;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
@@ -109,15 +103,7 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
 
     @Override
     public void onFinishClick() {
-        CommonProcess.ConfirmDialogCallback listener = new CommonProcess.ConfirmDialogCallback() {
-            @Override
-            public void onConfirmed() {
-                handleFinish();
-            }
-        };
-        CommonProcess.showMessage(parentActivity,
-                DomainConst.CONTENT00162,
-                DomainConst.CONTENT00561, listener);
+        confirmToFinish();
     }
 
     // MARK: Logic
@@ -145,20 +131,22 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
     private void handleUpdate(final String status) {
         updateActionButton();
         String token = BaseModel.getInstance().getToken(parentActivity.getBaseContext());
-        if (token != null) {
+        ConfigExtBean teethInfo = CommonProcess.getConfigExtObjById(mData.get(0), DomainConst.ITEM_TEETH_INFO);
+        if (token != null && (teethInfo != null)) {
             parentActivity.showLoadingView(true);
             TreatmentScheduleDetailUpdateRequest request = new TreatmentScheduleDetailUpdateRequest(
                     token,
                     CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID),
-                    teethId, diagnosisId, treatmentId, status
-            ) {
+                    teethId, diagnosisId, treatmentId, status,
+                    teethInfo.getDataExt()) {
                 @Override
                 protected void onPostExecute(Object o) {
                     BaseResponse resp = getResponse();
                     if ((resp != null) && resp.isSuccess()) {
                         parentActivity.showLoadingView(false);
                         if (status.equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED)) {
-                            parentActivity.onBackClick();
+//                            parentActivity.onBackClick();
+                            openReceipt();
                         }
                         mAdapter.notifyDataSetChanged();
                     } else {
@@ -201,14 +189,14 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
         for (ConfigExtBean item :
                 detailData.getDataExt()) {
             if (item.getId().equals(DomainConst.ITEM_DETAILS)) {
-                section++;
-                addSectionHeaderItem(item, section);
-                for (ConfigExtBean bean :
-                        item.getDataExt()) {
-                    if (!bean.getId().isEmpty()) {
-                        addItem(bean, section);
-                    }
-                }
+//                section++;
+//                addSectionHeaderItem(item, section);
+//                for (ConfigExtBean bean :
+//                        item.getDataExt()) {
+//                    if (!bean.getId().isEmpty()) {
+//                        addItem(bean, section);
+//                    }
+//                }
             } else if (!item.getId().equals(DomainConst.ITEM_RECEIPT)) {
                 switch (item.getId()) {
                     case DomainConst.ITEM_HEALTHY:
@@ -233,6 +221,7 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
                     case DomainConst.ITEM_TREATMENT_TYPE_ID:
                     case DomainConst.ITEM_START_DATE:
                     case DomainConst.ITEM_TYPE:
+                    case DomainConst.ITEM_TEETH:
                         break;
                     case DomainConst.ITEM_INSURANCE:
                         if (!item.getDataStr().isEmpty() && !item.getDataStr().equals("0")) {
@@ -268,12 +257,20 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
                                     }
                                     break;
                                 case DomainConst.ITEM_TEETH:
-                                    if (canUpdate()) {
-                                        updateTeeth(bean.getName());
-                                    }
+//                                    if (canUpdate()) {
+//                                        updateTeeth(bean.getName());
+//                                    }
+                                    break;
+                                case DomainConst.ITEM_TEETH_INFO:
+                                    updateTeeth(bean.getName());
                                     break;
                                 case DomainConst.ITEM_TREATMENT:
-                                    updateTreatment(bean.getName());
+                                    if (canUpdate()) {
+                                        updateTreatment(bean.getName());
+                                    }
+                                    break;
+                                case DomainConst.ITEM_IMAGE:
+                                    openXRayImages();
                                     break;
                                 default: break;
                             }
@@ -302,7 +299,6 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
         final ArrayList<String> treatment = new ArrayList<>();
         for (ConfigExtBean bean :
                 LoginBean.getInstance().getTreatment()) {
-//            treatment.add(bean.getName());
             for (ConfigExtBean child :
                     bean.getDataExt()) {
                 String name = child.getName() + " - " + child.getDataStr();
@@ -314,15 +310,22 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
         String[] simpleArray = new String[ treatment.size() ];
         treatment.toArray(simpleArray);
         new SimpleSearchDialogCompat(parentActivity, title,
-                "Tìm kiếm", null, listTreatment,
+                DomainConst.CONTENT00287, null, listTreatment,
                 new SearchResultListener<ConfigExtBean>() {
                     @Override
                     public void onSelected(BaseSearchDialogCompat dialog,
                                            ConfigExtBean item, int position) {
-                        CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_TREATMENT, item.getName());
-                        treatmentId = item.getId();
-                        dialog.dismiss();
-                        updateDataToServer();
+                        // Check if current selected item is Create new item
+                        if (item.getId().equals(DomainConst.ITEM_CREATE_NEW)) {
+                            CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                    DomainConst.CONTENT00362, null);
+                        } else {
+                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_TREATMENT, item.getName());
+
+                            treatmentId = item.getId();
+                            dialog.dismiss();
+                            updateDataToServer();
+                        }
                     }
                 }).show();
     }
@@ -338,19 +341,46 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
             teeth.add(bean.getName());
         }
         String[] simpleArray = new String[ teeth.size() ];
+        final boolean[] selecteds = new boolean[teeth.size()];
         teeth.toArray(simpleArray);
-        new SimpleSearchDialogCompat(parentActivity, title,
-                "Tìm kiếm", null, LoginBean.getInstance().getTooth(),
-                new SearchResultListener<ConfigExtBean>() {
-                    @Override
-                    public void onSelected(BaseSearchDialogCompat dialog,
-                                           ConfigExtBean item, int position) {
-                        CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_TEETH, item.getName());
-                        teethId = item.getId();
-                        dialog.dismiss();
-                        updateDataToServer();
+        final ConfigExtBean teethInfo = CommonProcess.getConfigExtObjById(mData.get(0), DomainConst.ITEM_TEETH_INFO);
+        if (teethInfo != null) {
+            int idx = 0;
+            for (ConfigExtBean bean :
+                    LoginBean.getInstance().getTooth()) {
+                selecteds[idx++] = teethInfo.contains(bean);
+            }
+        }
+        DialogInterface.OnMultiChoiceClickListener listener = new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                selecteds[i] = b;
+            }
+        };
+        DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (teethInfo != null) {
+                    int idx = 0;
+                    // Clear current teeth info
+                    teethInfo.getDataExt().clear();
+                    for (ConfigExtBean bean :
+                            LoginBean.getInstance().getTooth()) {
+                        // Update teeth info
+                        if (selecteds[idx++]) {
+                            teethInfo.getDataExt().add(bean);
+                        }
                     }
-                }).show();
+                    updateDataToServer();
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        CommonProcess.showMultiSelectionAlert(parentActivity, title, simpleArray, selecteds, listener, okListener, null);
+    }
+
+    private void openXRayImages() {
+        CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162, DomainConst.CONTENT00362, null);
     }
 
     /**
@@ -383,20 +413,28 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
         };
 //        CommonProcess.showSelectionAlert(parentActivity, title, simpleArray, listener);
         new SimpleSearchDialogCompat(parentActivity, title,
-                "Tìm kiếm", null, LoginBean.getInstance().getDiagnosis(),
+                DomainConst.CONTENT00287, null, LoginBean.getInstance().getDiagnosisFull(),
+//                "Tìm kiếm", null, createSampleData(),
                 new SearchResultListener<ConfigExtBean>() {
                     @Override
                     public void onSelected(BaseSearchDialogCompat dialog,
                                            ConfigExtBean item, int position) {
-                        String[] arrValue = item.getName().split("-");
-                        if (arrValue.length == 3) {
-                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, arrValue[1]);
+                        // Check if current selected item is Create new item
+                        if (item.getId().equals(DomainConst.ITEM_CREATE_NEW)) {
+                            CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                    DomainConst.CONTENT00362, null);
                         } else {
-                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, item.getName());
+                            String[] arrValue = item.getName().split("-");
+                            if (arrValue.length == 3) {
+                                CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, arrValue[1]);
+                            } else {
+                                CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, item.getName());
+                            }
+                            diagnosisId = item.getId();
+                            dialog.dismiss();
+                            updateDataToServer();
                         }
-                        diagnosisId = item.getId();
-                        dialog.dismiss();
-                        updateDataToServer();
+
                     }
                 }).show();
     }
@@ -506,17 +544,78 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
      */
     @OnClick(R.id.btnAdd)
     public void btnAddClick() {
+        openReceipt();
+    }
+
+    /**
+     * Open Receipt screen
+     */
+    private void openReceipt() {
         ConfigExtBean bean = LoginBean.getInstance().getTreatment(treatmentId);
         ConfigExtBean receipt = CommonProcess.getConfigExtObjById(detailData.getDataExt(), DomainConst.ITEM_RECEIPT);
-        if (bean != null && receipt != null) {
-            if (receipt == null) {
-                parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), bean.getDataStr());
-            } else {
-                parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), bean.getDataStr(),
-                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DISCOUNT),
-                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_FINAL),
-                        CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DESCRIPTION));
+        String debt = CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_CUSTOMER_DEBT);
+        String amount = (bean != null) ? bean.getDataStr() : "0 VND";
+        if (receipt != null) {
+            parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), amount,
+                    CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DISCOUNT),
+                    CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_FINAL),
+                    CommonProcess.getConfigExtValueById(receipt.getDataExt(), DomainConst.ITEM_DESCRIPTION), debt);
+        } else {
+            parentActivity.openG01F03S04(CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_ID), amount, debt);
+        }
+    }
+
+    /**
+     * Check if data is full fill
+     * @return True if all field (id, diagnosis, treatment type) have updated all,
+     *              False otherwise
+     */
+    private boolean isDataFullFill() {
+        for (ConfigExtBean bean :
+                mData.get(0)) {
+            switch (bean.getId()) {
+                case DomainConst.ITEM_DIAGNOSIS:
+                case DomainConst.ITEM_TREATMENT_TYPE_ID:
+                    if (bean.getDataStr().isEmpty()) {
+                        return false;
+                    }
+                default: break;
             }
         }
+        return true;
+    }
+
+    /**
+     * Handle confirm data before finish
+     */
+    private void confirmToFinish() {
+        if (isDataFullFill()) {
+            finishTreatmentScheduleDetail();
+        } else {
+            CommonProcess.showMessage(parentActivity,
+                    DomainConst.CONTENT00162,
+                    DomainConst.CONTENT00576,
+                    new CommonProcess.ConfirmDialogCallback() {
+                        @Override
+                        public void onConfirmed() {
+                            finishTreatmentScheduleDetail();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Ask user want to finishing this detail
+     */
+    private void finishTreatmentScheduleDetail() {
+        CommonProcess.ConfirmDialogCallback listener = new CommonProcess.ConfirmDialogCallback() {
+            @Override
+            public void onConfirmed() {
+                handleFinish();
+            }
+        };
+        CommonProcess.showMessage(parentActivity,
+                DomainConst.CONTENT00162,
+                DomainConst.CONTENT00561, listener);
     }
 }

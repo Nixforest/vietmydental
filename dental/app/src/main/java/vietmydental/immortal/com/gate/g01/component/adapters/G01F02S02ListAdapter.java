@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
+import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g01.model.TreatmentBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
@@ -165,7 +166,7 @@ public class G01F02S02ListAdapter extends BaseAdapter {
         }
 
         ConfigExtBean data = getItem(position);
-        String updating = "Đang cập nhật";
+        String updating = DomainConst.CONTENT00555;
         if(rowType == TYPE_ITEM){
             int imageId = 0;
             switch (getSectionId(position)) {
@@ -236,6 +237,40 @@ public class G01F02S02ListAdapter extends BaseAdapter {
                             } else {
                                 holder.textValue.setText(data.getDataStr());
                             }
+                            holder.textDetail.setVisibility(View.GONE);
+                            holder.imgNext.setVisibility(View.GONE);
+                            break;
+
+                        case DomainConst.ITEM_TEETH_INFO:
+                            imageId = CommonProcess.getImageId(DomainConst.ITEM_TEETH_INFO);
+                            String name = data.getName();
+                            String value = DomainConst.CONTENT00555;
+                            if (data.getDataExt().size() == 1) {
+                                value = data.getDataExt().get(0).getName();
+                            } else if (data.getDataExt().size() > 1) {
+                                name = DomainConst.CONTENT00575;
+                                value = DomainConst.BLANK;
+                            } else {
+                                holder.textValue.setTextColor(Color.RED);
+                            }
+                            holder.textView.setText(name);
+                            holder.textValue.setText(value);
+                            holder.textDetail.setVisibility(View.GONE);
+                            break;
+                        case DomainConst.ITEM_IMAGE:
+                            imageId = CommonProcess.getImageId(DomainConst.ITEM_IMAGE);
+
+                            holder.textView.setText(data.getName());
+                            holder.textValue.setText(DomainConst.BLANK);
+
+                            holder.textDetail.setVisibility(View.GONE);
+                            break;
+                        case DomainConst.ITEM_CUSTOMER_DEBT:
+                            imageId = CommonProcess.getImageId(DomainConst.ITEM_CUSTOMER_DEBT);
+
+                            holder.textView.setText(data.getName());
+
+                            holder.textValue.setText(data.getDataStr());
                             holder.textDetail.setVisibility(View.GONE);
                             holder.imgNext.setVisibility(View.GONE);
                             break;

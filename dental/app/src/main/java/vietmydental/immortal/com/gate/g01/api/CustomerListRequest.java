@@ -54,8 +54,8 @@ public class CustomerListRequest extends BaseRequest {
             object.put(DomainConst.KEY_TOKEN, token);
             object.put(DomainConst.KEY_PAGE, page);
             object.put(DomainConst.KEY_TYPE, type);
-            object.put(DomainConst.KEY_DATE_FROM, date_from);
-            object.put(DomainConst.KEY_DATE_TO, date_to);
+//            object.put(DomainConst.KEY_DATE_FROM, date_from);
+//            object.put(DomainConst.KEY_DATE_TO, date_to);
         } catch (JSONException e) {
             e.printStackTrace();
         }

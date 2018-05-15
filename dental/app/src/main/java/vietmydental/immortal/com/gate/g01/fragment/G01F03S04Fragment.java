@@ -193,9 +193,12 @@ public class G01F03S04Fragment extends BaseFragment<G00HomeActivity> {
 
     /**
      * Initialize data
+     * @param amount Amount value
+     * @param debt Debt value
      */
-    public void initData(String amount) {
+    public void initData(String amount, String debt) {
         data.add(new ConfigExtBean(DomainConst.ITEM_CHARACTERISTICS, DomainConst.CONTENT00570, amount));
+        data.add(new ConfigExtBean(DomainConst.ITEM_CUSTOMER_DEBT, DomainConst.CONTENT00577, debt));
         data.add(new ConfigExtBean(DomainConst.ITEM_DISCOUNT, DomainConst.CONTENT00572, ""));
         data.add(new ConfigExtBean(DomainConst.ITEM_FINAL, DomainConst.CONTENT00573, ""));
         data.add(new ConfigExtBean(DomainConst.ITEM_DESCRIPTION, DomainConst.CONTENT00081, ""));
@@ -209,9 +212,10 @@ public class G01F03S04Fragment extends BaseFragment<G00HomeActivity> {
      * @param finalAmount
      * @param description
      */
-    public void setData(String id, String amount, String discount, String finalAmount, String description) {
+    public void setData(String id, String amount, String discount, String finalAmount, String description, String debt) {
         this.id = id;
         data.add(new ConfigExtBean(DomainConst.ITEM_CHARACTERISTICS, DomainConst.CONTENT00570, amount));
+        data.add(new ConfigExtBean(DomainConst.ITEM_CUSTOMER_DEBT, DomainConst.CONTENT00577, debt));
         data.add(new ConfigExtBean(DomainConst.ITEM_DISCOUNT, DomainConst.CONTENT00572, discount));
         data.add(new ConfigExtBean(DomainConst.ITEM_FINAL, DomainConst.CONTENT00573, finalAmount));
         data.add(new ConfigExtBean(DomainConst.ITEM_DESCRIPTION, DomainConst.CONTENT00081, description));
@@ -243,7 +247,13 @@ public class G01F03S04Fragment extends BaseFragment<G00HomeActivity> {
                     BaseResponse resp = getResponse();
                     if ((resp != null) && resp.isSuccess()) {
                         parentActivity.showLoadingView(false);
-                        parentActivity.onBackClick();
+                        CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                resp.getMessage(), new CommonProcess.ConfirmDialogCallback() {
+                            @Override
+                                    public void onConfirmed() {
+                                parentActivity.onBackClick();
+                            }
+                                });
                     } else {
                         parentActivity.showLoadingView(false);
                         CommonProcess.showErrorMessage(parentActivity, resp);

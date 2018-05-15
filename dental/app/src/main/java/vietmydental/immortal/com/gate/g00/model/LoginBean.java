@@ -118,9 +118,28 @@ public class LoginBean extends ConfigBean {
     public ArrayList<ConfigBean> getPathological() {
         return pathological;
     }
+    public ArrayList<ConfigBean> getTimer() {
+        return timer;
+    }
 
     public ArrayList<ConfigExtBean> getDiagnosis() {
         return diagnosis;
+    }
+
+    /**
+     * Get list full of diagnosis, only children items in 1 array
+     * @return Children list items
+     */
+    public ArrayList<ConfigExtBean> getDiagnosisFull() {
+        ArrayList<ConfigExtBean> retVal = new ArrayList<>();
+        for (ConfigExtBean item :
+                diagnosis) {
+            for (ConfigExtBean child :
+                    item.getDataExt()) {
+                retVal.add(child);
+            }
+        }
+        return retVal;
     }
 
     public ArrayList<ConfigExtBean> getTooth() {

@@ -449,11 +449,12 @@ public class BaseNavigationComponent {
      * Open G01F03S04 screen
      * @param id Id of treatment detail
      * @param amount Amount of money
+     * @param debt Debt value
      */
-    public void openG01F03S04(String id, String amount) {
+    public void openG01F03S04(String id, String amount, String debt) {
         BaseFragment fragment = new G01F03S04Fragment();
         ((G01F03S04Fragment)fragment).setId(id);
-        ((G01F03S04Fragment)fragment).initData(amount);
+        ((G01F03S04Fragment)fragment).initData(amount, debt);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 
@@ -461,10 +462,11 @@ public class BaseNavigationComponent {
      * Open G01F03S04 screen
      * @param id Id of treatment detail
      * @param amount Amount of money
+     * @param debt Debt value
      */
-    public void openG01F03S04(String id, String amount, String discount, String finalAmount, String description) {
+    public void openG01F03S04(String id, String amount, String discount, String finalAmount, String description, String debt) {
         BaseFragment fragment = new G01F03S04Fragment();
-        ((G01F03S04Fragment)fragment).setData(id, amount, discount, finalAmount, description);
+        ((G01F03S04Fragment)fragment).setData(id, amount, discount, finalAmount, description, debt);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 }

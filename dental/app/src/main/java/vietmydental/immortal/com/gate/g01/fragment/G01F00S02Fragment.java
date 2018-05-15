@@ -62,46 +62,64 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
         View rootView = inflater.inflate(R.layout.fragment_g01_f00_s02, container, false);
         ButterKnife.bind(this, rootView);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ConfigExtBean bean = getItem(i);
-                switch (getSectionId(i)) {
-                    case DomainConst.GROUP_MEDICAL_RECORD:          // Medical record group
-                        if (isSectionHeader(i)) {
-                            parentActivity.openG01F01S01(id);
-                        } else {
-                            switch (bean.getId()) {
-                                case DomainConst.ITEM_MEDICAL_HISTORY:      // View medical history
-                                    parentActivity.openG01F01S02(bean.getDataExt(), id, "");
-                                    break;
-                                case DomainConst.ITEM_UPDATE_DATA:          // Update data
-                                    parentActivity.openG01F01S01(id);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        break;
-                    case DomainConst.GROUP_TREATMENT:               // Treatment group
-                        if (isSectionHeader(i)) {
-                            parentActivity.openG01F02S01(id);
-                        } else {
-                            switch (bean.getId()) {
-                                case DomainConst.ITEM_UPDATE_DATA:          // Update data
-                                    parentActivity.openG01F02S06(id);
-                                    break;
-                                default:
-                                    parentActivity.openG01F02S02(bean.getId());
-                                    break;
-                            }
-                        }
-                        break;
-                    default: break;
-                }
-            }
-        });
+        handleListViewClick();
+        requestServer();
 
+        return rootView;
+    }
+
+    // MARK: Logic
+    /**
+     * Handle click on list view item
+     */
+    private void handleListViewClick() {
+        if (listView != null) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ConfigExtBean bean = getItem(i);
+                    switch (getSectionId(i)) {
+                        case DomainConst.GROUP_MEDICAL_RECORD:          // Medical record group
+                            if (isSectionHeader(i)) {
+                                parentActivity.openG01F01S01(id);
+                            } else {
+                                switch (bean.getId()) {
+                                    case DomainConst.ITEM_MEDICAL_HISTORY:      // View medical history
+                                        parentActivity.openG01F01S02(bean.getDataExt(), id, "");
+                                        break;
+                                    case DomainConst.ITEM_UPDATE_DATA:          // Update data
+                                        parentActivity.openG01F01S01(id);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case DomainConst.GROUP_TREATMENT:               // Treatment group
+                            if (isSectionHeader(i)) {
+                                parentActivity.openG01F02S01(id);
+                            } else {
+                                switch (bean.getId()) {
+                                    case DomainConst.ITEM_UPDATE_DATA:          // Update data
+                                        parentActivity.openG01F02S06(id);
+                                        break;
+                                    default:
+                                        parentActivity.openG01F02S02(bean.getId());
+                                        break;
+                                }
+                            }
+                            break;
+                        default: break;
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Request data from server
+     */
+    private void requestServer() {
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         if (token != null) {
             this.parentActivity.showLoadingView(true);
@@ -121,11 +139,7 @@ public class G01F00S02Fragment extends BaseFragment<G00HomeActivity> {
             };
             request.execute();
         }
-
-        return rootView;
     }
-
-    // MARK: Logic
 
     /**
      * Parse data from response.

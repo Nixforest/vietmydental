@@ -16,9 +16,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import vietmydental.immortal.com.gate.api.BaseResponse;
@@ -193,6 +195,25 @@ public class CommonProcess {
         builder.setTitle(title);
         builder.setItems(values, listener);
         builder.setNegativeButton(DomainConst.CONTENT00202, null);
+        builder.show();
+    }
+
+    /**
+     * Show selection alert
+     * @param context Context
+     * @param title Title of alert
+     * @param values Value of list selection
+     * @param listener Listener when click item
+     */
+    public static void showMultiSelectionAlert(Context context, String title, String[] values, boolean[] selecteds,
+                                               DialogInterface.OnMultiChoiceClickListener listener,
+                                               DialogInterface.OnClickListener okListener,
+                                               DialogInterface.OnClickListener cancelListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMultiChoiceItems(values, selecteds, listener);
+        builder.setNegativeButton(DomainConst.CONTENT00202, cancelListener);
+        builder.setPositiveButton(DomainConst.CONTENT00008, okListener);
         builder.show();
     }
 
@@ -374,6 +395,43 @@ public class CommonProcess {
     }
 
     /**
+     * Convert date to string with format
+     * @param date Date value
+     * @param format Format value
+     * @return Date value as string with format
+     */
+    public static String getDateString(Date date, String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(date);
+    }
+
+    /**
+     * Convert date string to date object with format
+     * @param date Date value (as string)
+     * @param format Format value
+     * @return Date object with format convert from date string
+     */
+    public static Date getDateObject(String date, String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        try {
+            return dateFormat.parse(date);
+        } catch (ParseException ex) {
+            return new Date();
+        }
+    }
+
+    /**
+     * Convert date value to calendar object
+     * @param date Date value
+     * @return Calendar value
+     */
+    public static Calendar toCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    /**
      * Get image id
      * @param key Key value
      * @return Image id
@@ -383,5 +441,40 @@ public class CommonProcess {
             return DomainConst.VMD_IMG_LIST.get(key);
         }
         return 0;
+    }
+
+    /** String array to remove sign in Vietnamese. */
+    private static String[] vietnameseSigns = new String[]{"aAeEoOuUiIdDyY", "áàạảãâấầậẩẫăắằặẳẵ", "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+            "éèẹẻẽêếềệểễ", "ÉÈẸẺẼÊẾỀỆỂỄ", "óòọỏõôốồộổỗơớờợởỡ", "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ", "úùụủũưứừựửữ", "ÚÙỤỦŨƯỨỪỰỬỮ",
+            "íìịỉĩ", "ÍÌỊỈĨ", "đ", "Đ", "ýỳỵỷỹ", "ÝỲỴỶỸ"};
+
+    /**
+     * Method remove sign in Vietnamese string.
+     * @param text String to remove sign
+     * @return String after remove sign
+     */
+    public static String removeSign4VietNameseString(String text) {
+        for (int i = 1; i < vietnameseSigns.length; i++) {
+            for (int j = 0; j < vietnameseSigns[i].length(); j++) {
+                text = text.replace(vietnameseSigns[i].charAt(j), vietnameseSigns[0].charAt(i - 1));
+            }
+        }
+        return text;
+    }
+    public static String upperCaseAllFirst(String value) {
+
+        char[] array = value.toCharArray();
+        // Uppercase first letter.
+        array[0] = Character.toUpperCase(array[0]);
+
+        // Uppercase all letters that follow a whitespace character.
+        for (int i = 1; i < array.length; i++) {
+            if (Character.isWhitespace(array[i - 1])) {
+                array[i] = Character.toUpperCase(array[i]);
+            }
+        }
+
+        // Result.
+        return new String(array);
     }
 }

@@ -407,17 +407,20 @@ public class BaseActivity extends AppCompatActivity {
      * Open G01F03S04 screen
      * @param id Id of treatment detail
      * @param amount Amount of money
+     * @param debt Debt value
      */
-    public void openG01F03S04(String id, String amount) {
-        navigator.openG01F03S04(id, amount);
+    public void openG01F03S04(String id, String amount, String debt) {
+        navigator.openG01F03S04(id, amount, debt);
     }
 
     /**
      * Open G01F03S04 screen
      * @param id Id of treatment detail
      * @param amount Amount of money
+     * @param debt Debt value
      */
-    public void openG01F03S04(String id, String amount, String discount, String finalAmount, String description) {
-        navigator.openG01F03S04(id, amount, discount, finalAmount, description);
+    public void openG01F03S04(String id, String amount, String discount, String finalAmount,
+                              String description, String debt) {
+        navigator.openG01F03S04(id, amount, discount, finalAmount, description, debt);
     }
 }

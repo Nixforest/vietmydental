@@ -110,6 +110,12 @@ public class ConfigBean implements Serializable, Searchable {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      * Get data.
      * @return Data
@@ -136,5 +142,16 @@ public class ConfigBean implements Serializable, Searchable {
     @Override
     public String getTitle() {
         return name;
+    }
+
+    /**
+     * Check if keyword
+     * @param keyword
+     * @return
+     */
+    public boolean contains(String keyword) {
+        String formedKeywork = CommonProcess.removeSign4VietNameseString(keyword).toLowerCase();
+        String searchString = CommonProcess.removeSign4VietNameseString(getTitle()).toLowerCase();
+        return searchString.contains(formedKeywork);
     }
 }

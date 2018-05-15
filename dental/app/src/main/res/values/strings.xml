@@ -399,10 +399,10 @@
     <string name="CONTENT00551">Thông tin không hợp lệ. Xin vui lòng nhập lại</string>
     <string name="CONTENT00552">Thông tin đợt điều trị</string>
     <string name="CONTENT00553">Tạo mới đợt điều trị</string>
-    <string name="CONTENT00554">Thông tin chi tiết đợt điều trị</string>
+    <string name="CONTENT00554">Thông tin Lần điều trị</string>
     <string name="CONTENT00555">Đang cập nhật</string>
     <string name="CONTENT00556">Tiến trình mới</string>
-    <string name="CONTENT00557">Chi tiết điều trị mới</string>
+    <string name="CONTENT00557">Lần điều trị mới</string>
     <string name="CONTENT00569">Nam</string>
     <string name="CONTENT00574">Thanh toán</string>
 

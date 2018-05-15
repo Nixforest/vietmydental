@@ -10,6 +10,7 @@ public class BaseModel {
     private static BaseModel        instance;
     /** Database name */
     private static final String     DB_NAME             = "Share_DB";
+    private String shareString = "";
 
     /** Current application mode */
 //    private int                     mode                = DomainConst.MODE_TRAINING;
@@ -124,5 +125,13 @@ public class BaseModel {
             this.mode = Integer.parseInt(val);
         }
         return this.mode;
+    }
+
+    public String getShareString() {
+        return shareString;
+    }
+
+    public void setShareString(String shareString) {
+        this.shareString = shareString;
     }
 }

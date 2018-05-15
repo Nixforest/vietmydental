@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,11 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
+import vietmydental.immortal.com.gate.g01.api.PathologicalCreateRequest;
 import vietmydental.immortal.com.gate.g01.api.TreatmentInfoRequest;
 import vietmydental.immortal.com.gate.g01.api.TreatmentUpdateRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F02S02ListAdapter;
+import vietmydental.immortal.com.gate.g01.model.PathologicalCreateRespBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -213,6 +217,7 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
                     case DomainConst.ITEM_STATUS:
                     case DomainConst.ITEM_DIAGNOSIS_ID:
                     case DomainConst.ITEM_PATHOLOGICAL_ID:
+                    case DomainConst.ITEM_DIAGNOSIS:
                         break;
                     case DomainConst.ITEM_INSURANCE:
                         if (!item.getDataStr().isEmpty() && !item.getDataStr().equals("0")) {
@@ -249,7 +254,8 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
                                     break;
                                 case DomainConst.ITEM_PATHOLOGICAL:
                                     if (canUpdate()) {
-                                        updatePathological(bean.getName());
+//                                        updatePathological(bean.getName());
+                                        updatePathologicalWithSearchView(bean.getName());
                                     }
                                     break;
                                 case DomainConst.ITEM_HEALTHY:
@@ -457,6 +463,90 @@ public class G01F02S02Fragment extends BaseFragment<G00HomeActivity> {
             }
         };
         CommonProcess.showSelectionAlert(parentActivity, title, simpleArray, listener);
+    }
+
+    /**
+     * Update pathological with search dialog
+     * @param title Title of alert
+     */
+    private void updatePathologicalWithSearchView(String title) {
+        final SimpleSearchDialogCompat dialog = new SimpleSearchDialogCompat(parentActivity, title, DomainConst.CONTENT00287, null,
+                LoginBean.getInstance().getPathological(), new SearchResultListener<ConfigBean>() {
+            @Override
+            public void onSelected(final BaseSearchDialogCompat baseSearchDialogCompat, ConfigBean item, int i) {
+                // Get selected item
+                ConfigExtBean data = new ConfigExtBean(item.getId(), item.getName());
+                // Check if current selected item is Create new item
+                if (item.getId().equals(DomainConst.ITEM_CREATE_NEW)) {
+                    // Get text from searchbox
+                    String newPathological = ((SimpleSearchDialogCompat)baseSearchDialogCompat).getSearchBox().getText().toString();
+                    // Normalization
+                    newPathological = CommonProcess.upperCaseAllFirst(newPathological);
+                    final String finalNewPathological = newPathological;
+                    CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                            "Bạn có chắc chắn muốn tạo mới Bệnh lý " + newPathological + " không?",
+                            new CommonProcess.ConfirmDialogCallback() {
+                                @Override
+                                public void onConfirmed() {
+                                    requestCreateNewPathological(finalNewPathological, baseSearchDialogCompat);
+                                }
+                            });
+                } else {
+                    CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_PATHOLOGICAL, data.getName());
+                    pathologicalId = data.getId();
+                    mAdapter.notifyDataSetChanged();
+                    baseSearchDialogCompat.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }/**
+     * Request create new pathological
+     * @param value New value
+     * @param baseSearchDialogCompat Current dialog
+     */
+    private void requestCreateNewPathological(String value, final BaseSearchDialogCompat baseSearchDialogCompat) {
+        String token = BaseModel.getInstance().getToken(parentActivity);
+        if (token != null) {
+            PathologicalCreateRequest request = new PathologicalCreateRequest(
+                    token, value, value) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    final BaseResponse resp = getResponse();
+                    // Request success
+                    if ((resp != null) && resp.isSuccess()) {
+                        // Get response data
+                        final PathologicalCreateRespBean respBean = parseData(resp.getData());
+                        // Save to login data
+                        LoginBean.getInstance().getPathological().add(respBean.getBean());
+
+                        CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                resp.getMessage(), new CommonProcess.ConfirmDialogCallback() {
+                                    @Override
+                                    public void onConfirmed() {
+                                        // Add to current data
+                                        CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_PATHOLOGICAL, respBean.getBean().getName());
+                                        pathologicalId = respBean.getBean().getId();
+                                        // Reload load list view data
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                        baseSearchDialogCompat.dismiss();
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        CommonProcess.showErrorMessage(parentActivity, resp);
+                    }
+                }
+            };
+            request.execute();
+        }
+    }
+
+    private PathologicalCreateRespBean parseData(JSONObject data) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject gsonObj = (JsonObject) jsonParser.parse(data.toString());
+        PathologicalCreateRespBean retVal = new PathologicalCreateRespBean(gsonObj);
+        return retVal;
     }
 
     /**

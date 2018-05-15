@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
+import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 
@@ -72,20 +73,42 @@ public class G01F02S06ListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String updating = "Đang cập nhật";
+        String updating = DomainConst.CONTENT00555;
+
         if (item != null) {
-            holder.textView.setText(item.getName());
-            holder.textDetail.setVisibility(View.GONE);
-            holder.textValue.setText(item.getDataStr());
-            holder.imageNext.setVisibility(View.GONE);
             int imageId = 0;
             if (DomainConst.VMD_IMG_LIST.get(item.getId()) != null) {
                 imageId = DomainConst.VMD_IMG_LIST.get(item.getId());
             }
+            switch (item.getId()) {
 
-            if (item.getDataStr().isEmpty()) {
-                holder.textValue.setTextColor(Color.RED);
-                holder.textValue.setText(updating);
+                case DomainConst.ITEM_TEETH_INFO:
+                    imageId = CommonProcess.getImageId(DomainConst.ITEM_TEETH_INFO);
+                    String name = item.getName();
+                    String value = DomainConst.CONTENT00555;
+                    if (item.getDataExt().size() == 1) {
+                        value = item.getDataExt().get(0).getName();
+                    } else if (item.getDataExt().size() > 1) {
+                        name = DomainConst.CONTENT00575;
+                        value = DomainConst.BLANK;
+                    } else {
+                        holder.textValue.setTextColor(Color.RED);
+                    }
+                    holder.textView.setText(name);
+                    holder.textValue.setText(value);
+                    holder.textDetail.setVisibility(View.GONE);
+                    break;
+                default:
+                    holder.textView.setText(item.getName());
+                    holder.textDetail.setVisibility(View.GONE);
+                    holder.textValue.setText(item.getDataStr());
+                    holder.imageNext.setVisibility(View.GONE);
+
+                    if (item.getDataStr().isEmpty()) {
+                        holder.textValue.setTextColor(Color.RED);
+                        holder.textValue.setText(updating);
+                    }
+                    break;
             }
 
             if (imageId != 0) {
@@ -94,6 +117,7 @@ public class G01F02S06ListAdapter extends BaseAdapter {
             } else {
                 holder.imageView.setVisibility(View.GONE);
             }
+
         }
         return convertView;
     }

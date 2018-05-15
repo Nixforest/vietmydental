@@ -306,6 +306,7 @@ public final class DomainConst {
     public static final String KEY_DOCTOR_ID                     = "doctor_id";
     public static final String KEY_TREATMENT_TYPE_ID             = "treatment_type_id";
     public static final String KEY_TIMER                         = "timer";
+    public static final String KEY_TEETH_INFO                    = "teeth_info";
     /** Schedule id */
     public static final String KEY_SCHEDULE_ID                   = "schedule_id";
     /**
@@ -725,6 +726,8 @@ public final class DomainConst {
     public static final String KEY_AGENT = "agent";
     public static final String KEY_NAME = "name";
     public static final String KEY_CITY_ID = "city_id";
+    /** Description */
+    public static final String KEY_DESCRIPTION                   = "description";
     /** Age */
     public static final String KEY_AGE                           = "age";
     /** Career */
@@ -1292,6 +1295,14 @@ public final class DomainConst {
     public static final String ITEM_FINAL                        = "38";
     /* Item id: Insurance */
     public static final String ITEM_INSURANCE                    = "39";
+    /* Item id: Teeth information */
+    public static final String ITEM_TEETH_INFO                   = "40";
+    /* Item id: Customer debt */
+    public static final String ITEM_CUSTOMER_DEBT                = "41";
+    /* Item id: Image */
+    public static final String ITEM_IMAGE                        = "42";
+    /* Item id: Create */
+    public static final String ITEM_CREATE_NEW                   = "XXX";
     // MARK: Status
     public static final String TREATMENT_SCHEDULE_INACTIVE           = "0";
     public static final String TREATMENT_SCHEDULE_ACTIVE             = "1";
@@ -1339,6 +1350,9 @@ public final class DomainConst {
             put(ITEM_DISCOUNT,          R.drawable.discount);
             put(ITEM_FINAL,             R.drawable.actually_collected);
             put(ITEM_INSURANCE,         R.drawable.insurance);
+            put(ITEM_TEETH_INFO,        R.drawable.teeth);
+            put(ITEM_CUSTOMER_DEBT,     R.drawable.debt);
+            put(ITEM_IMAGE,             R.drawable.xray);
         }
     };
     // MARK: -----Public static strings-----
@@ -1864,10 +1878,10 @@ public final class DomainConst {
     public static final String CONTENT00551 = "Thông tin không hợp lệ. Xin vui lòng nhập lại";
     public static final String CONTENT00552 = "Thông tin đợt điều trị";
     public static final String CONTENT00553 = "Tạo mới đợt điều trị";
-    public static final String CONTENT00554 = "Thông tin chi tiết đợt điều trị";
+    public static final String CONTENT00554 = "Thông tin Lần điều trị";
     public static final String CONTENT00555 = "Đang cập nhật";
     public static final String CONTENT00556 = "Tiến trình mới";
-    public static final String CONTENT00557 = "Chi tiết điều trị mới";
+    public static final String CONTENT00557 = "Lần điều trị mới";
     public static final String CONTENT00558 = "✓";
     public static final String CONTENT00559 = "Chọn ngày giờ";
     public static final String CONTENT00560 = "Bổ sung số bệnh án";
@@ -1885,4 +1899,8 @@ public final class DomainConst {
     public static final String CONTENT00572 = "Giảm";
     public static final String CONTENT00573 = "Thực thu";
     public static final String CONTENT00574 = "Thanh toán";
+    public static final String CONTENT00575 = "Thông tin răng";
+    public static final String CONTENT00576 = "Dữ liệu chưa đầy đủ, bạn có muốn tiếp tục không?";
+    public static final String CONTENT00577 = "Nợ cũ";
+    public static final String CONTENT00578 = "Bạn có chắc chắn muốn tạo mới Đợt điều trị này không?";
 }
