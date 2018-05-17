@@ -39,6 +39,7 @@ class G01F02S06VC: ChildExtViewController {
                                   target: self)
         createInfoTableView()
         self.view.addSubview(_tblInfo)
+        autoInput(rowIdx: 0)
     }
     
     /**
@@ -57,6 +58,7 @@ class G01F02S06VC: ChildExtViewController {
                     self._time = BaseModel.shared.sharedString
                     self._data.setData(id: data.id, value: LoginBean.shared.getTimerConfig(id: self._time))
                     _tblInfo.reloadData()
+                    autoInput(rowIdx: 1)
                 }
             default:
                 break
@@ -92,10 +94,10 @@ class G01F02S06VC: ChildExtViewController {
                            name: DomainConst.CONTENT00563)
         self._data.setData(id: DomainConst.ITEM_NOTE,
                            value: "",
-                           name: DomainConst.CONTENT00564)
-        self._data.setData(id: DomainConst.ITEM_TYPE,
-                           value: "",
                            name: DomainConst.CONTENT00565)
+//        self._data.setData(id: DomainConst.ITEM_TYPE,
+//                           value: "",
+//                           name: DomainConst.CONTENT00565)
         self._customerId = customerId
     }
     
@@ -120,6 +122,26 @@ class G01F02S06VC: ChildExtViewController {
     }
     
     // MARK: Logic
+    private func autoInput(rowIdx: Int) {
+        let index = IndexPath(item: rowIdx, section: 0)
+        self._tblInfo.selectRow(at: index, animated: true, scrollPosition: .middle)
+        switch rowIdx {
+        case 0:
+            let bean = self._data.getData(id: DomainConst.ITEM_TIME_ID)
+            createSelectScreenTimer(title: bean.name)
+            break
+        case 1:
+            let bean = self._data.getData(id: DomainConst.ITEM_START_DATE)
+            inputDate(id: bean.id)
+            break
+        case 2:
+            let bean = self._data.getData(id: DomainConst.ITEM_NOTE)
+            inputText(bean: bean)
+            break
+        default:
+            break
+        }
+    }
     /**
      * Handle input date
      * - parameter id: Id of item
@@ -145,6 +167,7 @@ class G01F02S06VC: ChildExtViewController {
 //                                  value: date.dateTimeString())
                                     value: CommonProcess.getDateString(date: date, format: DomainConst.DATE_TIME_FORMAT_1))
                                 self._tblInfo.reloadData()
+                                self.autoInput(rowIdx: 2)
         })
         let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
         alert.addAction(ok)
@@ -292,6 +315,7 @@ extension G01F02S06VC: UITableViewDataSource {
                  DomainConst.ITEM_HEALTHY,
                  DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
@@ -334,11 +358,12 @@ extension G01F02S06VC: UITableViewDelegate {
             switch data.id {
             case DomainConst.ITEM_START_DATE:
                 self.inputDate(id: data.id)
-            case DomainConst.ITEM_TYPE,
-                 DomainConst.ITEM_NOTE:
+//            case DomainConst.ITEM_TYPE,
+            case DomainConst.ITEM_NOTE:
                 inputText(bean: data)
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_ID, DomainConst.ITEM_DOCTOR:
                 return
             case DomainConst.ITEM_TIME_ID:
@@ -367,6 +392,7 @@ extension G01F02S06VC: UITableViewDelegate {
                  DomainConst.ITEM_HEALTHY,
                  DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_TYPE,
                  DomainConst.ITEM_DETAILS:
                 return 0
             default:

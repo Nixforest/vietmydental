@@ -17,13 +17,13 @@ class CustomerListRequest: BaseRequest {
      */
     func setData(page: String, type: String, date: String) {
         self.data = "q=" + String.init(
-            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d, \"%@\": \"%@\", \"%@\": \"%@\"}",
+            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
             DomainConst.KEY_TOKEN,          BaseModel.shared.getUserToken(),
             DomainConst.KEY_PAGE,           page,
             DomainConst.KEY_TYPE,           type,
-            DomainConst.KEY_PLATFORM,       DomainConst.PLATFORM_IOS,
-            DomainConst.KEY_DATE_FROM,     date,
-            DomainConst.KEY_DATE_TO,       date
+            DomainConst.KEY_PLATFORM,       DomainConst.PLATFORM_IOS
+//            DomainConst.KEY_DATE_FROM,     date,
+//            DomainConst.KEY_DATE_TO,       date
         )
     }
     

@@ -14,20 +14,22 @@ class TreatmentScheduleDetailUpdateRequest: BaseRequest {
      * Set data content
      * - parameter id:              Treatment id
      * - parameter teeth_id:        Teeth id
+     * - parameter teeth_info:      Teeth info
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
      * - parameter status:          Status
      */
     func setData(id: String,
-                 teeth_id: String,
+                 teeth_id: String, teeth_info: String,
                  diagnosis: String,
                  treatment: String,
                  status: String) {
         self.data = "q=" + String.init(
-            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
+            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%@,\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
             DomainConst.KEY_TOKEN,              BaseModel.shared.getUserToken(),
             DomainConst.KEY_ID,                 id,
             DomainConst.KEY_TEETH_ID,           teeth_id,
+            DomainConst.KEY_TEETH_INFO,         teeth_info,
             DomainConst.KEY_DIAGNOSIS_ID,       diagnosis,
             DomainConst.KEY_TREATMENT_TYPE_ID,  treatment,
             DomainConst.KEY_STATUS,             status,
@@ -41,6 +43,7 @@ class TreatmentScheduleDetailUpdateRequest: BaseRequest {
      * - parameter view:            Current view
      * - parameter id:              Treatment id
      * - parameter teeth_id:        Teeth id
+     * - parameter teeth_info:      Teeth info
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
      * - parameter status:          Status
@@ -48,7 +51,7 @@ class TreatmentScheduleDetailUpdateRequest: BaseRequest {
      */
     public static func request(action: Selector, view: BaseViewController,
                                id: String,
-                               teeth_id: String,
+                               teeth_id: String, teeth_info: String,
                                diagnosis: String,
                                treatment: String,
                                status: String, isShowLoading: Bool = true) {
@@ -57,7 +60,7 @@ class TreatmentScheduleDetailUpdateRequest: BaseRequest {
             reqMethod: DomainConst.HTTP_POST_REQUEST,
             view: view)
         request.setData(id: id,
-                        teeth_id: teeth_id,
+                        teeth_id: teeth_id, teeth_info: teeth_info,
                         diagnosis: diagnosis,
                         treatment: treatment,
                         status: status)

@@ -19,6 +19,8 @@ class G01F03S03VC: ChildExtViewController {
     var _tblInfo:           UITableView             = UITableView()
     /** Date */
     var _date:              Date                    = Date()
+    /** Flag run first time */
+    var _isFirstTime:       Bool                    = false
     
     // MARK: Static values
     // MARK: Constant
@@ -37,6 +39,9 @@ class G01F03S03VC: ChildExtViewController {
                                   target: self)
         createInfoTableView()
         self.view.addSubview(_tblInfo)
+//        if _isFirstTime {
+//            autoInput(rowIdx: 0)
+//        }
     }
     
     /**
@@ -56,6 +61,10 @@ class G01F03S03VC: ChildExtViewController {
                     self._data.setData(id: DomainConst.ITEM_DIAGNOSIS,
                                        value: LoginBean.shared.getDiagnosisConfig(id: id))
                     _tblInfo.reloadData()
+                    if _isFirstTime {
+                        autoInput(rowIdx: 3)
+                        _isFirstTime = false
+                    }
                 }
             case DomainConst.ITEM_TEETH:
                 if !id.isEmpty {
@@ -64,6 +73,15 @@ class G01F03S03VC: ChildExtViewController {
                                        value: LoginBean.shared.getTeethConfig(id: id))
                     _tblInfo.reloadData()
                 }
+            case DomainConst.ITEM_TEETH_INFO:
+//                if !BaseModel.shared.sharedArrayConfig.isEmpty {
+                    self._data.setArrayData(id: DomainConst.ITEM_TEETH_INFO, value: BaseModel.shared.sharedArrayConfig)
+                    BaseModel.shared.sharedArrayConfig.removeAll()
+                    _tblInfo.reloadData()
+                    if _isFirstTime {
+                        autoInput(rowIdx: 2)
+                }
+//                }
             case DomainConst.ITEM_TREATMENT:
                 if !id.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_TREATMENT_TYPE_ID, value: id)
@@ -77,6 +95,9 @@ class G01F03S03VC: ChildExtViewController {
                     self._data.setData(id: DomainConst.ITEM_TIME_ID, value: id)
                     self._data.setData(id: data.id, value: LoginBean.shared.getTimerConfig(id: id))
                     _tblInfo.reloadData()
+                    if _isFirstTime {
+                        autoInput(rowIdx: 1)
+                    }
                 }
             default:
                 break
@@ -134,6 +155,11 @@ class G01F03S03VC: ChildExtViewController {
     }
     
     internal func requestCreate(isShowLoading: Bool = true) {
+        var arrData = [String]()
+        for item in self._data.getData(id: DomainConst.ITEM_TEETH_INFO).data {
+            arrData.append(item.id)         
+        }
+        let teethInfo = String.init(format: "%@%@%@", "[", arrData.joined(separator: ","), "]")
         TreatmentScheduleDetailCreateRequest.request(
             action: #selector(setData(_:)),
             view: self,
@@ -141,6 +167,7 @@ class G01F03S03VC: ChildExtViewController {
             time: self._data.getData(id: DomainConst.ITEM_TIME_ID)._dataStr,
             date: CommonProcess.getDateString(date: self._date, format: "yyyy/MM/dd"),
             teeth_id: self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr,
+            teeth_info: teethInfo,
             diagnosis: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr,
             treatment: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr,
             isShowLoading: isShowLoading)
@@ -173,7 +200,12 @@ class G01F03S03VC: ChildExtViewController {
                                     value: CommonProcess.getDateString(date: date, format: DomainConst.DATE_TIME_FORMAT_1))
                                 self._tblInfo.reloadData()
         })
-        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: nil)
+        let ok = UIAlertAction(title: DomainConst.CONTENT00008, style: .cancel, handler: {
+            alert in
+            if self._isFirstTime {
+                self.inputTeeth(id: DomainConst.ITEM_TEETH_INFO)
+            }
+        })
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
     }
@@ -183,11 +215,15 @@ class G01F03S03VC: ChildExtViewController {
      * - parameter id: id of item
      */
     public func inputTeeth(id: String) {
-        let view = SelectionVC(nibName: SelectionVC.theClassName, bundle: nil)
-        view.createNavigationBar(title: self._data.getData(id: DomainConst.ITEM_TEETH).name)
+//        let view = SelectionVC(nibName: SelectionVC.theClassName, bundle: nil)
+        let view = G01F03S05VC(nibName: G01F03S05VC.theClassName, bundle: nil)
+        view.createNavigationBar(title: self._data.getData(id: DomainConst.ITEM_TEETH_INFO).name)
         view.setData(data: LoginBean.shared.teeth,
-                     selectedValue: self._data.getData(
-                        id: DomainConst.ITEM_TEETH_ID)._dataStr)
+                     selectedValue: "")
+        view.setSelectedArray(value: self._data.getData(
+            id: DomainConst.ITEM_TEETH_INFO).data)
+        BaseModel.shared.sharedArrayConfig = self._data.getData(
+            id: DomainConst.ITEM_TEETH_INFO).data
         self.push(view, animated: true)
     }
     
@@ -240,6 +276,34 @@ class G01F03S03VC: ChildExtViewController {
         _tblInfo.dataSource = self
         _tblInfo.delegate = self
     }
+    
+    // MARK: Logic
+    private func autoInput(rowIdx: Int) {
+        let index = IndexPath(item: rowIdx, section: 0)
+        self._tblInfo.selectRow(at: index, animated: true, scrollPosition: .middle)
+        switch rowIdx {
+        case 0:
+            let bean = self._data.getData(id: DomainConst.ITEM_TIME)
+            createSelectScreenTimer(title: bean.name)
+            break
+        case 1:
+            let bean = self._data.getData(id: DomainConst.ITEM_START_DATE)
+            inputDate(id: bean.id)
+            break
+        case 2:
+            let bean = self._data.getData(id: DomainConst.ITEM_TEETH_INFO)
+            inputTeeth(id: bean.id)
+            break
+        case 3:
+            inputDiagnosis()
+            break
+        case 4:
+            inputTreatment()
+            break
+        default:
+            break
+        }
+    }
 }
 
 // MARK: Protocol - UITableViewDataSource
@@ -286,6 +350,7 @@ extension G01F03S03VC: UITableViewDataSource {
                  DomainConst.ITEM_END_DATE,
                  DomainConst.ITEM_DIAGNOSIS_ID, 
                  DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_TEETH,
                  DomainConst.ITEM_TREATMENT_TYPE_ID, 
                  DomainConst.ITEM_NOTE,
                  DomainConst.ITEM_STATUS,
@@ -293,9 +358,34 @@ extension G01F03S03VC: UITableViewDataSource {
                  DomainConst.ITEM_CAN_UPDATE,
                  DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_RECEIPT,
+                 DomainConst.ITEM_CUSTOMER_DEBT,
+                 DomainConst.ITEM_IMAGE,
                  DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
+                return cell
+            case DomainConst.ITEM_TEETH_INFO:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                var name = data.name
+                var value = LoginBean.shared.getUpdateText()
+                let listInfo = data.data
+                let count = listInfo.count
+                if count == 1 {
+                    value = listInfo[0].name
+                } else if (count > 1) {
+                    name = DomainConst.CONTENT00575
+                    value = DomainConst.BLANK
+                    cell.accessoryType = .detailDisclosureButton
+                } else {
+                    cell.detailTextLabel?.textColor = UIColor.red
+                }
+                cell.textLabel?.text = name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = value
+                cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             default:
                 let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
@@ -335,7 +425,9 @@ extension G01F03S03VC: UITableViewDelegate {
             switch data.id {
             case DomainConst.ITEM_START_DATE:
                 self.inputDate(id: data.id)
-            case DomainConst.ITEM_TEETH:
+//            case DomainConst.ITEM_TEETH:
+//                inputTeeth(id: data.id)
+            case DomainConst.ITEM_TEETH_INFO:
                 inputTeeth(id: data.id)
             case DomainConst.ITEM_DIAGNOSIS:
                 inputDiagnosis()
@@ -368,6 +460,7 @@ extension G01F03S03VC: UITableViewDelegate {
                  DomainConst.ITEM_END_DATE,
                  DomainConst.ITEM_DIAGNOSIS_ID, 
                  DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_TEETH,
                  DomainConst.ITEM_TREATMENT_TYPE_ID, 
                  DomainConst.ITEM_NOTE,
                  DomainConst.ITEM_STATUS,
@@ -375,6 +468,8 @@ extension G01F03S03VC: UITableViewDelegate {
                  DomainConst.ITEM_CAN_UPDATE,
                  DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_RECEIPT,
+                 DomainConst.ITEM_CUSTOMER_DEBT,
+                 DomainConst.ITEM_IMAGE,
                  DomainConst.ITEM_DETAILS:
                 return 0
             default:

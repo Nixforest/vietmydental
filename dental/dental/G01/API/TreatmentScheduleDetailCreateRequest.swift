@@ -16,22 +16,24 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
      * - parameter time:            Time
      * - parameter date:            Date
      * - parameter teeth_id:        Teeth id
+     * - parameter teeth_info:      Teeth info
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
      */
     func setData(id: String,
                  time: String,
                  date: String,
-                 teeth_id: String,
+                 teeth_id: String, teeth_info: String,
                  diagnosis: String,
                  treatment: String) {
         self.data = "q=" + String.init(
-            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
+            format: "{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%@,\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":%d}",
             DomainConst.KEY_TOKEN,              BaseModel.shared.getUserToken(),
             DomainConst.KEY_SCHEDULE_ID,        id,
             DomainConst.KEY_TIME,               time,
             DomainConst.KEY_DATE,               date,
             DomainConst.KEY_TEETH_ID,           teeth_id,
+            DomainConst.KEY_TEETH_INFO,         teeth_info,
             DomainConst.KEY_DIAGNOSIS_ID,       diagnosis,
             DomainConst.KEY_TREATMENT_TYPE_ID,  treatment,
             DomainConst.KEY_PLATFORM,           DomainConst.PLATFORM_IOS
@@ -46,6 +48,7 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
      * - parameter time:            Time
      * - parameter date:            Date
      * - parameter teeth_id:        Teeth id
+     * - parameter teeth_info:      Teeth info
      * - parameter diagnosis:       Diagnosis id
      * - parameter treatment:       Treatment type id
      * - parameter isShowLoading:   Flag show loading
@@ -54,7 +57,7 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
                                id: String,
                                time: String,
                                date: String,
-                               teeth_id: String,
+                               teeth_id: String, teeth_info: String,
                                diagnosis: String,
                                treatment: String,
                                isShowLoading: Bool = true) {
@@ -65,7 +68,7 @@ class TreatmentScheduleDetailCreateRequest: BaseRequest {
         request.setData(id: id,
                         time: time,
                         date: date,
-                        teeth_id: teeth_id,
+                        teeth_id: teeth_id, teeth_info: teeth_info,
                         diagnosis: diagnosis,
                         treatment: treatment)
         NotificationCenter.default.addObserver(view, selector: action, name:NSNotification.Name(rawValue: request.theClassName), object: nil)

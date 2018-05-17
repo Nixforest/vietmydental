@@ -119,15 +119,18 @@ class G00AddressSelectVC: ChildExtViewController {
     // MARK: Layout
     // MARK: Information table view
     private func createInfoTableView() {
-        if (self.navigationController?.isNavigationBarHidden)! {
-            tblInfo.frame = CGRect(x: 0, y: 0,
-                                   width: UIScreen.main.bounds.width,
-                                   height: UIScreen.main.bounds.height)
-        } else {
-            tblInfo.frame = CGRect(x: 0, y: 0,
-                                   width: UIScreen.main.bounds.width,
-                                   height: UIScreen.main.bounds.height - GlobalConst.NAVIGATION_BAR_HEIGHT)
-        }
+//        if (self.navigationController?.isNavigationBarHidden)! {
+//            tblInfo.frame = CGRect(x: 0, y: 0,
+//                                   width: UIScreen.main.bounds.width,
+//                                   height: UIScreen.main.bounds.height)
+//        } else {
+//            tblInfo.frame = CGRect(x: 0, y: 0,
+//                                   width: UIScreen.main.bounds.width,
+//                                   height: UIScreen.main.bounds.height - GlobalConst.NAVIGATION_BAR_HEIGHT)
+//        }
+        tblInfo.frame = CGRect(x: 0, y: 0,
+                               width: UIScreen.main.bounds.width,
+                               height: UIScreen.main.bounds.height - getTopHeight())
         tblInfo.dataSource = self
         tblInfo.delegate = self
         tblInfo.reloadData()
@@ -138,7 +141,7 @@ class G00AddressSelectVC: ChildExtViewController {
             view: tblInfo,
             x: 0, y: 0,
             w: UIScreen.main.bounds.width,
-            h: UIScreen.main.bounds.height)
+            h: UIScreen.main.bounds.height - getTopHeight())
     }
     
     // MARK: Search controller

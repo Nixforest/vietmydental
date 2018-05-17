@@ -1,15 +1,15 @@
 //
-//  G01F02S03VC.swift
+//  G01F01S03VC.swift
 //  dental
 //
-//  Created by SPJ on 2/18/18.
+//  Created by Pham Trung Nguyen on 5/8/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
 
 import UIKit
 import harpyframework
 
-class G01F02S03VC: SelectionVC {
+class G01F01S03VC: SelectionVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,11 +18,11 @@ class G01F02S03VC: SelectionVC {
     }
     
     /**
-     * Request create new diagnosis
-     * - parameter name: Name of diagnosis
+     * Request create new pathological
+     * - parameter name: Name of pathological
      */
-    internal func requestCreateNewDiagnosis(name: String) {
-        DiagnosisCreateRequest.request(
+    internal func requestCreateNewPathological(name: String) {
+        PathologicalCreateRequest.request(
             view: self,
             name: name, description: name,
             completionHandler: finishRequest)
@@ -38,27 +38,13 @@ class G01F02S03VC: SelectionVC {
             // Do when create success
             showAlert(message: model.message, okHandler: {
                 alert in
-                LoginBean.shared.addDiagnosisToOther(bean: model.data)
+                LoginBean.shared.addPathological(bean: model.data)
                 BaseModel.shared.sharedString = model.data.id
                 self.backButtonTapped(self)
             })
         } else {
             showAlert(message: model.message)
         }
-    }
-    
-    override func setData(data: [ConfigBean], selectedValue: String) {
-        for item in data {
-            self._data.append(item)
-            if !item.data.isEmpty {
-                for child in item.data {
-                    self._data.append(child)
-                }
-            }
-        }
-        self._selectedValue = selectedValue
-        self._originData = data
-        tblInfo.reloadData()
     }
     
     /**
@@ -91,34 +77,29 @@ class G01F02S03VC: SelectionVC {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-        if indexPath.row < self._data.count {
-            let data = self._data[indexPath.row]
-            let arrData = data.name.components(separatedBy: " - ")
-            if arrData.count == 3 {
-                cell.textLabel?.text = arrData[0] + " - " + arrData[1]
-                cell.detailTextLabel?.text = arrData[2]
-            } else {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+            if indexPath.row < self._data.count {
+                let data = self._data[indexPath.row]
                 cell.textLabel?.text = data.name
-            }
-            cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-            cell.detailTextLabel?.font = GlobalConst.BASE_FONT
-            if !_selectedArray.isEmpty {
-                for item in _selectedArray {
-                    if data.id == item.id {
-                        cell.accessoryType = .checkmark
-                        break
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                if !_selectedArray.isEmpty {
+                    for item in _selectedArray {
+                        if data.id == item.id {
+                            cell.accessoryType = .checkmark
+                            break
+                        } else {
+                            cell.accessoryType = .none
+                        }
+                    }
+                } else {
+                    if data.id == _selectedValue {
+                        cell.textLabel?.textColor = UIColor.red
+                    } else {
+                        cell.textLabel?.textColor = UIColor.black
                     }
                 }
-            } else {            
-                if data.id == _selectedValue {
-                    cell.textLabel?.textColor = UIColor.red
-                } else {
-                    cell.textLabel?.textColor = UIColor.black
-                }
             }
-        }
-        return cell
+            return cell
         case 1:
             let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
             cell.textLabel?.text = DomainConst.CONTENT00065
@@ -144,8 +125,8 @@ class G01F02S03VC: SelectionVC {
             break
         case 1:
             if let searchText = _searchController.searchBar.text, !searchText.isEmpty {
-                showAlert(message: "Bạn có chắc chắn muốn tạo mới Chẩn đoán \"\(searchText)\" không?", okHandler: { alert in
-                    self.requestCreateNewDiagnosis(name: searchText)
+                showAlert(message: "Bạn có chắc chắn muốn tạo mới Bệnh lý \"\(searchText)\" không?", okHandler: { alert in
+                    self.requestCreateNewPathological(name: searchText)
                 }, cancelHandler: { alert in
                     // Do nothing
                 })

@@ -7,11 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90063CAA20A10FBB0025E09F /* G01F03S05VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90063CA820A10FBB0025E09F /* G01F03S05VC.swift */; };
+		90063CAB20A10FBB0025E09F /* G01F03S05VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90063CA920A10FBB0025E09F /* G01F03S05VC.xib */; };
+		9018162820ABE72F000D69E2 /* DiagnosisCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9018162720ABE72F000D69E2 /* DiagnosisCreateRequest.swift */; };
+		902E28A020A8411B0085AAF3 /* G01F03S06VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902E289E20A8411B0085AAF3 /* G01F03S06VC.swift */; };
+		902E28A120A8411B0085AAF3 /* G01F03S06VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902E289F20A8411B0085AAF3 /* G01F03S06VC.xib */; };
 		908CE2DB205E5A5E00798C6F /* G01F03S04ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 908CE2D8205E5A5E00798C6F /* G01F03S04ViewController.xib */; };
 		908CE2DC205E5A5E00798C6F /* G01F03S04ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908CE2DA205E5A5E00798C6F /* G01F03S04ViewController.swift */; };
 		908CE2DE205E5A6E00798C6F /* CreateReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908CE2DD205E5A6E00798C6F /* CreateReceipt.swift */; };
 		909E7F9920429A2C006745CE /* harpyframework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 909E7F9620429A07006745CE /* harpyframework.framework */; };
 		909E7F9A20429A2C006745CE /* harpyframework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 909E7F9620429A07006745CE /* harpyframework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		90F2A33C20A14CCF004823B2 /* G01F01S03VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F2A33A20A14CCF004823B2 /* G01F01S03VC.swift */; };
+		90F2A33D20A14CCF004823B2 /* G01F01S03VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F2A33B20A14CCF004823B2 /* G01F01S03VC.xib */; };
+		90F2A34020A14FD0004823B2 /* PathologicalCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F2A33F20A14FD0004823B2 /* PathologicalCreateRequest.swift */; };
+		90F2A34220A150E6004823B2 /* PathologicalCreateResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F2A34120A150E6004823B2 /* PathologicalCreateResp.swift */; };
 		CAB846C24394F5871EBDC0EB /* Pods_dental.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7ED4C39F2032FD07F14AA7 /* Pods_dental.framework */; };
 		D702C815203903CA0075D40B /* G01F02S04VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D702C813203903CA0075D40B /* G01F02S04VC.swift */; };
 		D702C816203903CA0075D40B /* G01F02S04VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D702C814203903CA0075D40B /* G01F02S04VC.xib */; };
@@ -250,10 +259,19 @@
 		0D7ED4C39F2032FD07F14AA7 /* Pods_dental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F37EADE40DAA51C3E99EE16 /* Pods-dental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dental.release.xcconfig"; path = "dental/Pods/Target Support Files/Pods-dental/Pods-dental.release.xcconfig"; sourceTree = "<group>"; };
 		8A1E31541A63C702C8C88F19 /* Pods-dental.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dental.debug.xcconfig"; path = "dental/Pods/Target Support Files/Pods-dental/Pods-dental.debug.xcconfig"; sourceTree = "<group>"; };
+		90063CA820A10FBB0025E09F /* G01F03S05VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = G01F03S05VC.swift; path = G01/F03/G01F03S05VC.swift; sourceTree = "<group>"; };
+		90063CA920A10FBB0025E09F /* G01F03S05VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = G01F03S05VC.xib; path = G01/F03/G01F03S05VC.xib; sourceTree = "<group>"; };
+		9018162720ABE72F000D69E2 /* DiagnosisCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiagnosisCreateRequest.swift; path = G01/API/DiagnosisCreateRequest.swift; sourceTree = "<group>"; };
+		902E289E20A8411B0085AAF3 /* G01F03S06VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = G01F03S06VC.swift; path = G01/F03/G01F03S06VC.swift; sourceTree = "<group>"; };
+		902E289F20A8411B0085AAF3 /* G01F03S06VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = G01F03S06VC.xib; path = G01/F03/G01F03S06VC.xib; sourceTree = "<group>"; };
 		908CE2D8205E5A5E00798C6F /* G01F03S04ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F03S04ViewController.xib; path = G01/F03/G01F03S04ViewController.xib; sourceTree = "<group>"; };
 		908CE2DA205E5A5E00798C6F /* G01F03S04ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F03S04ViewController.swift; path = G01/F03/G01F03S04ViewController.swift; sourceTree = "<group>"; };
 		908CE2DD205E5A6E00798C6F /* CreateReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateReceipt.swift; sourceTree = "<group>"; };
 		909E7F9020429A07006745CE /* harpyframework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = harpyframework.xcodeproj; path = ../../harpyframework_vietmy/harpyframework/harpyframework.xcodeproj; sourceTree = "<group>"; };
+		90F2A33A20A14CCF004823B2 /* G01F01S03VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = G01F01S03VC.swift; path = G01/F01/G01F01S03VC.swift; sourceTree = "<group>"; };
+		90F2A33B20A14CCF004823B2 /* G01F01S03VC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = G01F01S03VC.xib; path = G01/F01/G01F01S03VC.xib; sourceTree = "<group>"; };
+		90F2A33F20A14FD0004823B2 /* PathologicalCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathologicalCreateRequest.swift; path = G01/API/PathologicalCreateRequest.swift; sourceTree = "<group>"; };
+		90F2A34120A150E6004823B2 /* PathologicalCreateResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PathologicalCreateResp.swift; path = G01/Model/PathologicalCreateResp.swift; sourceTree = "<group>"; };
 		D702C813203903CA0075D40B /* G01F02S04VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F02S04VC.swift; path = G01/F02/G01F02S04VC.swift; sourceTree = "<group>"; };
 		D702C814203903CA0075D40B /* G01F02S04VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F02S04VC.xib; path = G01/F02/G01F02S04VC.xib; sourceTree = "<group>"; };
 		D702C818203904010075D40B /* G01F02S05VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F02S05VC.swift; path = G01/F02/G01F02S05VC.swift; sourceTree = "<group>"; };
@@ -443,7 +461,7 @@
 		D7F4B1C1202B524F00EC7AB5 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		D7F4B1C2202B524F00EC7AB5 /* ServiceConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceConfig.swift; sourceTree = "<group>"; };
 		D7F4B1C3202B524F00EC7AB5 /* ServiceFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceFunctions.swift; sourceTree = "<group>"; };
-		D7F4B229202B52F200EC7AB5 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		D7F4B229202B52F200EC7AB5 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D7FF1FB92024224400C2DF28 /* G01F00S01VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = G01F00S01VC.swift; path = G01/F00/G01F00S01VC.swift; sourceTree = "<group>"; };
 		D7FF1FBA2024224400C2DF28 /* G01F00S01VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = G01F00S01VC.xib; path = G01/F00/G01F00S01VC.xib; sourceTree = "<group>"; };
 		D7FF1FBE2024228F00C2DF28 /* CustomerListRespBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerListRespBean.swift; path = G01/Model/CustomerListRespBean.swift; sourceTree = "<group>"; };
@@ -495,14 +513,18 @@
 		D706B045203AD4E7004AE6D7 /* F03 */ = {
 			isa = PBXGroup;
 			children = (
-				908CE2DA205E5A5E00798C6F /* G01F03S04ViewController.swift */,
-				908CE2D8205E5A5E00798C6F /* G01F03S04ViewController.xib */,
 				D706B046203AD504004AE6D7 /* G01F03S01VC.swift */,
 				D706B047203AD504004AE6D7 /* G01F03S01VC.xib */,
 				D70D336B203C81B2008BE959 /* G01F03S02VC.swift */,
 				D70D336C203C81B2008BE959 /* G01F03S02VC.xib */,
 				D706B04A203BC3AD004AE6D7 /* G01F03S03VC.swift */,
 				D706B04B203BC3AD004AE6D7 /* G01F03S03VC.xib */,
+				908CE2DA205E5A5E00798C6F /* G01F03S04ViewController.swift */,
+				908CE2D8205E5A5E00798C6F /* G01F03S04ViewController.xib */,
+				90063CA820A10FBB0025E09F /* G01F03S05VC.swift */,
+				90063CA920A10FBB0025E09F /* G01F03S05VC.xib */,
+				902E289E20A8411B0085AAF3 /* G01F03S06VC.swift */,
+				902E289F20A8411B0085AAF3 /* G01F03S06VC.xib */,
 			);
 			name = F03;
 			sourceTree = "<group>";
@@ -550,6 +572,8 @@
 				D7B43B2820368CE800F59945 /* G01F01S01VC.xib */,
 				D7B43B2F2036F74100F59945 /* G01F01S02VC.swift */,
 				D7B43B302036F74100F59945 /* G01F01S02VC.xib */,
+				90F2A33A20A14CCF004823B2 /* G01F01S03VC.swift */,
+				90F2A33B20A14CCF004823B2 /* G01F01S03VC.xib */,
 			);
 			name = F01;
 			sourceTree = "<group>";
@@ -942,6 +966,7 @@
 				D7C92A2C203967B2002EF00D /* TreatmentDetailBean.swift */,
 				D7E413F8203C963A002DBA96 /* TreatmentDetailUpdateResp.swift */,
 				D79087B6203D7195000BD77E /* TreatmentScheduleProcessCreateRespBean.swift */,
+				90F2A34120A150E6004823B2 /* PathologicalCreateResp.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -961,6 +986,8 @@
 				D7E41400203CA6FC002DBA96 /* TreatmentScheduleProcessUpdateRequest.swift */,
 				D79087B2203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift */,
 				D79087B8203DBCDA000BD77E /* TreatmentScheduleDetailCreateRequest.swift */,
+				90F2A33F20A14FD0004823B2 /* PathologicalCreateRequest.swift */,
+				9018162720ABE72F000D69E2 /* DiagnosisCreateRequest.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1113,9 +1140,11 @@
 				D7C73AFA2005131C000B3CBC /* G00HomeVC.xib in Resources */,
 				D7F4B215202B524F00EC7AB5 /* GreenInfoFieldSymbol.xib in Resources */,
 				D7F4B202202B524F00EC7AB5 /* Help.png in Resources */,
+				90063CAB20A10FBB0025E09F /* G01F03S05VC.xib in Resources */,
 				D78CD1642024B5BA00C70FAE /* G01F00S02VC.xib in Resources */,
 				D70BCB5E2016EF1A00BCD90B /* G00AddressSelectVC.xib in Resources */,
 				D7F4B1F8202B524F00EC7AB5 /* GPlus.png in Resources */,
+				90F2A33D20A14CCF004823B2 /* G01F01S03VC.xib in Resources */,
 				908CE2DB205E5A5E00798C6F /* G01F03S04ViewController.xib in Resources */,
 				D7F4B21B202B524F00EC7AB5 /* LandingView.xib in Resources */,
 				D70BCB5C2016EF1A00BCD90B /* G00AccountEditVC.xib in Resources */,
@@ -1131,6 +1160,7 @@
 				D702C816203903CA0075D40B /* G01F02S04VC.xib in Resources */,
 				D7F4B20A202B524F00EC7AB5 /* WifiDisconnect.png in Resources */,
 				D7F4B217202B524F00EC7AB5 /* GreenStepField.xib in Resources */,
+				902E28A120A8411B0085AAF3 /* G01F03S06VC.xib in Resources */,
 				D7AAE6752038683E001C3847 /* G01F02S02VC.xib in Resources */,
 				D7F4B200202B524F00EC7AB5 /* GUser.png in Resources */,
 				D7F4B1EC202B524F00EC7AB5 /* GDown.png in Resources */,
@@ -1149,9 +1179,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/dental/Pods/Target Support Files/Pods-dental/Pods-dental-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1164,9 +1199,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/dental/Pods/Target Support Files/Pods-dental/Pods-dental-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1179,13 +1219,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-dental-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1227,6 +1270,7 @@
 				D7C73AD420050787000B3CBC /* ViewController.swift in Sources */,
 				D7A2AC84202B59CC008C8580 /* Template.swift in Sources */,
 				D79087B3203D31E0000BD77E /* TreatmentScheduleProcessCreateRequest.swift in Sources */,
+				90F2A33C20A14CCF004823B2 /* G01F01S03VC.swift in Sources */,
 				D7F4B1DC202B524F00EC7AB5 /* GreenLabel.swift in Sources */,
 				D7F4B216202B524F00EC7AB5 /* GreenStepField.swift in Sources */,
 				D7C92A3420397D20002EF00D /* TreatmentCreateRequest.swift in Sources */,
@@ -1238,6 +1282,7 @@
 				D7FF1FC52024245700C2DF28 /* CustomerBean.swift in Sources */,
 				D70BCB4E2016E99100BCD90B /* G00AccountExtVC.swift in Sources */,
 				D7F4B1D6202B524F00EC7AB5 /* GreenExtention+UITextField.swift in Sources */,
+				90F2A34220A150E6004823B2 /* PathologicalCreateResp.swift in Sources */,
 				D7F4B210202B524F00EC7AB5 /* GreenInfoField.swift in Sources */,
 				D7F4B1CD202B524F00EC7AB5 /* GreenExtension+Date.swift in Sources */,
 				D7F4B1CC202B524F00EC7AB5 /* GreenExtension+Array.swift in Sources */,
@@ -1248,6 +1293,7 @@
 				D7F4B1D9202B524F00EC7AB5 /* UIDeviceExtension.swift in Sources */,
 				D78CD1682024C0A900C70FAE /* CustomerInfoRespBean.swift in Sources */,
 				D706B042203AD2E8004AE6D7 /* G01F02S06VC.swift in Sources */,
+				90063CAA20A10FBB0025E09F /* G01F03S05VC.swift in Sources */,
 				D7F4B220202B524F00EC7AB5 /* CustomerList.swift in Sources */,
 				D7F4B221202B524F00EC7AB5 /* LoginUser.swift in Sources */,
 				D78CD16C2024CC8D00C70FAE /* TreatmentBean.swift in Sources */,
@@ -1276,6 +1322,7 @@
 				D7F4B1D4202B524F00EC7AB5 /* GreenExtention+UILabel.swift in Sources */,
 				D7F4B1D3202B524F00EC7AB5 /* GreenExtention+UIButton.swift in Sources */,
 				D7C73AF92005131C000B3CBC /* G00HomeVC.swift in Sources */,
+				90F2A34020A14FD0004823B2 /* PathologicalCreateRequest.swift in Sources */,
 				D7FF1FC8202426F600C2DF28 /* CustomerListRequest.swift in Sources */,
 				D7F4B21E202B524F00EC7AB5 /* MBProgressHUD.m in Sources */,
 				D7F4B1DF202B524F00EC7AB5 /* GreenTextView.swift in Sources */,
@@ -1295,12 +1342,14 @@
 				D7F4B1CE202B524F00EC7AB5 /* GreenExtension+String.swift in Sources */,
 				D7AAE679203890E0001C3847 /* TreatmentInfoRespBean.swift in Sources */,
 				D7B43B312036F74100F59945 /* G01F01S02VC.swift in Sources */,
+				902E28A020A8411B0085AAF3 /* G01F03S06VC.swift in Sources */,
 				D7FF1FBF2024228F00C2DF28 /* CustomerListRespBean.swift in Sources */,
 				D7F4B222202B524F00EC7AB5 /* MasterModel.swift in Sources */,
 				D7AAE66D2037FF23001C3847 /* TreatmentListRequest.swift in Sources */,
 				D7F4B1D5202B524F00EC7AB5 /* GreenExtention+UITableView.swift in Sources */,
 				D7A2AC92202B6086008C8580 /* ItemIdConfig.swift in Sources */,
 				D7F4B1E1202B524F00EC7AB5 /* GreenDefine.swift in Sources */,
+				9018162820ABE72F000D69E2 /* DiagnosisCreateRequest.swift in Sources */,
 				D7F4B227202B524F00EC7AB5 /* ServiceConfig.swift in Sources */,
 				D78CD1662024B6B600C70FAE /* ConfigExtBean.swift in Sources */,
 				D79087AF203D1D5C000BD77E /* G01F04S02VC.swift in Sources */,

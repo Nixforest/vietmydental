@@ -43,9 +43,31 @@ class ListConfigBean: NSObject {
                 return
             }
         }
+        // Create new
         let data = ConfigExtBean()
         data.id         = id
         data._dataStr   = value
+        data.name       = name
+        self._data.append(data)
+    }
+    
+    /**
+     * Set data by id
+     * - parameter id: Id of item
+     * - parameter value: Value of array
+     */
+    public func setArrayData(id: String, value: [ConfigBean], name: String = DomainConst.BLANK) {
+        for item in self._data {
+            if item.id == id {
+                item.data = value
+                return
+            }
+        }
+        
+        // Create new
+        let data = ConfigExtBean()
+        data.id         = id
+        data.data       = value
         data.name       = name
         self._data.append(data)
     }

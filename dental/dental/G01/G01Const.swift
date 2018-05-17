@@ -36,4 +36,8 @@ class G01Const: NSObject {
     public static let PATH_TREATMENT_PROCESS_CREATE             = "customer/createTreatmentScheduleProcess"
     /** Path to connect with PHP server */
     public static let PATH_TREATMENT_DETAIL_CREATE              = "customer/createTreatmentScheduleDetail"
+    /** Path to connect with PHP server */
+    public static let PATH_PATHOLOGICAL_CREATE                  = "default/createPathological"
+    /** Path to connect with PHP server */
+    public static let PATH_DIAGNOSIS_CREATE                     = "default/createDiagnosis"
 }

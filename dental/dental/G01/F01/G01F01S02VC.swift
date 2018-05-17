@@ -107,7 +107,7 @@ class G01F01S02VC: ChildExtViewController {
     }
     
     internal func addNew(_ sender: AnyObject) {
-        let view = SelectionVC(nibName: SelectionVC.theClassName, bundle: nil)
+        let view = G01F01S03VC(nibName: G01F01S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: DomainConst.CONTENT00548)
         view.setData(data: LoginBean.shared.pathological, selectedValue: "")
         view.setSelectedArray(value: self._data)

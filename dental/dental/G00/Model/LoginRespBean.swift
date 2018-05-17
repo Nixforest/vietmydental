@@ -48,5 +48,6 @@ class LoginRespBean: BaseRespModel {
         LoginBean.shared.treatment          = data.data.treatment
         LoginBean.shared.id                 = data.data.id
         LoginBean.shared.timer              = data.data.timer
+        LoginBean.shared.diagnosis_other_id = data.data.diagnosis_other_id
     }
 }

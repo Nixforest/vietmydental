@@ -43,6 +43,8 @@ class SelectionVC: G00AddressSelectVC {
                     if data.id == item.id {
                         cell.accessoryType = .checkmark
                         break
+                    } else {
+                        cell.accessoryType = .none
                     }
                 }
             } else {            

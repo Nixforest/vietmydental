@@ -12,13 +12,15 @@ import harpyframework
 class G01F03S01VC: ChildExtViewController {
     // MARK: Properties
     /** Treatment id */
-    var _treatmentId:                String                  = DomainConst.BLANK
+    var _treatmentId:       String                  = DomainConst.BLANK
     /** Data */
     var _data:              ListConfigBean          = ListConfigBean()
     /** Create process flag */
     var _flagCreate:        Bool                    = false
     /** Open Receipt flag */
     var _flagOpenReceipt:   Bool                    = false
+    /** Need open receipt flag */
+    var _flagNeedOpenReceipt: Bool                  = false
     /** constrain height footer view */
     @IBOutlet weak var heightFooter: NSLayoutConstraint!
     /** Information table view */
@@ -41,7 +43,8 @@ class G01F03S01VC: ChildExtViewController {
 //        self.createNavigationBar(title: DomainConst.CONTENT00554)
         _tblInfo.dataSource = self
         _tblInfo.delegate = self
-        showFooter(isShow: !canUpdate())
+//        showFooter(isShow: !canUpdate())
+        showFooter(isShow: isCompleted())
     }
     
     /**
@@ -66,11 +69,17 @@ class G01F03S01VC: ChildExtViewController {
                     self._data.setData(id: DomainConst.ITEM_DIAGNOSIS_ID, value: BaseModel.shared.sharedString)
                     requestUpdate(isShowLoading: false)
                 }
-            case DomainConst.ITEM_TEETH:
-                if !BaseModel.shared.sharedString.isEmpty {
-                    self._data.setData(id: DomainConst.ITEM_TEETH_ID, value: BaseModel.shared.sharedString)
+//            case DomainConst.ITEM_TEETH:
+//                if !BaseModel.shared.sharedString.isEmpty {
+//                    self._data.setData(id: DomainConst.ITEM_TEETH_ID, value: BaseModel.shared.sharedString)
+//                    requestUpdate(isShowLoading: false)
+//                }
+            case DomainConst.ITEM_TEETH_INFO:
+//                if !BaseModel.shared.sharedArrayConfig.isEmpty {
+                    self._data.setArrayData(id: DomainConst.ITEM_TEETH_INFO, value: BaseModel.shared.sharedArrayConfig)
+                    BaseModel.shared.sharedArrayConfig.removeAll()
                     requestUpdate(isShowLoading: false)
-                }
+//                }
             case DomainConst.ITEM_TREATMENT:
                 if !BaseModel.shared.sharedString.isEmpty {
                     self._data.setData(id: DomainConst.ITEM_TREATMENT_TYPE_ID, value: BaseModel.shared.sharedString)
@@ -128,6 +137,10 @@ class G01F03S01VC: ChildExtViewController {
     public func setData(bean: [ConfigExtBean], treatmentId: String) {
         self._data.setData(data: bean)
         self._treatmentId = treatmentId
+        // Status is not complete
+        if !isCompleted() {
+            _flagNeedOpenReceipt = true
+        }
 //        showFooter(isShow: !self.canUpdate())
     }
     
@@ -150,11 +163,15 @@ class G01F03S01VC: ChildExtViewController {
      * - parameter title: Title of screen
      */
     public func createSelectScreenTeeth(title: String) {
-        let view = SelectionVC(nibName: SelectionVC.theClassName, bundle: nil)
+//        let view = SelectionVC(nibName: SelectionVC.theClassName, bundle: nil)
+        let view = G01F03S05VC(nibName: G01F03S05VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
         view.setData(data: LoginBean.shared.teeth,
-                     selectedValue: self._data.getData(
-                        id: DomainConst.ITEM_TEETH_ID)._dataStr)
+                     selectedValue: "")
+        view.setSelectedArray(value: self._data.getData(
+            id: DomainConst.ITEM_TEETH_INFO).data)
+        BaseModel.shared.sharedArrayConfig = self._data.getData(
+            id: DomainConst.ITEM_TEETH_INFO).data
         self.push(view, animated: true)
     }
     
@@ -170,12 +187,28 @@ class G01F03S01VC: ChildExtViewController {
         self.push(view, animated: true)
     }
     
+    public func openImageXRayInfoScreen() {
+//        let view = G01F03S06VC(nibName: G01F03S06VC.theClassName, bundle: nil)
+//        view.createNavigationBar(title: self._data.getData(id: DomainConst.ITEM_IMAGE).name)
+//        let listConfig = ListConfigBean()
+//        listConfig.setData(data: self._data.getData(id: DomainConst.ITEM_IMAGE)._dataExt)
+//        view.setDataExt(data: listConfig, selectedValue: "")
+//        self.push(view, animated: true)
+        showAlert(message: DomainConst.CONTENT00362)
+    }
+    
     internal func requestUpdate(isShowLoading: Bool = true) {
+        var arrData = [String]()
+        for item in self._data.getData(id: DomainConst.ITEM_TEETH_INFO).data {
+            arrData.append(item.id)         
+        }
+        let teethInfo = String.init(format: "%@%@%@", "[", arrData.joined(separator: ","), "]")
         TreatmentScheduleDetailUpdateRequest.request(
             action: #selector(finishUpdate(_:)),
             view: self,
             id: self._data.getData(id: DomainConst.ITEM_ID)._dataStr,
             teeth_id: self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr,
+            teeth_info: teethInfo,
             diagnosis: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr,
             treatment: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr,
             status: self._data.getData(id: DomainConst.ITEM_STATUS)._dataStr,
@@ -188,9 +221,11 @@ class G01F03S01VC: ChildExtViewController {
         if model.isSuccess() {
             self.setData(bean: model.data.getData(), treatmentId: self._treatmentId)
             _tblInfo.reloadData()
-            self.showFooter(isShow: !self.canUpdate())
-            if self.isCompleted() {
+//            self.showFooter(isShow: !self.canUpdate())
+            self.showFooter(isShow: isCompleted())
+            if self.isCompleted() && _flagNeedOpenReceipt {
                 self.openReceipt()
+                _flagNeedOpenReceipt = false
             }
             //check show button finish
             if canShowBtnFinish() {
@@ -251,11 +286,15 @@ class G01F03S01VC: ChildExtViewController {
     }
     
     // MARK: Logic
-    func canShowBtnFinish() -> Bool {
+    /**
+     * Check if data is full fill
+     * - returns: True if all field (id, diagnosis, treatment type) have updated all,
+     *              False otherwise
+     */
+    private func isDataFullFill() -> Bool {
         for item in self._data._data {
             switch item.id {
-            case DomainConst.ITEM_TEETH_ID,
-                 DomainConst.ITEM_DIAGNOSIS_ID,
+            case DomainConst.ITEM_DIAGNOSIS_ID,
                  DomainConst.ITEM_TREATMENT_TYPE_ID:
                 if item._dataStr.isBlank {
                     return false
@@ -264,6 +303,21 @@ class G01F03S01VC: ChildExtViewController {
                 break
             }
         }
+        return true
+    }
+    func canShowBtnFinish() -> Bool {
+//        for item in self._data._data {
+//            switch item.id {
+////            case DomainConst.ITEM_TEETH_ID,
+//            case DomainConst.ITEM_DIAGNOSIS_ID,
+//                 DomainConst.ITEM_TREATMENT_TYPE_ID:
+//                if item._dataStr.isBlank {
+//                    return false
+//                }
+//            default:
+//                break
+//            }
+//        }
         if !canUpdate() {
             return false
         }
@@ -271,7 +325,7 @@ class G01F03S01VC: ChildExtViewController {
     }
     func showBtnFinish() {
         createRightNavigationItem(title: DomainConst.CONTENT00558,
-                                  action: #selector(handleFinish(_:)),
+                                  action: #selector(confirmToFinish(_:)),
                                   target: self)
     }
     /**
@@ -302,7 +356,7 @@ class G01F03S01VC: ChildExtViewController {
     /**
      * Handle finish treatment schedule detail
      */
-    internal func handleFinish(_ sender: AnyObject) {
+    internal func handleFinish() {
         showAlert(message: DomainConst.CONTENT00561,
                   okHandler: {
                     alert in
@@ -315,15 +369,35 @@ class G01F03S01VC: ChildExtViewController {
         })
     }
     
+    internal func confirmToFinish(_ sender: AnyObject) {
+        if !isDataFullFill() {
+            showAlert(message: DomainConst.CONTENT00576,
+                      okHandler: { alert in
+                        self.handleFinish()
+            },
+                      cancelHandler: { alert in
+                        // Do nothing
+            })
+        } else {
+            handleFinish()
+        }
+    }
+    
     /**
      * Request server finish treatment schedule detail
      */
     internal func finishTreatmentScheduleDetail() {
+        var arrData = [String]()
+        for item in self._data.getData(id: DomainConst.ITEM_TEETH_INFO).data {
+            arrData.append(item.id)         
+        }
+        let teethInfo = String.init(format: "%@%@%@", "[", arrData.joined(separator: ","), "]")
         TreatmentScheduleDetailUpdateRequest.request(
             action: #selector(finishUpdate(_:)),
             view: self,
             id: self._data.getData(id: DomainConst.ITEM_ID)._dataStr,
             teeth_id: self._data.getData(id: DomainConst.ITEM_TEETH_ID)._dataStr,
+            teeth_info: teethInfo,
             diagnosis: self._data.getData(id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr,
             treatment: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr,
             status: DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED,
@@ -354,13 +428,31 @@ class G01F03S01VC: ChildExtViewController {
         _flagOpenReceipt = true
         let vc = G01F03S04ViewController()
         vc.amount = LoginBean.shared.getTreatmentConfig(id: self._data.getData(id: DomainConst.ITEM_TREATMENT_TYPE_ID)._dataStr)._dataStr
+        vc.debt = self._data.getData(id: DomainConst.ITEM_CUSTOMER_DEBT)._dataStr
+        
+        
         for bean in _data._data {
             if bean.id == DomainConst.ITEM_RECEIPT {
                 vc.receiptBean = bean
+                var obj = ConfigExtBean()
+                
+                obj.id = DomainConst.ITEM_ID
+                obj.name = DomainConst.CONTENT00570
+                obj._dataStr = vc.amount
+                vc.receiptBean._dataExt.append(obj)
+                
+                obj = ConfigExtBean()
+                obj.id = DomainConst.ITEM_CUSTOMER_DEBT
+                obj.name = DomainConst.CONTENT00577
+                obj._dataStr = vc.debt
+                vc.receiptBean._dataExt.append(obj)
+//                for child in bean.getListData() {
+//                    vc.receiptBean._dataExt.append(child)
+//                }
             }
         }
         vc.detailID = self._data.getData(id: DomainConst.ITEM_ID)._dataStr
-        vc.createNavigationBar(title: "Thanh toán")
+        vc.createNavigationBar(title: DomainConst.CONTENT00574)
         self.push(vc, animated: true)
     }
     @IBAction func btnPayAction(_ sender: Any) {
@@ -427,7 +519,8 @@ extension G01F03S01VC: UITableViewDataSource {
                  DomainConst.ITEM_TIME_ID,
                  DomainConst.ITEM_DETAILS,
                  DomainConst.ITEM_TYPE,
-                 DomainConst.ITEM_RECEIPT:
+                 DomainConst.ITEM_RECEIPT,
+                 DomainConst.ITEM_TEETH:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
                 return cell
@@ -457,6 +550,41 @@ extension G01F03S01VC: UITableViewDataSource {
                     cell.imageView?.image = image
                     cell.imageView?.contentMode = .scaleAspectFit
                 }
+                return cell
+            case DomainConst.ITEM_TEETH_INFO:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                var name = data.name
+                var value = LoginBean.shared.getUpdateText()
+                let listInfo = data.data
+                let count = listInfo.count
+                if count == 1 {
+                    value = listInfo[0].name
+                } else if (count > 1) {
+                    name = DomainConst.CONTENT00575
+                    value = DomainConst.BLANK
+                    cell.accessoryType = .detailDisclosureButton
+                } else {
+                    cell.detailTextLabel?.textColor = UIColor.red
+                }
+                cell.textLabel?.text = name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = value
+                cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
+                return cell
+            case DomainConst.ITEM_IMAGE:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = DomainConst.BLANK
+                cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+                cell.accessoryType = .detailDisclosureButton
+                cell.imageView?.image = image
+                cell.imageView?.contentMode = .scaleAspectFit
                 return cell
             default:
                 let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
@@ -512,14 +640,18 @@ extension G01F03S01VC: UITableViewDelegate {
                 if self.canUpdate() {
                     self.createSelectScreenDiagnosis(title: data.name)
                 }
-            case DomainConst.ITEM_TEETH:
-                if self.canUpdate() {
-                    self.createSelectScreenTeeth(title: data.name)
-                }
+//            case DomainConst.ITEM_TEETH:
+//                if self.canUpdate() {
+//                    self.createSelectScreenTeeth(title: data.name)
+//                }
+            case DomainConst.ITEM_TEETH_INFO:
+                self.createSelectScreenTeeth(title: data.name)
             case DomainConst.ITEM_TREATMENT:
                 if self.canUpdate() {
                     self.createSelectScreenTreatment(title: data.name)
                 }
+            case DomainConst.ITEM_IMAGE:
+                self.openImageXRayInfoScreen()
             default:
                 break
             }
@@ -545,6 +677,7 @@ extension G01F03S01VC: UITableViewDelegate {
                  DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID,
                  DomainConst.ITEM_TEETH_ID,
+                 DomainConst.ITEM_TEETH,
                  DomainConst.ITEM_ID,
                  DomainConst.ITEM_START_DATE,
                  DomainConst.ITEM_TREATMENT_TYPE_ID,
@@ -581,15 +714,16 @@ extension G01F03S01VC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return nil
-        }
-        let header = CustomerInfoHeaderView.init(
-            frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: HEADER_HEIGHT))
-        header.setHeader(bean: self._data.getData(id: DomainConst.ITEM_DETAILS),
-                         actionText: DomainConst.CONTENT00065)
-        header.delegate = self
-        return header
+//        if section == 0 {
+//            return nil
+//        }
+//        let header = CustomerInfoHeaderView.init(
+//            frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: HEADER_HEIGHT))
+//        header.setHeader(bean: self._data.getData(id: DomainConst.ITEM_DETAILS),
+//                         actionText: DomainConst.CONTENT00065)
+//        header.delegate = self
+//        return header
+        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

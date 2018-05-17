@@ -17,6 +17,7 @@ class G01F03S04ViewController: ChildExtViewController {
     var amount: String = "0"
     var detailID: String = ""
     var receiptBean: ConfigExtBean!
+    var debt:   String = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,18 @@ class G01F03S04ViewController: ChildExtViewController {
         
         var bean = ConfigExtBean()
         
+        bean.id = DomainConst.ITEM_ID
+        bean.name = DomainConst.CONTENT00570
+        bean._dataStr = amount
+        output._dataExt.append(bean)
+        
+        bean = ConfigExtBean()
+        bean.id = DomainConst.ITEM_CUSTOMER_DEBT
+        bean.name = DomainConst.CONTENT00577
+        bean._dataStr = debt
+        output._dataExt.append(bean)
+        
+        bean = ConfigExtBean()
         bean.id = DomainConst.ITEM_DISCOUNT
         bean.name = DomainConst.CONTENT00572
         bean._dataStr = ""
@@ -105,7 +118,15 @@ class G01F03S04ViewController: ChildExtViewController {
             
             BaseModel.shared.sharedString = str
 //            self.showAlert(message: result.message)
-            self.backButtonTapped(self)
+            if result.status == 1 {
+                self.showAlert(message: result.message,
+                               okHandler: { alert in
+                                self.backButtonTapped(self)
+                })
+            } else {
+                self.showAlert(message: result.message)
+            }
+//            self.backButtonTapped(self)
         }
     }
     func create(_ sender: AnyObject) {
@@ -128,6 +149,14 @@ class G01F03S04ViewController: ChildExtViewController {
         case DomainConst.ITEM_NAME:
             title           = bean.name
             value           = bean._dataStr
+            break
+        case DomainConst.ITEM_DISCOUNT,
+             DomainConst.ITEM_FINAL:
+            title           = bean.name
+            value           = bean._dataStr
+            message         = DomainConst.BLANK
+            placeHolder     = bean.name
+            keyboardType    = UIKeyboardType.numberPad
             break
         default:
             title           = bean.name
@@ -225,7 +254,7 @@ extension G01F03S04ViewController: UITableViewDataSource {
      */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.receiptBean.getListData().count + 1
+            return self.receiptBean.getListData().count
         } else {
             // For future
             return 0
@@ -241,51 +270,50 @@ extension G01F03S04ViewController: UITableViewDataSource {
             if indexPath.row > self.receiptBean.getListData().count {
                 return UITableViewCell()
             }
+            let data = receiptBean.getListData()[indexPath.row]
+            var imagePath = DomainConst.INFORMATION_IMG_NAME
+            if let img = DomainConst.VMD_IMG_LIST[data.id] {
+                imagePath = img
+            }
             // dynamic cell for amount
-            if indexPath.row == 0 {
-                let data = ConfigExtBean()
-                data.id = receiptBean.id
-                data.name = DomainConst.CONTENT00570
-                data._dataStr = amount
+            switch data.id {
+            case DomainConst.ITEM_ID:
                 let cell = getCell(bean: data)
-                var imagePath = DomainConst.VMD_SUM_ICON_IMG_NAME
-                let image = ImageManager.getImage(named: imagePath,
-                                                  margin: GlobalConst.MARGIN * 2)
-                cell.imageView?.image = image
+                imagePath = DomainConst.VMD_SUM_ICON_IMG_NAME
+                cell.imageView?.image = ImageManager.getImage(
+                    named: imagePath, margin: GlobalConst.MARGIN * 2)
                 cell.imageView?.contentMode = .scaleAspectFit
                 return cell
-            } else {
-                let data = self.receiptBean.getListData()[indexPath.row - 1]
-                var imagePath = DomainConst.INFORMATION_IMG_NAME
-                if let img = DomainConst.VMD_IMG_LIST[data.id] {
-                    imagePath = img
+            case DomainConst.ITEM_CUSTOMER_DEBT:
+                let cell = getCell(bean: data)
+                cell.imageView?.image = ImageManager.getImage(
+                    named: imagePath, margin: GlobalConst.MARGIN * 2)
+                cell.imageView?.contentMode = .scaleAspectFit
+                return cell
+            case DomainConst.ITEM_CUSTOMER_CONFIRMED,
+                 DomainConst.ITEM_NEED_APPROVE,
+                 DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_START_DATE:
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+                cell.contentView.isHidden = true
+                return cell
+                
+            default:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+                cell.textLabel?.text = data.name
+                cell.textLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.text = data._dataStr
+                cell.detailTextLabel?.font = GlobalConst.BASE_FONT
+                cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+                cell.detailTextLabel?.numberOfLines = 0
+                if data._dataStr.isEmpty {
+                    cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
+                    cell.detailTextLabel?.textColor = UIColor.red
                 }
-                let image = ImageManager.getImage(named: imagePath,
-                                                  margin: GlobalConst.MARGIN * 2)
-                switch data.id {
-                case DomainConst.ITEM_CUSTOMER_CONFIRMED,
-                     DomainConst.ITEM_NEED_APPROVE,
-                     DomainConst.ITEM_CAN_UPDATE,
-                     DomainConst.ITEM_START_DATE:
-                    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-                    cell.contentView.isHidden = true
-                    return cell
-                default:
-                    let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-                    cell.textLabel?.text = data.name
-                    cell.textLabel?.font = GlobalConst.BASE_FONT
-                    cell.detailTextLabel?.text = data._dataStr
-                    cell.detailTextLabel?.font = GlobalConst.BASE_FONT
-                    cell.detailTextLabel?.lineBreakMode = .byWordWrapping
-                    cell.detailTextLabel?.numberOfLines = 0
-                    if data._dataStr.isEmpty {
-                        cell.detailTextLabel?.text = LoginBean.shared.getUpdateText()
-                        cell.detailTextLabel?.textColor = UIColor.red
-                    }
-                    cell.imageView?.image = image
-                    cell.imageView?.contentMode = .scaleAspectFit
-                    return cell
-                }
+                cell.imageView?.image = ImageManager.getImage(
+                    named: imagePath, margin: GlobalConst.MARGIN * 2)
+                cell.imageView?.contentMode = .scaleAspectFit
+                return cell
             }
         case 1:     // For future
             break
@@ -303,11 +331,7 @@ extension G01F03S04ViewController: UITableViewDelegate {
         if canUpdate() {
             switch indexPath.section {
             case 0:
-                if (indexPath.row > self.receiptBean.getListData().count) ||
-                    (indexPath.row == 0) {
-                    return
-                }
-                let data = self.receiptBean.getListData()[indexPath.row - 1]
+                let data = self.receiptBean.getListData()[indexPath.row]
                 switch data.id {
                 case DomainConst.ITEM_DESCRIPTION,
                      DomainConst.ITEM_DISCOUNT,
@@ -330,18 +354,14 @@ extension G01F03S04ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            if indexPath.row == 0 {
+            switch receiptBean.getListData()[indexPath.row].id {
+            case DomainConst.ITEM_CUSTOMER_CONFIRMED,
+                 DomainConst.ITEM_NEED_APPROVE,
+                 DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_START_DATE:
+                return 0
+            default:
                 return UITableViewAutomaticDimension
-            } else {
-                switch receiptBean.getListData()[indexPath.row - 1].id {
-                case DomainConst.ITEM_CUSTOMER_CONFIRMED,
-                     DomainConst.ITEM_NEED_APPROVE,
-                     DomainConst.ITEM_CAN_UPDATE,
-                     DomainConst.ITEM_START_DATE:
-                    return 0
-                default:
-                    return UITableViewAutomaticDimension
-                }
             }
         default:
             return UITableViewAutomaticDimension

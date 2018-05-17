@@ -184,6 +184,21 @@ class G01F02S02VC: ChildExtViewController {
      * - parameter title: Title of screen
      */
     public func createSelectScreenDiagnosis(title: String) {
+        if self._data.data.getData(
+            id: DomainConst.ITEM_DIAGNOSIS_ID)._dataStr.isEmpty {
+            openScreenDiagnosis(title: title)
+        } else {
+            showAlert(message: "Bạn chắc chắn muốn cập nhật thông tin \"\(title)\" không?", okHandler: {
+                alert in
+                self.openScreenDiagnosis(title: title)
+            }, cancelHandler: {
+                alert in
+                // Do nothing
+            })
+        }
+    }
+    
+    public func openScreenDiagnosis(title: String) {
         let view = G01F02S03VC(nibName: G01F02S03VC.theClassName, bundle: nil)
         view.createNavigationBar(title: title)
         view.setData(data: LoginBean.shared.getDiagnosisConfigs(),
@@ -362,8 +377,11 @@ extension G01F02S02VC: UITableViewDataSource {
                 cell.imageView?.image = image
                 cell.imageView?.contentMode = .scaleAspectFit
                 return cell
-            case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
-                 DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID,
+            case DomainConst.ITEM_CAN_UPDATE,
+                 DomainConst.ITEM_STATUS,
+                 DomainConst.ITEM_DIAGNOSIS_ID,
+                 DomainConst.ITEM_PATHOLOGICAL_ID,
+                 DomainConst.ITEM_DIAGNOSIS,
                  DomainConst.ITEM_DETAILS:
                 let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
                 cell.contentView.isHidden = true
@@ -472,6 +490,7 @@ extension G01F02S02VC: UITableViewDelegate {
             switch self._data.data.getData()[indexPath.row].id {
             case DomainConst.ITEM_CAN_UPDATE, DomainConst.ITEM_STATUS,
                  DomainConst.ITEM_DIAGNOSIS_ID, DomainConst.ITEM_PATHOLOGICAL_ID,
+                 DomainConst.ITEM_DIAGNOSIS,
                  DomainConst.ITEM_DETAILS:
                 return 0
             case DomainConst.ITEM_END_DATE:

@@ -38,6 +38,8 @@ class LoginBean: ConfigBean {
     var teeth:              [ConfigBean]    = [ConfigBean]()
     /** Timer config */
     var timer:              [ConfigBean]    = [ConfigBean]()
+    /** Id of diagnosis other */
+    var diagnosis_other_id: String          = DomainConst.BLANK
     
     override public init() {
         super.init()
@@ -70,6 +72,8 @@ class LoginBean: ConfigBean {
         self.teeth.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_TEETH))
         // Timer
         self.timer.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_TIMER))
+        // Diagnosis other id
+        self.diagnosis_other_id = getString(json: jsonData, key: DomainConst.KEY_DIAGNOSIS_OTHER_ID)
     }
     
     /**
@@ -155,6 +159,20 @@ class LoginBean: ConfigBean {
         }
         return DomainConst.BLANK
     }
+    
+    /**
+     * Get diagnosis config id by name
+     * - parameter name: Name of config
+     * - returns: Id of config
+     */
+    public func getDiagnosisConfigIdByName(name: String) -> String {
+        for item in self.diagnosis {
+            if item.name == name {
+                return item.id
+            }
+        }
+        return DomainConst.BLANK
+    }
         
     /**
      * Get treatment config value
@@ -211,5 +229,39 @@ class LoginBean: ConfigBean {
             }
         }
         return DomainConst.BLANK
+    }
+    
+    /**
+     * Add pathological
+     * - parameter bean: Object to add
+     */
+    public func addPathological(bean: ConfigBean) {
+        pathological.append(bean)
+    }
+    
+    /**
+     * Add new diagnosis
+     * - parameter bean: Object to add
+     * - parameter parent_id: Id of parent object
+     */
+    public func addDiagnosis(bean: ConfigBean, parent_id: String) {
+        for item in self.diagnosis {
+            if item.id == parent_id {
+                item.data.append(bean)
+            }
+        }
+    }
+    
+    /**
+     * Add new diagnosis
+     * - parameter bean: Object to add
+     * - parameter parent_id: Id of parent object
+     */
+    public func addDiagnosisToOther(bean: ConfigBean) {
+        for item in self.diagnosis {
+            if item.id == self.diagnosis_other_id {
+                item.data.append(bean)
+            }
+        }
     }
 }

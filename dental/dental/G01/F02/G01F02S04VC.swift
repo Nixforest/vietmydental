@@ -8,7 +8,7 @@
 
 import UIKit
 
-class G01F02S04VC: SelectionVC {
+class G01F02S04VC: G01F01S03VC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
