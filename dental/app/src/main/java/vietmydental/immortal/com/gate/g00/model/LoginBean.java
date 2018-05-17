@@ -36,6 +36,8 @@ public class LoginBean extends ConfigBean {
     private ArrayList<ConfigExtBean> teeth          = new ArrayList<>();
     /** Timer config */
     private ArrayList<ConfigBean> timer             = new ArrayList<>();
+    /** Id of diagnosis other */
+    private String diagnosis_other_id               = DomainConst.BLANK;
 
     /**
      * Constructor.
@@ -76,6 +78,7 @@ public class LoginBean extends ConfigBean {
         this.treatment          = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_TREATMENT);
         this.teeth              = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_TEETH);
         this.timer              = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_TIMER);
+        this.diagnosis_other_id = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_DIAGNOSIS_OTHER_ID);
     }
 
     /**
@@ -93,6 +96,7 @@ public class LoginBean extends ConfigBean {
         this.treatment.clear();
         this.teeth.clear();
         this.timer.clear();
+        this.diagnosis_other_id = DomainConst.BLANK;
     }
 
     /**
@@ -190,5 +194,18 @@ public class LoginBean extends ConfigBean {
             }
         }
         return null;
+    }
+
+    /**
+     * Add new diagnosis
+     * @param bean Object to add
+     */
+    public void addDiagnosisToOther(ConfigExtBean bean) {
+        for (ConfigExtBean item :
+                this.diagnosis) {
+            if (item.getId().equals(this.diagnosis_other_id)) {
+                item.getDataExt().add(bean);
+            }
+        }
     }
 }

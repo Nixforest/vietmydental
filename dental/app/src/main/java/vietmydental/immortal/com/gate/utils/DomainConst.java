@@ -290,6 +290,8 @@ public final class DomainConst {
     public static final String KEY_DIAGNOSIS                     = "diagnosis";
     /** Diagnosis id */
     public static final String KEY_DIAGNOSIS_ID                  = "diagnosis_id";
+    /** Diagnosis other id */
+    public static final String KEY_DIAGNOSIS_OTHER_ID            = "diagnosis_other_id";
     /** Teeth */
     public static final String KEY_TEETH                         = "teeth";
     /** Teeth */

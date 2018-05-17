@@ -11,6 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +29,11 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
+import vietmydental.immortal.com.gate.g01.api.DiagnosisCreateRequest;
+import vietmydental.immortal.com.gate.g01.api.PathologicalCreateRequest;
 import vietmydental.immortal.com.gate.g01.api.TreatmentScheduleDetailUpdateRequest;
 import vietmydental.immortal.com.gate.g01.component.adapters.G01F02S02ListAdapter;
+import vietmydental.immortal.com.gate.g01.model.PathologicalCreateRespBean;
 import vietmydental.immortal.com.gate.g01.model.SampleSearchModel;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -56,6 +63,8 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
     private List<ArrayList<ConfigExtBean>> mData = new ArrayList<>();
     /** Adapter */
     private G01F02S02ListAdapter mAdapter;
+    /** Need open receipt flag */
+    private boolean _flagNeedOpenReceipt                   = false;
     /** Action receipt */
     @BindView(R.id.btnAdd)
     protected FloatingActionButton actionButton;
@@ -117,6 +126,14 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
             actionButton.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * Check if current treatment schedule is in completed status
+     * @return True if value of status item is Completed, False otherwise
+     */
+    private boolean isCompleted() {
+        return CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_STATUS).equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED);
+    }
     /**
      * Handle finish schedule detail
      */
@@ -144,9 +161,9 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
                     BaseResponse resp = getResponse();
                     if ((resp != null) && resp.isSuccess()) {
                         parentActivity.showLoadingView(false);
-                        if (status.equals(DomainConst.TREATMENT_SCHEDULE_DETAIL_COMPLETED)) {
-//                            parentActivity.onBackClick();
+                        if (isCompleted() && _flagNeedOpenReceipt) {
                             openReceipt();
+                            _flagNeedOpenReceipt = false;
                         }
                         mAdapter.notifyDataSetChanged();
                     } else {
@@ -175,6 +192,9 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
         this.teethId = CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_TEETH_ID);
         this.diagnosisId = CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_DIAGNOSIS_ID);
         this.treatmentId = CommonProcess.getConfigExtValueById(detailData.getDataExt(), DomainConst.ITEM_TREATMENT_TYPE_ID);
+        if (!isCompleted()) {
+            _flagNeedOpenReceipt = true;
+        }
     }
 
     /**
@@ -417,12 +437,25 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
 //                "Tìm kiếm", null, createSampleData(),
                 new SearchResultListener<ConfigExtBean>() {
                     @Override
-                    public void onSelected(BaseSearchDialogCompat dialog,
+                    public void onSelected(final BaseSearchDialogCompat dialog,
                                            ConfigExtBean item, int position) {
                         // Check if current selected item is Create new item
                         if (item.getId().equals(DomainConst.ITEM_CREATE_NEW)) {
+//                            CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+//                                    DomainConst.CONTENT00362, null);
+                            // Get text from searchbox
+                            String newDiagnosis = ((SimpleSearchDialogCompat)dialog).getSearchBox().getText().toString();
+                            // Normalization
+                            newDiagnosis = CommonProcess.upperCaseAllFirst(newDiagnosis);
+                            final String finalNewDiagnosis = newDiagnosis;
                             CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
-                                    DomainConst.CONTENT00362, null);
+                                    "Bạn có chắc chắn muốn tạo mới Chẩn đoán " + newDiagnosis + " không?",
+                                    new CommonProcess.ConfirmDialogCallback() {
+                                        @Override
+                                        public void onConfirmed() {
+                                            requestCreateNewDiagnosis(finalNewDiagnosis, dialog);
+                                        }
+                                    });
                         } else {
                             String[] arrValue = item.getName().split("-");
                             if (arrValue.length == 3) {
@@ -437,6 +470,65 @@ public class G01F03S01Fragment extends BaseFragment<G00HomeActivity> {
 
                     }
                 }).show();
+    }
+
+    /**
+     * Request create new diagnosis
+     * @param value New value
+     * @param baseSearchDialogCompat Current dialog
+     */
+    private void requestCreateNewDiagnosis(String value, final BaseSearchDialogCompat baseSearchDialogCompat) {
+        String token = BaseModel.getInstance().getToken(parentActivity);
+        if (token != null) {
+            DiagnosisCreateRequest request = new DiagnosisCreateRequest(
+                    token, value, value) {
+                @Override
+                protected void onPostExecute(Object o) {
+                    final BaseResponse resp = getResponse();
+                    // Request success
+                    if ((resp != null) && resp.isSuccess()) {
+                        // Get response data
+                        final PathologicalCreateRespBean respBean = parseData(resp.getData());
+                        // Save to login data
+                        LoginBean.getInstance().addDiagnosisToOther(respBean.getBean());
+                        CommonProcess.showMessage(parentActivity, DomainConst.CONTENT00162,
+                                resp.getMessage(), new CommonProcess.ConfirmDialogCallback() {
+                                    @Override
+                                    public void onConfirmed() {
+                                        ConfigExtBean item = respBean.getBean();
+                                        String[] arrValue = item.getName().split("-");
+                                        if (arrValue.length == 3) {
+                                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, arrValue[1]);
+                                        } else {
+                                            CommonProcess.setConfigExtDataStrById(mData.get(0), DomainConst.ITEM_DIAGNOSIS, item.getName());
+                                        }
+                                        diagnosisId = item.getId();
+                                        // Reload load list view data
+                                        mAdapter.notifyDataSetChanged();
+                                        updateDataToServer();
+                                    }
+                                });
+                        baseSearchDialogCompat.dismiss();
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        CommonProcess.showErrorMessage(parentActivity, resp);
+                    }
+                }
+            };
+            request.execute();
+        }
+    }
+
+    /**
+     * Parse data
+     * @param data Json data
+     * @return Response bean
+     */
+    private PathologicalCreateRespBean parseData(JSONObject data) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject gsonObj = (JsonObject) jsonParser.parse(data.toString());
+        PathologicalCreateRespBean retVal = new PathologicalCreateRespBean(gsonObj);
+        return retVal;
     }
 
     /**
