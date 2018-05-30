@@ -201,8 +201,47 @@ class G00HomeVC: BaseParentViewController {
         }
     }
     
+    /**
+     * Finish request
+     */
+    override func finishRequest(_ model: Any?) {
+        let data = model as! String
+        let model = DomainNameRespBean(jsonString: data)
+        if model.isSuccess() && !model.data.isEmpty {
+            BaseModel.shared.setServerUrl(url: model.data)
+        } else {
+            BaseModel.shared.setDefaultServerUrl()
+        }
+        startNormalLogic()
+    }
+    
     // MARK: Logic
-    private func startLogic() {
+    /**
+     * Handle get domain name
+     */
+    private func startGetDomainName() {
+        // Get bundle id value
+        if let bundleId = Bundle.main.bundleIdentifier {
+            // If in training mode
+            if BaseModel.shared.checkTrainningMode() {
+                DomainNameRequest.request(view: self,
+                                          bundleId: bundleId + ".training",
+                                          completionHandler: finishRequest)
+            } else {
+                // Running mode
+                DomainNameRequest.request(view: self,
+                                          bundleId: bundleId,
+                                          completionHandler: finishRequest)
+            }
+        } else {    // Get bundle id failed
+            BaseModel.shared.setDefaultServerUrl()
+        }
+    }
+    
+    /**
+     * Start normal logic
+     */
+    private func startNormalLogic() {
         if BaseModel.shared.checkIsLogin() {
             requestUpdateConfig()
         } else {
@@ -210,6 +249,20 @@ class G00HomeVC: BaseParentViewController {
         }
     }
     
+    /**
+     * Start logic
+     */
+    private func startLogic() {
+        if BaseModel.shared.getServerURL().isEmpty {
+            startGetDomainName()
+        } else {
+            startNormalLogic()
+        }
+    }
+    
+    /**
+     * Request update config
+     */
     private func requestUpdateConfig() {
         UpdateConfigurationRequest.requestUpdateConfiguration(
             action: #selector(finishUpdateConfigRequest(_:)),

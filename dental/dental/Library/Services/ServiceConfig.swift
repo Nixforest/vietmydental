@@ -7,14 +7,14 @@
 //
 
 import UIKit
+import harpyframework
 
 
 let  serviceConfig = ServiceConfig.sharedInstance()
 
 
 class ServiceConfig: NSObject {
-    
-    let url = "http://vietmy.immortal.vn/index.php/api/"
+    let url = BaseModel.shared.getServerURL()
     var token = ""
     
     static var instance: ServiceConfig!
