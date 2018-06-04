@@ -6,9 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
+import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 
@@ -16,6 +22,8 @@ import vietmydental.immortal.com.vietmydental.R;
  * A simple {@link Fragment} subclass.
  */
 public class ConfigurationFragment extends BaseFragment<G00HomeActivity> {
+    @BindView(R.id.txtContent)
+    public TextView textView;
 
 
     public ConfigurationFragment() {
@@ -27,7 +35,10 @@ public class ConfigurationFragment extends BaseFragment<G00HomeActivity> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_configuration, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_configuration, container, false);
+        ButterKnife.bind(this, rootView);
+        textView.setText(FirebaseInstanceId.getInstance().getToken());
+        return rootView;
     }
 
     /**

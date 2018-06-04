@@ -11,6 +11,7 @@ public class BaseModel {
     /** Database name */
     private static final String     DB_NAME             = "Share_DB";
     private String shareString = "";
+    private String mDeviceToken                         = "";
 
     /** Current application mode */
 //    private int                     mode                = DomainConst.MODE_TRAINING;
@@ -133,5 +134,21 @@ public class BaseModel {
 
     public void setShareString(String shareString) {
         this.shareString = shareString;
+    }
+
+    /**
+     * Get device token
+     * @return Value of device token
+     */
+    public String getDeviceToken() {
+        return this.mDeviceToken;
+    }
+
+    /**
+     * Set device token
+     * @param token Token value
+     */
+    public void setDeviceToken(String token) {
+        this.mDeviceToken = token;
     }
 }

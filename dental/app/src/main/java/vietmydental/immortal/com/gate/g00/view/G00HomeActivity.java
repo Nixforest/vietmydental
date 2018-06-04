@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
@@ -13,12 +14,15 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.api.UpdateConfigurationRequest;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
+import vietmydental.immortal.com.gate.model.NotificationBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.gate.view.BaseActivity;
 import vietmydental.immortal.com.vietmydental.R;
 
 public class G00HomeActivity extends BaseActivity {
+    /** Flag need open Home */
+    private boolean isNotOpenHome = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         adjustFontScale(getBaseContext(), getResources().getConfiguration());
@@ -27,8 +31,7 @@ public class G00HomeActivity extends BaseActivity {
         ButterKnife.bind(this);
         // For menu
         updateMenu();
-
-        navigator.openHome();
+        openHome();
         String token = BaseModel.getInstance().getToken(getBaseContext());
         if (token != null) {
             showLoadingView(true);
@@ -51,13 +54,28 @@ public class G00HomeActivity extends BaseActivity {
     }
 
     /**
+     * Open home screen
+     */
+    private void openHome() {
+        if (!isNotOpenHome) {
+            navigator.openHome();
+        }
+    }
+
+    /**
      * Handle after get update config
      * @param data JSONObject data
      */
     private void handleUpdateConfig(JSONObject data) {
         LoginBean.getInstance().updateData(data);
         // Update title
-        navigator.openHome();
+//        navigator.openHome();
+
+
+
+        // Check extras data -> false will be redirect to home
+        isNotOpenHome = checkExtrasData();
+        openHome();
         // Update menu
         updateMenu();
     }
@@ -65,20 +83,28 @@ public class G00HomeActivity extends BaseActivity {
     /**
      * Check extras data.
      *
-     * @param extras Extras data.
      * @return False
      */
-    private boolean checkExtrasData(Bundle extras) {
+    private boolean checkExtrasData() {
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String type = extras.getString(DomainConst.KEY_TYPE, DomainConst.BLANK);
-//            String roleId = BaseModel.getInstance().getRoleId(G00HomeActivity.this);
-
-            Toast.makeText(this, " " + extras.getString(DomainConst.MENU_ID_LIST.KEY_MESSAGE), Toast.LENGTH_SHORT).show();
-
-            return true;
-        } else {
-            return false;
+            String data = extras.getString(DomainConst.KEY_DATA, DomainConst.BLANK);
+            try {
+                JSONObject jsonObject = new JSONObject(data);
+                NotificationBean bean = new NotificationBean(jsonObject);
+                switch (bean.getCategory()) {
+                    case NotificationBean.NOTIFY_CATEGORY_NEW_TREATMENT_SCHEDULE:
+//                        navigator.openG01F02S02(bean.getObjectId());
+                        navigator.openG01F00S02(bean.getObjectId());
+                    // Use for future
+                    default: break;
+                }
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 
     @Override

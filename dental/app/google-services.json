@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "424884813338",
+    "firebase_url": "https://api-project-424884813338.firebaseio.com",
+    "project_id": "api-project-424884813338",
+    "storage_bucket": "api-project-424884813338.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424884813338:android:ac0f0c9c342175ad",
+        "android_client_info": {
+          "package_name": "vietmydental.immortal.com.vietmydental"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424884813338-45p3ajir6qsprkfkuhemjoln8rfn0ic2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEXE3z2yP-ir4OgYcHL2_qjNiu84t2oNE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

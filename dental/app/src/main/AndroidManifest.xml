@@ -55,6 +55,17 @@
         <provider
             android:name="vietmydental.immortal.com.gate.model.SearchContentProvider"
             android:authorities="com.zoftino.coupons.search"></provider>
+        <service
+            android:name="vietmydental.immortal.com.gate.component.VietMyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="vietmydental.immortal.com.gate.component.VietMyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
-
 </manifest>

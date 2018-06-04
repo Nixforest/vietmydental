@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.internal.service.Common;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -46,6 +48,7 @@ import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.api.LoginRequest;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
+import vietmydental.immortal.com.gate.model.NotificationBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
@@ -88,6 +91,7 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g00_login);
+        checkExtrasData(getIntent().getExtras());
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -247,7 +251,7 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
             showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
-            LoginRequest api = new LoginRequest(email, password, "123", "123") {
+            LoginRequest api = new LoginRequest(email, password, FirebaseInstanceId.getInstance().getToken(), "") {
                 @Override
                 protected void onPostExecute(Object o) {
                     BaseResponse resp = getResponse();
@@ -261,6 +265,29 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
             };
             api.execute();
         }
+    }
+
+    /**
+     * Check extras data.
+     * @param extras Extras data
+     * @return False
+     */
+    private boolean checkExtrasData(Bundle extras) {
+        if (extras != null) {
+            String data = extras.getString(DomainConst.KEY_DATA, DomainConst.BLANK);
+            try {
+                JSONObject jsonObject = new JSONObject(data);
+                NotificationBean bean = new NotificationBean(jsonObject);
+                switch (bean.getCategory()) {
+                    // Use for future
+                    default: break;
+                }
+                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     /**
@@ -281,6 +308,10 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
      */
     private void gotoHomeActivity() {
         Intent intent = new Intent(getBaseContext(), G00HomeActivity.class);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            intent.putExtras(getIntent().getExtras());
+        }
         startActivity(intent);
         finish();
     }

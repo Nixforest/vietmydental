@@ -604,9 +604,15 @@ public final class DomainConst {
     /**
      * Address
      */
-    public static final String KEY_ADDRESS = "address";
+    public static final String KEY_ADDRESS                      = "address";
     /** Key birthday */
-    public static final String KEY_BIRTHDAY                      = "birthday";
+    public static final String KEY_BIRTHDAY                     = "birthday";
+    /** Key birthday */
+    public static final String KEY_BODY                         = "body";
+    /** Key birthday */
+    public static final String KEY_CATEGORY                     = "category";
+    /** Key birthday */
+    public static final String KEY_OBJECT_ID_NEW                = "object_id";
     /**
      * Image avatar
      */
