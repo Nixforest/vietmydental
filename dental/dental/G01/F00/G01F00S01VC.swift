@@ -30,6 +30,7 @@ class G01F00S01VC: BaseParentViewController {
     let MAXIMUM_HEIGHT_SEARCH_VIEW: CGFloat = 30.0
     let MINIMUM_HEIGHT_SEARCH_VIEW: CGFloat = 0.0
     // MARK: Constant
+    let CELL_ID = "CustomerInfoTableViewCell"
     
     // MARK: Override methods
     /**
@@ -133,10 +134,11 @@ class G01F00S01VC: BaseParentViewController {
 //            x: 0, y: 0,
 //            width: UIScreen.main.bounds.width,
 //            height: UIScreen.main.bounds.height)
+        _tblInfo.register(UINib(nibName: CELL_ID, bundle: Bundle.main), forCellReuseIdentifier: CELL_ID)
         _tblInfo.dataSource = self
         _tblInfo.delegate = self
-        _tblInfo.rowHeight = UITableViewAutomaticDimension
-        _tblInfo.estimatedRowHeight = 150
+//        _tblInfo.rowHeight = UITableViewAutomaticDimension
+//        _tblInfo.estimatedRowHeight = 150
         _tblInfo.addSubview(refreshControl)
         searchBar.alpha = 0
     }
@@ -174,36 +176,45 @@ extension G01F00S01VC: UITableViewDataSource {
      * Asks the data source for a cell to insert in a particular location of the table view.
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row > self._data.getList().count {
-            return UITableViewCell()
-        }
-        let data = self._data.getList()[indexPath.row]
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-        cell.textLabel?.text = data.name
-        cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
-        cell.detailTextLabel?.text = data.address
-        cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
-        cell.detailTextLabel?.lineBreakMode = .byWordWrapping
-        cell.detailTextLabel?.numberOfLines = 0
-        // Set image
-        var imgPath = DomainConst.VMD_PATIENT_ICON_IMG_NAME
-        let imgMargin = GlobalConst.MARGIN * 2
-        if data.gender != DomainConst.CONTENT00569 {
-            imgPath = DomainConst.VMD_PATIENT_FEMALE_ICON_IMG_NAME
-        }
-        cell.imageView?.image = ImageManager.getImage(
-            named: imgPath, margin: imgMargin)
-        cell.imageView?.contentMode = .scaleAspectFit
         
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! CustomerInfoTableViewCell
+        let customer = self._data.getList()[indexPath.row]
+        cell.loadCustomer(customer)
+        cell.selectionStyle = .none
         return cell
+        
+        
+//        if indexPath.row > self._data.getList().count {
+//            return UITableViewCell()
+//        }
+//        let data = self._data.getList()[indexPath.row]
+//        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+//        cell.textLabel?.text = data.name
+//        cell.textLabel?.font = GlobalConst.BASE_BOLD_FONT
+//        cell.detailTextLabel?.text = data.address
+//        cell.detailTextLabel?.font = GlobalConst.SMALL_FONT
+//        cell.detailTextLabel?.lineBreakMode = .byWordWrapping
+//        cell.detailTextLabel?.numberOfLines = 0
+//        // Set image
+//        var imgPath = DomainConst.VMD_PATIENT_ICON_IMG_NAME
+//        let imgMargin = GlobalConst.MARGIN * 2
+//        if data.gender != DomainConst.CONTENT00569 {
+//            imgPath = DomainConst.VMD_PATIENT_FEMALE_ICON_IMG_NAME
+//        }
+//        cell.imageView?.image = ImageManager.getImage(
+//            named: imgPath, margin: imgMargin)
+//        cell.imageView?.contentMode = .scaleAspectFit
+//
+//
+//        return cell
     }
     
     /**
      * Asks the delegate for the height to use for a row in a specified location.
      */
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return GlobalConst.LABEL_H * 3
+        return 75
+//        return GlobalConst.LABEL_H * 3
     }
 }
 
