@@ -70,6 +70,12 @@ class MenuVC: BaseMenuViewController {
     
     //++ BUG0165-SPJ (NguyenPT 20171123) Override select home menu
     override func openHome() {
+        // temp open Statistics controller 
+        let view = StatisticsViewController()
+        if let controller = BaseViewController.getCurrentViewController() {
+            controller.navigationController?.pushViewController(view, animated: true)
+        }
+        return
         // Get current view controller
         if let currentView = BaseViewController.getCurrentViewController() {
             // Pop to root view controller
