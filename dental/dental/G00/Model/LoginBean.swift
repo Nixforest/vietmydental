@@ -89,7 +89,7 @@ class LoginBean: ConfigBean {
         // Status receipt
         self.status_receipt.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_STATUS_RECEIPT))
         // App page size
-        self.status_receipt.append(contentsOf: getListConfig(json: jsonData, key: DomainConst.KEY_APP_API_LIST_PAGE_SIZE))
+        self.app_page_size = getString(json: jsonData, key: DomainConst.KEY_APP_API_LIST_PAGE_SIZE)
     }
     
     /**

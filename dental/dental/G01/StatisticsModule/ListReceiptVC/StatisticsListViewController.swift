@@ -5,6 +5,8 @@
 //  Created by Lâm Phạm on 8/16/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
+//  P0032_GetListReceipts_API
+
 
 import UIKit
 import harpyframework
@@ -25,9 +27,11 @@ class StatisticsListViewController: ChildExtViewController {
     var collectedRawVal = ""
     var notCollectedRawVal = ""
     var pageIndex = 1
+    var canLoadMore: Bool = false
     var param: GetListReceiptRequest!
     var receipt: MedicalReceipt!
     
+    /** init controller with GetListReceiptRequest */
     init(withParam: GetListReceiptRequest) {
         super.init(nibName: "StatisticsListViewController", bundle: Bundle.main)
         self.param = withParam
@@ -39,28 +43,7 @@ class StatisticsListViewController: ChildExtViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        switch self.param.status {
-        case DomainConst.RECEIPT_STATUS_COLLECTED:
-            self.createNavigationBar(title: "Danh sách đã thu")
-            for item in LoginBean.shared.status_receipt {
-                if item.id == DomainConst.RECEIPT_STATUS_COLLECTED {
-                    collectedRawVal = item.id
-                }
-                break
-            }
-            self.type = .collected
-        case DomainConst.RECEIPT_STATUS_NOT_COLLECTED:
-            self.createNavigationBar(title: "Danh sách chưa thu")
-            for item in LoginBean.shared.status_receipt {
-                if item.id == DomainConst.RECEIPT_STATUS_NOT_COLLECTED {
-                    notCollectedRawVal = item.id
-                    break
-                }
-            }
-            self.type = .notCollected
-        default:
-            self.createNavigationBar(title: "???")
-        }
+        processNavigationBar(statusCode: self.param.status)
         self.getListReceipt()
         tbView.delegate = self
         tbView.dataSource = self
@@ -72,11 +55,56 @@ class StatisticsListViewController: ChildExtViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func processResponse(resp: MedicalReceipt) {
+    //Logic
+    
+    /** Setting Navigation Bar title */
+    private func processNavigationBar(statusCode: String) {
+        switch statusCode {
+        case DomainConst.RECEIPT_STATUS_COLLECTED:
+            self.createNavigationBar(title: "Danh sách đã thu")
+            collectedRawVal = getStatusRawValue(byStatus: DomainConst.RECEIPT_STATUS_COLLECTED)
+            self.type = .collected
+        case DomainConst.RECEIPT_STATUS_NOT_COLLECTED:
+            self.createNavigationBar(title: "Danh sách chưa thu")
+            notCollectedRawVal = getStatusRawValue(byStatus: DomainConst.RECEIPT_STATUS_NOT_COLLECTED)
+            self.type = .notCollected
+        default:
+            self.createNavigationBar(title: "Lỗi trạng thái")
+        }
+    }
+    private func getStatusRawValue(byStatus status: String) -> String {
+        for item in LoginBean.shared.status_receipt {
+            if item.id == status {
+                return item.id
+            }
+            break
+        }
+        return ""
+    }
+    private func processResponse(resp: MedicalReceipt) {
         if resp.data.count() == LoginBean.shared.app_page_size.intValue() {
-            pageIndex += 1
+            shouldLoadMore(should: true)
         } else {
-            
+            shouldLoadMore(should:  false)
+        }
+        if self.receipt == nil {
+            receipt = resp
+        } else {
+            var data = self.receipt.data.getData()
+            data.append(contentsOf: resp.data.getData())
+            self.receipt.data.setData(data: data)
+        }
+        if resp.data.count() > 0 {
+            self.headerView.loadReceipt(resp.data.getData()[0])
+        }
+        self.tbView.reloadData()
+    }
+    func shouldLoadMore(should: Bool) {
+        if should {
+            pageIndex += 1
+            canLoadMore = true
+        } else {
+            canLoadMore = false
         }
     }
     
@@ -85,11 +113,7 @@ class StatisticsListViewController: ChildExtViewController {
         LoadingView.shared.showOverlay(view: self.view, className: self.theClassName)
         param.page = "\(pageIndex)"
         serviceInstance.getListReceipt(req: self.param, success: { (resp) in
-            self.receipt = resp
-            self.tbView.reloadData()
-            if resp.data.count() > 0 {
-                self.headerView.loadReceipt(resp.data.getData()[0])
-            }
+            self.processResponse(resp: resp)
             LoadingView.shared.hideOverlayView(className: self.theClassName)
         }) { (error) in
             LoadingView.shared.hideOverlayView(className: self.theClassName)
@@ -117,6 +141,13 @@ extension StatisticsListViewController: UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         headerView.loadReceipt(receipt.data.getData()[indexPath.row])
+    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == self.receipt.data.getData().count - 1 {
+            if canLoadMore {
+                self.getListReceipt()
+            }
+        }
     }
 }
 

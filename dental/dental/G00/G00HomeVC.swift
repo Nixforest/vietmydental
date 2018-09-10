@@ -5,6 +5,7 @@
 //  Created by SPJ on 1/9/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
+//  P0031_GetStatistic_API
 
 import UIKit
 import harpyframework
@@ -13,7 +14,8 @@ class G00HomeVC: BaseParentViewController {
     // MARK: Properties
     /** Logo */
     var imgLogo:        UIImageView = UIImageView()
-    
+    /** Statistic Detail View*/
+    @IBOutlet weak var statisticDetailView: StatisticsDetailView!
     // MARK: Constant
     // Logo
     var LOGIN_LOGO_REAL_WIDTH_HD        = GlobalConst.LOGIN_LOGO_WIDTH * G00LoginExtVC.W_RATE_HD
@@ -302,15 +304,25 @@ class G00HomeVC: BaseParentViewController {
 
 //MARK: - Setting Statistic content
 extension G00HomeVC: StatisticsDetailViewDelegate {
+    /** API Get today statistic detail of user*/
+    func getStatistics(param: GetStatisticsRequest) {
+        LoadingView.shared.showOverlay(view: self.view, className: self.theClassName)
+        serviceInstance.getStatistics(req: param, success: { (resp) in
+            self.statisticDetailView.loadUI(statistic: resp)
+            LoadingView.shared.hideOverlayView(className: self.theClassName)
+            self.view.bringSubview(toFront: self.statisticDetailView)
+        }) { (error) in
+            LoadingView.shared.hideOverlayView(className: self.theClassName)
+            self.statisticDetailView.alpha = 0
+            self.showAlert(message: error.message)
+        }
+    }
+    /** */
     func loadStatisticContent() {
-        let v = StatisticsDetailView()
-        v.frame = self.view.frame
-        v.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        v.delegate = self
-        self.statisticParam = v.getParamToday()
-        v.getStatistics(param: self.statisticParam)
-        
-        self.view.addSubview(v)
+        statisticDetailView.delegate = self
+        self.statisticParam = statisticDetailView.getParamToday()
+        statisticDetailView.param = self.statisticParam
+        self.getStatistics(param: self.statisticParam)
     }
     func statisticsDetailViewDidSelectCollected() {
         self.receiptParam = GetListReceiptRequest()

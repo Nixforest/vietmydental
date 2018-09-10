@@ -38,18 +38,7 @@ class StatisticsDetailView: BaseView {
         self.backgroundColor = UIColor.white
         cltvAgents.delegate = self
         cltvAgents.dataSource = self
-        //        cltvAgents.collectionViewLayout = LeftAlignedCollectionViewFlowLayout()
         cltvAgents.register(UINib(nibName: cellID, bundle: nil), forCellWithReuseIdentifier: cellID)
-        if param == nil {
-            lbTime.text = "Hôm nay"
-//            getStatistics(param: getParamToday())
-        } else {
-            if let from = CommonProcess.getDate(fromString: param.date_from, withFormat: DomainConst.DATE_TIME_FORMAT_2),
-                let to = CommonProcess.getDate(fromString: param.date_to, withFormat: DomainConst.DATE_TIME_FORMAT_2) {
-                lbTime.text = "Từ \(from) đến \(to)"
-            }
-//            getStatistics(param: param)
-        }
         cltvAgents.reloadData()
     }
     
@@ -96,6 +85,12 @@ class StatisticsDetailView: BaseView {
     }
     
     func loadUI(statistic: StatisticsModel) {
+        if let dateFrom = CommonProcess.getDate(fromString: param.date_from, withFormat: DomainConst.DATE_TIME_FORMAT_2),
+            let dateTo = CommonProcess.getDate(fromString: param.date_to, withFormat: DomainConst.DATE_TIME_FORMAT_2) {
+            let strFrom = CommonProcess.getDateString(date: dateFrom, format: DomainConst.DATE_TIME_FORMAT_1)
+            let strTo = CommonProcess.getDateString(date: dateTo, format: DomainConst.DATE_TIME_FORMAT_1)
+            lbTime.text = "Từ \(strFrom) đến \(strTo)"
+        }
         if statistic.total.replacingOccurrences(of: ",", with: "").intValue() == 0 {
             btnListDebt.alpha = 0
             btnListDiscount.alpha = 0
@@ -112,7 +107,6 @@ class StatisticsDetailView: BaseView {
     }
     
     //MARK: - Services
-    
     func getStatistics(param: GetStatisticsRequest) {
         self.param = param
         serviceInstance.getStatistics(req: param, success: { (resp) in
@@ -121,8 +115,8 @@ class StatisticsDetailView: BaseView {
             
         }
     }
-    //MARK: - IBAction
     
+    //MARK: - IBAction
     @IBAction func btnListCollectedAction(_ sender: Any) {
         delegate.statisticsDetailViewDidSelectCollected!()
     }

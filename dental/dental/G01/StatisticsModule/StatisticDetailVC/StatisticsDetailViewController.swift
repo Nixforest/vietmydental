@@ -5,6 +5,7 @@
 //  Created by Lâm Phạm on 8/1/18.
 //  Copyright © 2018 SPJ. All rights reserved.
 //
+//  P0031_GetStatistic_API
 
 import UIKit
 import harpyframework
@@ -30,7 +31,7 @@ class StatisticsDetailViewController: ChildExtViewController {
         super.viewDidLoad()
         createNavigationBar(title: "Thống kê")
         detailView.delegate = self
-//        detailView.getStatistics(param: self.param)
+        detailView.param = self.param
         self.getStatistics(param: self.param)
     }
 
