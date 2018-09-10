@@ -32,7 +32,7 @@ extension Service {
         let baseReq = BaseRequest(url: url, method: DomainConst.HTTP_POST_REQUEST, body: body)
         
         baseReq.execute { (response) in
-            let receipt = CreateReceipt(dictionary: response.result.value as! NSDictionary)
+            let receipt = CreateReceipt(dictionary: response.data as! NSDictionary)
             completionHandler(receipt)
         }
     }

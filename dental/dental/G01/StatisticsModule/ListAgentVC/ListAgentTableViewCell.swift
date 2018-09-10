@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import harpyframework
 
 class ListAgentTableViewCell: UITableViewCell {
 
@@ -24,13 +25,19 @@ class ListAgentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func loadAgent(_ agent: Agent) {
+    func loadAgent(_ agent: ConfigBean) {
         lb.text = agent.name
-        if agent.isSelected {
-            imgCheck.alpha = 1
-        } else {
-            imgCheck.alpha = 0
-        }
+//        if agent.isSelected {
+//            imgCheck.alpha = 1
+//        } else {
+//            imgCheck.alpha = 0
+//        }
+    }
+    func select() {
+        imgCheck.alpha = 1
     }
     
+    func notSelect() {
+        imgCheck.alpha = 0
+    }
 }

@@ -31,6 +31,8 @@ class MedicalRecordInfo: MasterModel {
     
     //offline variable
     var listInfo: [MasterObject] = []
+    var isSelected: Bool = false
+    
 }
 class MedicalRecordInfo_Request: MasterModel {
     var id = ""

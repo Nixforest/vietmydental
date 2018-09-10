@@ -34,6 +34,10 @@ class LoginRespBean: BaseRespModel {
         }
     }
     
+    public func getAllAgentConfigBean() -> ConfigBean {
+        return LoginBean.shared.list_agent[0]
+    }
+    
     /**
      * Handle save config data
      * - parameter data: LoginRespBean
@@ -49,5 +53,9 @@ class LoginRespBean: BaseRespModel {
         LoginBean.shared.id                 = data.data.id
         LoginBean.shared.timer              = data.data.timer
         LoginBean.shared.diagnosis_other_id = data.data.diagnosis_other_id
+        LoginBean.shared.list_agent         = data.data.list_agent
+        LoginBean.shared.status_receipt     = data.data.status_receipt
+        LoginBean.shared.user_agents_id     = data.data.user_agents_id
+        LoginBean.shared.app_page_size      = data.data.app_page_size
     }
 }

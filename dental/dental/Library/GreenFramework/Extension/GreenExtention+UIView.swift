@@ -76,6 +76,19 @@ public extension UIView
 
         self.layer.borderColor = UIColor.clear.cgColor
     }
+    /**
+     *
+     */
+    func dropShadow(color: UIColor, radius: CGFloat, opacity: Float) {
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = opacity
+        self.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.layer.shadowRadius = radius
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.main.scale
+    }
     
     public func drawRadius(_ radius  : CGFloat,color : UIColor , thickness :CGFloat )  {
         self.layer.cornerRadius = radius

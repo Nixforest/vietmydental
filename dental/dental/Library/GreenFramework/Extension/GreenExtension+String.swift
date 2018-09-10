@@ -114,7 +114,7 @@ public extension String
         }
     }
     
-    public func toBool() -> Bool?
+    public func toBool() -> Bool
     {
         switch self
         {

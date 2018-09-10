@@ -103,9 +103,9 @@ class Service: NSObject {
  * Extension Base Request using Alamofire with completion block
  */
 extension BaseRequest {
-    func execute(completionHandler: @escaping((DataResponse<Any>) -> Void)) {
-        print("===== URL REQUEST =====")
-        print(self.url)
+    func execute(completionHandler: @escaping((APIResponse) -> Void)) {
+        print("===== URL REQUEST \(self.url) =====")
+        print("Body: \(self.data)")
         let serverUrl: URL = URL.init(string: self.url)!
         var request = URLRequest(url: serverUrl)
         request.httpMethod = self.reqMethod
@@ -115,9 +115,10 @@ extension BaseRequest {
         request.httpBody = self.data.data(using: String.Encoding.utf8)
         
         Alamofire.request(request as URLRequestConvertible).responseJSON { (response) in
-            print("===========response")
+            print("===== Response \(self.url)")
             print(response as Any)
-            completionHandler(response)
+            completionHandler(self.processReponse(response: response))
+            print("===== End request \(self.url) =====")
         }
     }
     
@@ -125,6 +126,7 @@ extension BaseRequest {
     private func processReponse(response: DataResponse<Any>) -> APIResponse {
         if(response.result.isSuccess) {
             let resp = APIResponse.init(dictionary: response.result.value as! NSDictionary)
+            resp.code = (response.response?.statusCode)!
             if resp.data == nil {
                 resp.error = true
             } else {
@@ -132,7 +134,10 @@ extension BaseRequest {
             }
             return resp
         } else {
-            return APIResponse.init()
+            let resp = APIResponse.init()
+//            resp.code = (response.response?.statusCode)!
+//            resp.message = response.description
+            return resp
         }
     }
     

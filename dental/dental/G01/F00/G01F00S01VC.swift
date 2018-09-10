@@ -11,6 +11,7 @@ import harpyframework
 
 class G01F00S01VC: BaseParentViewController {
     // MARK: Properties
+    @IBOutlet weak var viewNoData: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     /** Data */
     var _data:              CustomerListRespBean    = CustomerListRespBean()
@@ -38,13 +39,38 @@ class G01F00S01VC: BaseParentViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        // Navigation
         self.createNavigationBar(title: DomainConst.CONTENT00541)
         createInfoTableView()
-        requestData(date: CommonProcess.getDateString(date: Date(), format: DomainConst.DATE_TIME_FORMAT_2))
+        viewNoData.alpha = 0
         searchBar.delegate = self
+        addSearchButton()
+        requestData(date: CommonProcess.getDateString(date: Date(), format: DomainConst.DATE_TIME_FORMAT_2))
+    }
+    
+    func addSearchButton() {
+        let img = #imageLiteral(resourceName: "ic_navigation_search")
+        let tinted = img.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let btn = UIButton()
+        btn.setImage(tinted, for: UIControlState())
+        btn.tintColor = UIColor.white
+        btn.frame = CGRect(x: 0, y: 0,
+                           width: GlobalConst.MENU_BUTTON_W,
+                           height: GlobalConst.MENU_BUTTON_W)
+        btn.setTitle(DomainConst.BLANK, for: UIControlState())
+        btn.backgroundColor = UIColor.clear
+        btn.layer.cornerRadius = 0.5 * btn.bounds.size.width
+        btn.addTarget(self, action: #selector(searchAction), for: UIControlEvents.touchUpInside)
+        
+        let navItem = UIBarButtonItem()
+        navItem.customView = btn
+        navItem.isEnabled = true
+        self.navigationItem.setRightBarButton(navItem, animated: true)
+    }
+    
+    //search button action
+    func searchAction() {
+        let vc = G01F00S01AdvancedSearchVC()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     /**
@@ -54,11 +80,18 @@ class G01F00S01VC: BaseParentViewController {
         let data = (notification.object as! String)
         let model = CustomerListRespBean(jsonString: data)
         if model.isSuccess() {
+            if model.getList().count == 0 {
+                viewNoData.alpha = 1
+                _tblInfo.alpha = 0
+            } else {
+                viewNoData.alpha = 0
+                _tblInfo.alpha = 1
+            }
             _data.updateData(bean: model.data)
             _tblInfo.reloadData()
             searchBar.alpha = 1
-            let firstCellRect = CGRect(x: 0, y: 56, width: _tblInfo.frame.size.width, height: _tblInfo.frame.size.height)
-            _tblInfo.scrollRectToVisible(firstCellRect, animated: false)
+//            let firstCellRect = CGRect(x: 0, y: 56, width: _tblInfo.frame.size.width, height: _tblInfo.frame.size.height)
+//            _tblInfo.scrollRectToVisible(firstCellRect, animated: false)
         } else {
             showAlert(message: model.message)
         }
@@ -125,6 +158,7 @@ class G01F00S01VC: BaseParentViewController {
         }
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
+        self.searchBar.text = CommonProcess.getDateString(date: Date())
     }
     // MARK: Layout
     

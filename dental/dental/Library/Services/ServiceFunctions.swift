@@ -5,5 +5,6 @@ enum APIFunctions: String {
     case getMedicalRecordInfo = "customer/medicalRecordInfo"
     case updateMedicalRecord = "customer/updateMedicalRecord"
     case getListCustomer = "customer/list"
+    case getDomain = "default/getDomainName"
 }
 

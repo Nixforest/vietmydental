@@ -10,7 +10,7 @@ import UIKit
 import harpyframework
 
 protocol ListAgencyViewControllerDelegate: class {
-    func ListAgencyViewControllerDidPick(listAgency: [Agent])
+    func listAgencyViewControllerDidPick(listAgents: [ConfigBean])
 }
 
 class ListAgencyViewController: ChildExtViewController {
@@ -19,11 +19,11 @@ class ListAgencyViewController: ChildExtViewController {
     @IBOutlet weak var tbView: UITableView!
     
     var delegate: ListAgencyViewControllerDelegate!
-    var listAgent: [Agent] = []
-    var selectedAgents: [Agent] = []
+    var listAgent: [ConfigBean] = []
+    var selectedAgents: [ConfigBean] = []
     let cellID = "ListAgentTableViewCell"
     
-    init(selectedAgents: [Agent]) {
+    init(selectedAgents: [ConfigBean]) {
         self.selectedAgents = selectedAgents
         super.init(nibName: "ListAgencyViewController", bundle: nil)
     }
@@ -39,7 +39,7 @@ class ListAgencyViewController: ChildExtViewController {
         tbView.delegate = self
         tbView.dataSource = self
         tbView.register(UINib(nibName: cellID, bundle: nil), forCellReuseIdentifier: cellID)
-        fakeAgents()
+        processListAgents()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,53 +47,39 @@ class ListAgencyViewController: ChildExtViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func fakeAgents() {
-        var agent = Agent(name: "Chi nhánh quận 1")
-        agent.id = 1
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 2")
-        agent.id = 2
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 3")
-        agent.id = 3
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 4")
-        agent.id = 4
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 5")
-        agent.id = 5
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 6")
-        agent.id = 6
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 7")
-        agent.id = 7
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 8")
-        agent.id = 8
-        listAgent.append(agent)
-        agent = Agent(name: "Chi nhánh quận 9")
-        agent.id = 9
-        listAgent.append(agent)
-        for selected in selectedAgents {
-            for agent in listAgent {
-                if agent.id == selected.id {
-                    agent.isSelected = true
-                    break
+    func isAgentSelected(agent: ConfigBean) -> Bool {
+        for a in selectedAgents {
+            if agent.id == a.id {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func indexOf(agent: ConfigBean, inList: [ConfigBean]) -> Int {
+        var ind = -1
+        for a in selectedAgents {
+            if agent.id == a.id {
+                ind = selectedAgents.index(of: a)!
+            }
+        }
+        return ind
+    }
+    
+    func processListAgents() {
+        let customerAgentsID = BaseModel.shared.getUserInfo().getAgentId()
+        for id in customerAgentsID {
+            for bean in LoginBean.shared.list_agent {
+                if bean.id == id {
+                    listAgent.append(bean)
                 }
             }
         }
-        tbView.reloadData()
     }
     
     @IBAction func btnOKAction(_ sender: Any) {
-        var selectedAgents = [Agent]()
-        for agent in listAgent {
-            if agent.isSelected {
-                selectedAgents.append(agent)
-            }
-        }
-        delegate.ListAgencyViewControllerDidPick(listAgency: selectedAgents)
+        delegate.listAgencyViewControllerDidPick(listAgents: selectedAgents)
+        self.navigationController?.popViewController(animated: true)
     }
     
 
@@ -109,12 +95,29 @@ extension ListAgencyViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ListAgentTableViewCell
         cell.selectionStyle = .none
-        cell.loadAgent(listAgent[indexPath.row])
+        let agent = listAgent[indexPath.row]
+        cell.loadAgent(agent)
+        if self.isAgentSelected(agent: agent) {
+            cell.select()
+        } else {
+            cell.notSelect()
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listAgent[indexPath.row].isSelected = !listAgent[indexPath.row].isSelected
-        tbView.reloadRows(at: [indexPath], with: .none)
+        let agent = listAgent[indexPath.row]
+        if agent.id == "-1" {
+            selectedAgents.removeAll()
+            selectedAgents.append(agent)
+        } else {
+            if self.isAgentSelected(agent: agent) {
+                let ind = self.indexOf(agent: agent, inList: selectedAgents)
+                selectedAgents.remove(at: ind)
+            } else {
+                selectedAgents.append(agent)
+            }
+        }
+        tbView.reloadData()
     }
 }
 

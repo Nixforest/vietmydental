@@ -11,6 +11,8 @@ import harpyframework
 
 enum SelectBoxType {
     case normal
+    case phone
+    case compose
     case picker
     case datePicker
 }
@@ -34,10 +36,19 @@ class BorderSelectBox: BaseView {
     
     override func firstInit() {
         viewBorder.drawRadius(6, color: "EAEAEA".hexColor(), thickness: 0.5)
+        imgIcon.alpha = 0.7
     }
     
     func setValue(_ value: String) {
         tfDesc.text = value
+    }
+    
+    func getValue() -> String {
+        if (tfDesc.text?.count)! > 0 {
+            return tfDesc.text!
+        } else {
+            return ""
+        }
     }
     
     func set(placeholder: String, img: UIImage, type: SelectBoxType) {
@@ -52,22 +63,39 @@ class BorderSelectBox: BaseView {
             break
         case .normal:
             break
+        case .phone:
+            setPhoneType()
+            break
+        case .compose:
+            break
+        default:
+            break
         }
     }
     
-    func setTypeDatePicker() {
+    private func setTypeDatePicker() {
         datePicker = MIDateView(type: .justDate)
         datePicker.delegate = self
         let fr = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 216)
         datePicker.frame = fr
         tfDesc.inputView = datePicker
     }
+    
+    private func setPhoneType() {
+        tfDesc.keyboardType = .phonePad
+    }
+    
+    func setComposeType() {
+        tfDesc.keyboardType = .default
+    }
 
     @IBAction func tapAction(_ sender: Any) {
-        if type == .datePicker {
+        switch self.type {
+        case .compose, .phone, .datePicker:
             tfDesc.becomeFirstResponder()
+        default:
+            delegate.borderSelectBoxDidTouch(box: self)
         }
-        delegate.borderSelectBoxDidTouch(box: self)
     }
 }
 

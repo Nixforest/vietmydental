@@ -27,6 +27,9 @@ class G00HomeVC: BaseParentViewController {
     var LOGIN_LOGO_REAL_WIDTH_FHD_L     = GlobalConst.LOGIN_LOGO_WIDTH * G00LoginExtVC.W_RATE_FHD_L
     var LOGIN_LOGO_REAL_HEIGHT_FHD_L    = GlobalConst.LOGIN_LOGO_HEIGHT * G00LoginExtVC.H_RATE_FHD_L
     var LOGIN_LOGO_REAL_Y_POS_FHD_L     = GlobalConst.LOGIN_LOGO_Y_POS_FHD_LAND * G00LoginExtVC.H_RATE_FHD_L
+    
+    var statisticParam: GetStatisticsRequest!
+    var receiptParam: GetListReceiptRequest!
 
     // MARK: Override methods
     /**
@@ -38,8 +41,31 @@ class G00HomeVC: BaseParentViewController {
         // Do any additional setup after loading the view.
         self.createNavigationBar(title: DomainConst.CONTENT00571)
         startLogic()
+        
     }
     
+    /**
+     *  Get domain
+     */
+    func getDomain() {
+        let param = GetDomainRequest()
+        if let bundleId = Bundle.main.bundleIdentifier {
+            if BaseModel.shared.checkTrainningMode() {
+                param.bundle_id = bundleId + ".training"
+            } else {
+                param.bundle_id = bundleId
+            }
+        }
+        serviceInstance.getDomain(param: param, success: { (domain) in
+            BaseModel.shared.setServerUrl(url: domain)
+            /** Start normal logic*/
+            self.startNormalLogic()
+            
+        }) { (error) in
+            BaseModel.shared.setDefaultServerUrl()
+            self.showAlert(message: error.message)
+        }
+    }
     /**
      * Handle update constants
      */
@@ -198,6 +224,8 @@ class G00HomeVC: BaseParentViewController {
         let model = LoginRespBean(jsonString: data)
         if model.isSuccess() {
             LoginRespBean.saveConfigData(data: model)
+            /** Loading statistic content*/
+            self.loadStatisticContent()
         }
     }
     
@@ -254,7 +282,8 @@ class G00HomeVC: BaseParentViewController {
      */
     private func startLogic() {
         if BaseModel.shared.getServerURL().isEmpty {
-            startGetDomainName()
+//            startGetDomainName()
+            getDomain()
         } else {
             startNormalLogic()
         }
@@ -270,3 +299,40 @@ class G00HomeVC: BaseParentViewController {
     }
 
 }
+
+//MARK: - Setting Statistic content
+extension G00HomeVC: StatisticsDetailViewDelegate {
+    func loadStatisticContent() {
+        let v = StatisticsDetailView()
+        v.frame = self.view.frame
+        v.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        v.delegate = self
+        self.statisticParam = v.getParamToday()
+        v.getStatistics(param: self.statisticParam)
+        
+        self.view.addSubview(v)
+    }
+    func statisticsDetailViewDidSelectCollected() {
+        self.receiptParam = GetListReceiptRequest()
+        receiptParam.date_from = statisticParam.date_from
+        receiptParam.date_to = statisticParam.date_to
+        receiptParam.agent_id = statisticParam.agent_id
+        receiptParam.status = LoginBean.shared.getReceiptStatusCollected().id
+        let vc = StatisticsListViewController(withParam: receiptParam)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func statisticsDetailViewDidSelectNotCollected() {
+        self.receiptParam = GetListReceiptRequest()
+        receiptParam.date_from = statisticParam.date_from
+        receiptParam.date_to = statisticParam.date_to
+        receiptParam.agent_id = statisticParam.agent_id
+        receiptParam.status = LoginBean.shared.getReceiptStatusNotCollected().id
+        let vc = StatisticsListViewController(withParam: receiptParam)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+
+
+
+
