@@ -39,9 +39,9 @@ class G00HomeVC: BaseParentViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         self.createNavigationBar(title: DomainConst.CONTENT00571)
+        statisticDetailView.alpha = 0
         startLogic()
         
     }
@@ -308,12 +308,12 @@ extension G00HomeVC: StatisticsDetailViewDelegate {
     func getStatistics(param: GetStatisticsRequest) {
         LoadingView.shared.showOverlay(view: self.view, className: self.theClassName)
         serviceInstance.getStatistics(req: param, success: { (resp) in
+            self.statisticDetailView.alpha = 1
             self.statisticDetailView.loadUI(statistic: resp)
             LoadingView.shared.hideOverlayView(className: self.theClassName)
             self.view.bringSubview(toFront: self.statisticDetailView)
         }) { (error) in
             LoadingView.shared.hideOverlayView(className: self.theClassName)
-            self.statisticDetailView.alpha = 0
             self.showAlert(message: error.message)
         }
     }

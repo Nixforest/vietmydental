@@ -30,12 +30,6 @@ class MedicalReceipt: NSObject {
     var data: ListConfigBean = ListConfigBean()
     
     init(listDict: [NSDictionary]) {
-        var jsondata = [[String: AnyObject]]()
-        for dict in listDict {
-            for item in dict.allKeys {
-                jsondata.append([item as! String: dict.object(forKey: item as! String) as AnyObject])
-            }
-        }
         self.data = ListConfigBean(jsonData: listDict as! [[String: AnyObject]])
         super.init()
     }
