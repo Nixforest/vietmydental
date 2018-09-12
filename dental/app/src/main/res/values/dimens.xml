@@ -1,0 +1,123 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="tiny_spacing">4dp</dimen>
+    <dimen name="small_spacing">8dp</dimen>
+    <dimen name="normal_spacing">16dp</dimen>
+    <dimen name="login_button_width">250dp</dimen>
+    <dimen name="base_margin">10dp</dimen>
+    <dimen name="act_login_logo_mg_top">20dp</dimen>
+    <dimen name="act_login_password_mg_top">10dp</dimen>
+    <dimen name="act_login_username_mg_top">30dp</dimen>
+    <dimen name="home_notify_mg_top">10dp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="map_view_height">550dp</dimen>
+    <dimen name="store_header_height">60dp</dimen>
+
+    <!--For general-->
+    <dimen name="layout_title_height">56dp</dimen>
+    <dimen name="layout_sub_title_height">38dp</dimen>
+    <dimen name="layout_margin_smallest">4dp</dimen>
+    <dimen name="layout_margin_small">10dp</dimen>
+    <dimen name="layout_margin_horizontal">15dp</dimen>
+    <dimen name="layout_margin_horizontal_large">40dp</dimen>
+    <dimen name="layout_button_height">40dp</dimen>
+    <dimen name="layout_button_height_small">30dp</dimen>
+    <dimen name="layout_menu_margin_height">8dp</dimen>
+    <dimen name="layout_menu_margin_horizontal">20dp</dimen>
+    <dimen name="layout_menu_profile_info">15dp</dimen>
+    <dimen name="layout_icon_height">11dp</dimen>
+    <dimen name="layout_profile_size">100dp</dimen>
+    <dimen name="layout_item_size">70dp</dimen>
+    <dimen name="layout_item_size_2">90dp</dimen>
+    <dimen name="layout_profile_padding">30dp</dimen>
+    <dimen name="margin_size_for_fix_scroll_issue">60dp</dimen>
+
+    <!--For general size-->
+    <dimen name="text_menu_size">17sp</dimen>
+    <dimen name="text_sub_header_size">16sp</dimen>
+    <dimen name="text_size_30">30sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+
+    <!--For login-->
+    <dimen name="login_logo_height">150dp</dimen>
+    <dimen name="login_space_login_button_top">17dp</dimen>
+    <dimen name="login_space_login_button_bottom">17dp</dimen>
+    <dimen name="login_register_text_size">13sp</dimen>
+
+    <!--For gas booking-->
+    <dimen name="gas_booking_image_size">54dp</dimen>
+    <dimen name="gas_booking_item_title_size">14sp</dimen>
+    <dimen name="gas_booking_tab_text_size">10sp</dimen>
+    <dimen name="gas_booking_item_price_size">11sp</dimen>
+    <dimen name="gas_booking_confirm_address_size">14sp</dimen>
+    <dimen name="gas_booking_confirm_phone_size">20sp</dimen>
+    <dimen name="gas_booking_bottom_bar_height">74dp</dimen>
+    <dimen name="gas_booking_button_size">52dp</dimen>
+    <dimen name="gas_booking_button_img_size">40dp</dimen>
+    <dimen name="gas_booking_big_button_size">84dp</dimen>
+    <dimen name="gas_booking_big_button_margin">10dp</dimen>
+    <dimen name="gas_booking_button_margin_horizontal">25dp</dimen>
+    <dimen name="gas_booking_button_margin_bottom">10dp</dimen>
+    <dimen name="gas_booking_button_spacing">20dp</dimen>
+    <dimen name="layout_gas_booking_tab_height">44dp</dimen>
+    <dimen name="gas_booking_shadow_button_margin">10dp</dimen>
+    <dimen name="gas_booking_shadow_button_margin_horizon">4dp</dimen>
+    <dimen name="gas_booking_confirm_view_item_margin">8dp</dimen>
+    <dimen name="gas_booking_confirm_view_group_margin">14dp</dimen>
+    <!--For gas booking - Employee profile -->
+    <dimen name="gas_booking_employee_cycle_size">60dp</dimen>
+    <dimen name="gas_booking_employee_cycle_margin">18dp</dimen>
+    <dimen name="gas_booking_employee_margin_vertical">10dp</dimen>
+
+    <!--For customer order list-->
+    <dimen name="gift_icon_margin">14dp</dimen>
+    <dimen name="customer_order_item_code_no_size">16sp</dimen>
+    <dimen name="customer_order_item_price_size">14sp</dimen>
+    <dimen name="customer_order_item_date_time_size">20sp</dimen>
+    <dimen name="customer_order_item_date_am_pm_size">11sp</dimen>
+    <dimen name="customer_order_item_margin">10dp</dimen>
+    <dimen name="customer_order_item_divider_size">5dp</dimen>
+    <dimen name="customer_order_item_divider_time_size">8dp</dimen>
+
+    <!--For promotion list-->
+    <dimen name="promotion_list_gift_icon_margin">15dp</dimen>
+    <dimen name="promotion_list_item_margin">15dp</dimen>
+
+    <!--For promotion list-->
+    <dimen name="profile_list_button_margin">14dp</dimen>
+
+    <!--For uphold craete-->
+    <dimen name="uphold_create_hot_line_text_size">18sp</dimen>
+    <dimen name="uphold_create_call_center_text_size">13sp</dimen>
+
+    <!--For agent booking-->
+    <dimen name="agent_booking_title_margin">10dp</dimen>
+    <dimen name="agent_booking_name_min_width">140dp</dimen>
+    <dimen name="agent_booking_kg_min_width">35dp</dimen>
+
+    <!-- For discount view -->
+    <dimen name="layout_v2_margin_horizontal">18dp</dimen>
+    <dimen name="layout_v2_margin_top">10dp</dimen>
+    <dimen name="layout_v2_text_size">16dp</dimen>
+    <dimen name="discount_tab_margin_top">8dp</dimen>
+    <dimen name="discount_tab_margin_bottom">4dp</dimen>
+    <dimen name="discount_view_margin_item">18dp</dimen>
+    <dimen name="discount_text_box_margin_item">15dp</dimen>
+    <dimen name="discount_confirm_margin">10dp</dimen>
+
+    <!--For customer order view-->
+    <dimen name="customer_order_margin_horizontal">23dp</dimen>
+    <dimen name="customer_order_item_margin_horizontal">8dp</dimen>
+    <dimen name="customer_order_item_margin_vertical">11dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
