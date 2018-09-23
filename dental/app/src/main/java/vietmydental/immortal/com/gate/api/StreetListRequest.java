@@ -15,17 +15,24 @@ public class StreetListRequest extends BaseRequest {
     private final String id;
     /** Page */
     private final String page;
-
+    /** Token */
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    private final String token;
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     /**
      * Constructor
      * @param id Id of city
      * @param page Page of list
+     * @param token Token
      */
-    public StreetListRequest(String id, String page) {
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public StreetListRequest(String id, String page,String token) {
         super(DomainConst.PATH_LIST_STREETS);
         this.id = id;
         this.page = page;
+        this.token = token;
     }
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
 
     /**
      * Get body for request.
@@ -37,12 +44,14 @@ public class StreetListRequest extends BaseRequest {
         ArrayList<NameValuePair> ret = new ArrayList<>();
         JSONObject object = this.generateDefaultJSONObject();
         try {
+            //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+            object.put(DomainConst.KEY_TOKEN, token);
+            //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
             object.put(DomainConst.KEY_ID, id);
             object.put(DomainConst.KEY_PAGE, page);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         ret.add(new BasicNameValuePair(DomainConst.KEY_Q, object.toString()));
         return ret;
     }

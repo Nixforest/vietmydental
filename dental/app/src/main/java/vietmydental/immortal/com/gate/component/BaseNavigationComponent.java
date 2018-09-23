@@ -17,6 +17,8 @@ import vietmydental.immortal.com.gate.g00.api.LogoutRequest;
 import vietmydental.immortal.com.gate.g00.fragment.ConfigurationFragment;
 import vietmydental.immortal.com.gate.g00.fragment.HomeFragment;
 import vietmydental.immortal.com.gate.g00.fragment.TestFragment;
+import vietmydental.immortal.com.gate.g00.fragment.UserChangePasswordFragment;
+import vietmydental.immortal.com.gate.g00.fragment.UserEditProfileFragment;
 import vietmydental.immortal.com.gate.g00.fragment.UserProfileFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
@@ -300,7 +302,23 @@ public class BaseNavigationComponent {
         BaseFragment fragment = new UserProfileFragment();
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    /**
+     * Open user edit profile
+     */
+    public void openUserEditProfile() {
+        BaseFragment fragment = new UserEditProfileFragment();
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
 
+    /**
+     * Open user change password
+     */
+    public void openUserChangePassword() {
+        BaseFragment fragment = new UserChangePasswordFragment();
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     /**
      * Handle log out
      */

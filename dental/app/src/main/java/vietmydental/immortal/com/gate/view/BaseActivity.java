@@ -423,4 +423,31 @@ public class BaseActivity extends AppCompatActivity {
                               String description, String debt) {
         navigator.openG01F03S04(id, amount, discount, finalAmount, description, debt);
     }
+
+    /**
+     * Open UserEditProfileFragment
+     */
+    public void openUserProfile() {
+        this.navigator.openUserProfile();
+
+    }
+
+    /**
+     * Open UserEditProfileFragment
+     */
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public void openUserEditProfile() {
+        this.navigator.openUserEditProfile();
+
+    }
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    /**
+     * Open UserEditProfileFragment
+     */
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public void openUserChangePassword() {
+        this.navigator.openUserChangePassword();
+
+    }
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
 }

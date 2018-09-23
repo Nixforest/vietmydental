@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">VietMy Dental</string>
-
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -405,6 +404,13 @@
     <string name="CONTENT00557">Lần điều trị mới</string>
     <string name="CONTENT00569">Nam</string>
     <string name="CONTENT00574">Thanh toán</string>
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    <string name="CONTENT00575">Tỉnh/Thành Phố</string>
+    <string name="CONTENT00576">Phường/Xã</string>
+    <string name="CONTENT00577">Tên người dùng</string>
+    <string name="CONTENT00578">Cập nhật</string>
+    <string name="CONTENT00579">Quận/Huyện</string>
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
 
     <!-- For discount view-->
     <string name="discount_0001">Giới thiệu</string>
