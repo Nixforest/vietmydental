@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/view_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00577"
+                android:textSize="@dimen/text_size_14"/>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_15"/>
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_email"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:clickable="true">
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_email"
+                android:textSize="@dimen/text_size_14"
+                />
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_house_numbers"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:clickable="true">
+            <TextView
+                android:id="@+id/tv_house_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00057"
+                android:textSize="@dimen/text_size_14"
+                />
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00058"
+                android:textSize="@dimen/text_size_14"/>
+            <TextView
+                android:id="@+id/tv_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_15"/>
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00575"
+                android:textSize="@dimen/text_size_14"/>
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_15"/>
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00579"
+                android:textSize="@dimen/text_size_14"/>
+            <TextView
+                android:id="@+id/tv_district"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_15"/>
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <LinearLayout
+            android:id="@+id/view_ward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00576"
+                android:textSize="@dimen/text_size_14"/>
+            <TextView
+                android:id="@+id/tv_ward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/text_size_15"/>
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="@string/gas_du_0007"
+            android:background="@color/colorMain"
+            android:textColor="@android:color/white"/>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="@string/gas_du_0008"
+            android:background="@color/v2_dark"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+
+</ScrollView>
