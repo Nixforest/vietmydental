@@ -98,7 +98,7 @@ public class G02F00S02Fragment extends BaseFragment<G00HomeActivity> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_g02_f00_s02, container, false);
         ButterKnife.bind(this, rootView);
         ArrayList<String> agentId = new ArrayList<>();
 

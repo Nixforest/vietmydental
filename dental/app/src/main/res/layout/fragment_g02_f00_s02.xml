@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  tools:context="vietmydental.immortal.com.gate.g00.fragment.HomeFragment">
+
+        <me.gujun.android.taggroup.TagGroup
+            android:id="@+id/tag_group"
+            style="@style/TagGroup"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            app:atg_backgroundColor = "@color/colorMain"
+            app:atg_borderColor="@color/colorMain"
+            app:atg_textColor="@android:color/white"
+            app:atg_textSize="@dimen/text_size_16"/>
+
+        <TextView
+            android:id="@+id/tv_date_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginTop="10dp"
+            android:text="Từ 22/09/2018 đến 22/09/2018"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00581"
+                android:textSize="@dimen/text_size_16"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_files"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 hồ sơ"
+                android:textSize="@dimen/text_size_16"
+                />
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style"
+            android:layout_margin= "10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00372"
+                android:textSize="@dimen/text_size_16"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/text_size_16"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00582"
+                android:textSize="@dimen/text_size_16"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_colect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/text_size_16"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00583"
+                android:textSize="@dimen/text_size_16"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_dept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_16"
+                />
+        </LinearLayout>
+
+        <View
+            style="@style/view_indicator_style"
+            android:layout_margin= "10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CONTENT00218"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textStyle="bold"
+                android:textColor="@color/colorMain"
+                android:textSize="@dimen/text_size_18"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_list_collected"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/CONTENT00584"
+            android:textColor="@color/colorMain"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"/>
+
+        <Button
+            android:id="@+id/btn_list_no_collected"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/CONTENT00585"
+            android:textColor="@color/colorMain"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+
+    </LinearLayout>
+</ScrollView>
+
