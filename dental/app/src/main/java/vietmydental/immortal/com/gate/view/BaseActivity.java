@@ -423,4 +423,27 @@ public class BaseActivity extends AppCompatActivity {
                               String description, String debt) {
         navigator.openG01F03S04(id, amount, discount, finalAmount, description, debt);
     }
+
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /**
+     * Open openG02F00S03Fragment screen
+     * @param status status of receipt
+     * @param fromDate from date of receipt
+     * @param status to date of receipt
+     */
+    public void openG02F00S03Fragment(String status, String fromDate, String toDate) {
+        navigator.openG02F00S03Fragment(status,fromDate,toDate);
+    }
+
+    /**
+     * Open openG02F00S02Fragment screen
+     * @param fromDate From Date
+     * @param toDate To Date
+     * @param agentList List Agent
+     */
+    public void openG02F00S02Fragment(String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
+        navigator.openG02F00S02Fragment(fromDate,toDate, agentList);
+    }
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+
 }

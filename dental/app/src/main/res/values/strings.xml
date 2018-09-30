@@ -373,7 +373,7 @@
     <string name="CONTENT00367">Vui lòng chọn đại lý khác</string>
     <string name="CONTENT00368">Số KG thiếu</string>
     <string name="CONTENT00369">Bạn có muốn xóa tất cả vỏ?</string>
-    <string name="CONTENT00370" formatted="false">%s: %s</string>
+    <string name="CONTENT0CONTENT003720370" formatted="false">%s: %s</string>
     <string name="CONTENT00371">KG</string>
     <string name="CONTENT00372">Giảm giá</string>
     <string name="CONTENT00373">Nhập mã giới thiệu</string>
@@ -405,6 +405,21 @@
     <string name="CONTENT00557">Lần điều trị mới</string>
     <string name="CONTENT00569">Nam</string>
     <string name="CONTENT00574">Thanh toán</string>
+    <string name="CONTENT00580">Tất cả</string>
+    <string name="CONTENT00581">Số bệnh nhân</string>
+    <string name="CONTENT00582">Thực thu</string>
+    <string name="CONTENT00583">Còn nợ</string>
+    <string name="CONTENT00584">Danh sách đã thu</string>
+    <string name="CONTENT00585">Danh sách chưa thu</string>
+    <string name="CONTENT00586">Tìm kiếm</string>
+    <string name="CONTENT00587">Tất cả chi nhánh</string>
+    <string name="CONTENT00588">Thu ngân</string>
+    <string name="CONTENT00589">Bác sĩ</string>
+    <string name="CONTENT00590">0 VNĐ</string>
+    <string name="CONTENT00591">Hôm nay</string>
+    <string name="CONTENT00592">Hôm qua</string>
+    <string name="CONTENT00593">Tháng này</string>
+    <string name="CONTENT00594">Tháng trước</string>
 
     <!-- For discount view-->
     <string name="discount_0001">Giới thiệu</string>
