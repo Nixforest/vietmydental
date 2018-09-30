@@ -492,9 +492,9 @@ public class BaseNavigationComponent {
      * @param fromDate From Date
      * @param toDate To Date
      */
-    public void openG02F00S03Fragment(String status, String fromDate, String toDate) {
+    public void openG02F00S03Fragment(String status, String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
         BaseFragment fragment = new G02F00S03Fragment();
-        ((G02F00S03Fragment)fragment).setData(status, fromDate, toDate);
+        ((G02F00S03Fragment)fragment).setData(status, fromDate, toDate, agentList);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
 

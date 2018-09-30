@@ -38,8 +38,8 @@ public class G02F00S02Fragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.tv_date_search) TextView tvDateSearch;
     public StatisticBean statisticBean;
     @BindView(R.id.tag_group) TagGroup mTagGroup;
-    private String fromDate = "";
-    private String toDate   = "";
+    private String fromDate = DomainConst.BLANK;
+    private String toDate   = DomainConst.BLANK;
     private ArrayList<ConfigBean> agentList   = new ArrayList<>();
 
     private String page   = "-1";
@@ -57,12 +57,12 @@ public class G02F00S02Fragment extends BaseFragment<G00HomeActivity> {
     }
     @OnClick(R.id.btn_list_collected)
     public void goListCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST, fromDate, toDate);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST, fromDate, toDate,agentList);
     }
 
     @OnClick(R.id.btn_list_no_collected)
     public void goListNoCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR, fromDate, toDate);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR, fromDate, toDate,agentList);
     }
 
 
@@ -103,11 +103,8 @@ public class G02F00S02Fragment extends BaseFragment<G00HomeActivity> {
         ArrayList<String> agentId = new ArrayList<>();
 
         tvDateSearch.setText("Từ "+ fromDate + " đến " + toDate);
-        if (agentList.size() == LoginBean.getInstance().listAgent.size()){
+        if (agentList.size() == LoginBean.getInstance().agentList.size()){
             mTagGroup.setTags("Tất cả");
-            for(int i = 1; i < agentList.size(); i++){
-                agentId.add(agentList.get(i).getId());
-            }
         }
         else{
             String[] strings = new String[agentList.size()];

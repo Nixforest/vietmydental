@@ -33,10 +33,10 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.tv_branch) TextView tvBranch;
     @BindView(R.id.tv_fromdate) TextView tvFromDate;
     @BindView(R.id.tv_todate) TextView tvToDate;
-    String fromDate = "";
-    String toDate   = "";
+    String fromDate = DomainConst.BLANK;
+    String toDate   = DomainConst.BLANK;
 
-    String[] listItems = new String [LoginBean.getInstance().listAgent.size()];
+    String[] listItems = new String [LoginBean.getInstance().agentList.size()];
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
     ArrayList<ConfigBean> listSelected = new ArrayList<>();
@@ -102,12 +102,16 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
 
     @OnClick(R.id.btnToday)
     public void searchToday(View view) {
-        Date todayDate = Calendar.getInstance().getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        String sDate = formatter.format(todayDate);
-        parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
-        mUserItems.clear();
-
+        if(listSelected.size() == 0){
+            Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Date todayDate = Calendar.getInstance().getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            String sDate = formatter.format(todayDate);
+            parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
+            mUserItems.clear();
+        }
     }
 
     private Date yesterday() {
@@ -118,52 +122,67 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
 
     @OnClick(R.id.btnYesterday)
     public void searchYesterday(View view) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        String sDate = formatter.format(yesterday());
-        parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
-        mUserItems.clear();
+        if(listSelected.size() == 0){
+            Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            String sDate = formatter.format(yesterday());
+            parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
+            mUserItems.clear();
+        }
     }
 
     @OnClick(R.id.btnLastMonth)
     public void searchLastMonth(View view) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        Calendar aCalendar = Calendar.getInstance();
+        if(listSelected.size() == 0){
+            Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar aCalendar = Calendar.getInstance();
 // add -1 month to current month
-        aCalendar.add(Calendar.MONTH, -1);
+            aCalendar.add(Calendar.MONTH, -1);
 // set DATE to 1, so first date of previous month
-        aCalendar.set(Calendar.DATE, 1);
+            aCalendar.set(Calendar.DATE, 1);
 
-        Date firstDateOfPreviousMonth = aCalendar.getTime();
+            Date firstDateOfPreviousMonth = aCalendar.getTime();
 
 // set actual maximum date of previous month
-        aCalendar.set(Calendar.DATE,     aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            aCalendar.set(Calendar.DATE,     aCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 //read it
-        Date lastDateOfPreviousMonth = aCalendar.getTime();
-        String fromDate = formatter.format(firstDateOfPreviousMonth.getTime());
-        String toDate = formatter.format(lastDateOfPreviousMonth.getTime());
-        parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
-        mUserItems.clear();
+            Date lastDateOfPreviousMonth = aCalendar.getTime();
+            String fromDate = formatter.format(firstDateOfPreviousMonth.getTime());
+            String toDate = formatter.format(lastDateOfPreviousMonth.getTime());
+            parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
+            mUserItems.clear();
+        }
     }
 
     @OnClick(R.id.btncurrenMonth)
     public void searchCurrenMonth(View view) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        Calendar c = Calendar.getInstance();   // this takes current date
-        c.add(Calendar.DAY_OF_MONTH, 1);
-        Calendar c2 = Calendar.getInstance();
-        c2.add(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
-        String fromDate = formatter.format(c.getTime());
-        String toDate = formatter.format(c2.getTime());
-        parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
-        mUserItems.clear();
+        if(listSelected.size() == 0){
+            Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar c = Calendar.getInstance();   // this takes current date
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            Calendar c2 = Calendar.getInstance();
+            c2.add(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+            String fromDate = formatter.format(c.getTime());
+            String toDate = formatter.format(c2.getTime());
+            parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
+            mUserItems.clear();
+        }
     }
 
     @OnClick(R.id.btnSearch)
     public void search(View view) {
-//        if(listSelected.size() == 0){
-//            listSelected = LoginBean.getInstance().listAgent;
-//        }
-        if(fromDate.equals(DomainConst.BLANK)){
+        if(listSelected.size() == 0){
+            Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
+        }
+        else if(fromDate.equals(DomainConst.BLANK)){
             Toast.makeText(parentActivity,"Bạn chưa chọn ngày bắt đầu!",Toast.LENGTH_SHORT).show();
         }
         else if(toDate.equals(DomainConst.BLANK)){
@@ -172,6 +191,8 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
         else{
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
             mUserItems.clear();
+            fromDate = DomainConst.BLANK;
+            toDate = DomainConst.BLANK;
         }
 
     }
@@ -183,22 +204,21 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             @Override
             public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
                 if(isChecked){
-                    if( position == 0){
-                        for (int i = 1; i < checkedItems.length; i++) {
-                            checkedItems[i] = false;
-                            ((AlertDialog) dialogInterface).getListView().setItemChecked(i, false);
-                        }
-                        mUserItems.clear();
-                        mUserItems.add(position);
-                    }
-                    else{
-                        checkedItems[0] = false;
-                        ((AlertDialog) dialogInterface).getListView().setItemChecked(0, false);
-                        mUserItems.remove((Integer.valueOf(0)));
-                        mUserItems.add(position);
-                    }
-
-
+//                    if( position == 0){
+//                        for (int i = 1; i < checkedItems.length; i++) {
+//                            checkedItems[i] = false;
+//                            ((AlertDialog) dialogInterface).getListView().setItemChecked(i, false);
+//                        }
+//                        mUserItems.clear();
+//                        mUserItems.add(position);
+//                    }
+//                    else{
+//                        checkedItems[0] = false;
+//                        ((AlertDialog) dialogInterface).getListView().setItemChecked(0, false);
+//                        mUserItems.remove((Integer.valueOf(0)));
+//                        mUserItems.add(position);
+//                    }
+                    mUserItems.add(position);
                 }else{
                     mUserItems.remove((Integer.valueOf(position)));
                 }
@@ -212,10 +232,13 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
 //                String item = "";
                     listSelected = new ArrayList<>();
                     for (int i = 0; i < mUserItems.size(); i++) {
-                        listSelected.add(LoginBean.getInstance().listAgent.get(mUserItems.get(i)));
+                        listSelected.add(LoginBean.getInstance().agentList.get(mUserItems.get(i)));
                     }
-                    if (mUserItems.size() == 1 && mUserItems.get(0) == 0 ){
-                        listSelected = LoginBean.getInstance().listAgent;
+//                    if (mUserItems.size() == 1 && mUserItems.get(0) == 0 ){
+//                        listSelected = LoginBean.getInstance().agentList;
+//                        tvBranch.setText("Tất cả chi nhánh");
+//                    }
+                    if(listSelected.size()== LoginBean.getInstance().agentList.size()){
                         tvBranch.setText("Tất cả chi nhánh");
                     }
                     else{
@@ -283,11 +306,11 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
         View rootView = inflater.inflate(R.layout.fragment_report_revenue_seach, container, false);
         ButterKnife.bind(this, rootView);
 
-        for(int i = 0; i < LoginBean.getInstance().listAgent.size(); i++){
-            listItems[i] = LoginBean.getInstance().listAgent.get(i).getName();
+        for(int i = 0; i < LoginBean.getInstance().agentList.size(); i++){
+            listItems[i] = LoginBean.getInstance().agentList.get(i).getName();
         }
         checkedItems = new boolean[listItems.length];
-        listSelected = LoginBean.getInstance().listAgent;
+        listSelected = LoginBean.getInstance().agentList;
         //requestServer();
         return rootView;
     }

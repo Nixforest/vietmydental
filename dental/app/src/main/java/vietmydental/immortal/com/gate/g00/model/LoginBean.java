@@ -42,8 +42,9 @@ public class LoginBean extends ConfigBean {
     /** Id of diagnosis other */
     private String diagnosis_other_id               = DomainConst.BLANK;
     //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
-    /** Timer config */
+    /** list of agent */
     public ArrayList<ConfigBean> listAgent         = new ArrayList<>();
+    public ArrayList<ConfigBean> agentList         = new ArrayList<>();
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
 
     /**
@@ -89,6 +90,7 @@ public class LoginBean extends ConfigBean {
         //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
         this.listAgent          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_LIST_AGENT);
         this.agent_id           = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_AGENT_ID);
+        this.agentList          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_AGENT_LIST);
         //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     }
 
@@ -110,6 +112,7 @@ public class LoginBean extends ConfigBean {
         this.diagnosis_other_id = DomainConst.BLANK;
         //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
         this.listAgent.clear();
+        this.agentList.clear();
         this.agent_id = DomainConst.BLANK;
         //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     }

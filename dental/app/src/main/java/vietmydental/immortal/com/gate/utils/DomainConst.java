@@ -751,6 +751,10 @@ public final class DomainConst {
      */
     public static final String KEY_LIST_AGENT = "list_agent";
     /**
+     * List street for register customer
+     */
+    public static final String KEY_AGENT_LIST = "agent_list";
+    /**
      * Agent id
      */
     public static final String KEY_AGENT_ID = "agent_id";

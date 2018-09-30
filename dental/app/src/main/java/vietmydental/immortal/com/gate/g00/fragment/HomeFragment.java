@@ -45,12 +45,12 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     String currentDate = DomainConst.BLANK;
     @OnClick(R.id.btn_list_collected)
     public void goListCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST,currentDate,currentDate);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST,currentDate,currentDate,LoginBean.getInstance().listAgent);
     }
 
     @OnClick(R.id.btn_list_no_collected)
     public void goListNoCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate,LoginBean.getInstance().listAgent);
     }
 
 
@@ -96,8 +96,9 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         tvDateSearch.setText("Từ "+ sDate + " đến " + sDate);
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         ArrayList<String> agentId = new ArrayList<>();
-        for(int i = 1; i < LoginBean.getInstance().listAgent.size(); i++){
-            agentId.add(LoginBean.getInstance().listAgent.get(i).getId());
+        Log.e("size",String.valueOf(LoginBean.getInstance().agentList.size()));
+        for(int i = 0; i < LoginBean.getInstance().agentList.size(); i++){
+            agentId.add(LoginBean.getInstance().agentList.get(i).getId());
         }
         if (token != null) {
             parentActivity.showLoadingView(true);

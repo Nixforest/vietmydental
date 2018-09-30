@@ -42,6 +42,9 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.lv_statistic) ListView lvStatistic;
     public GetListReceiptsResModel getListReceiptsResModel;
     public ArrayList<ReceiptBean> listReceipt = new ArrayList<>();
+    public ArrayList<ConfigBean> agentList = new ArrayList<>();
+
+
     private String fromDate = DomainConst.BLANK;
     private String toDate = DomainConst.BLANK;
     private String status = DomainConst.BLANK;
@@ -50,10 +53,11 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
      * Set data
      * @param status
      */
-    public void setData(String status, String fromDate, String toDate) {
+    public void setData(String status, String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
         this.status   = status;
         this.fromDate = fromDate;
         this.toDate   = toDate;
+        this.agentList = agentList;
 
     }
     /**
@@ -98,8 +102,8 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
 //        String sDate = formatter.format(todayDate);
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         ArrayList<String> agentId = new ArrayList<>();
-        for(int i = 0; i < LoginBean.getInstance().listAgent.size(); i++){
-            agentId.add(LoginBean.getInstance().listAgent.get(i).getId());
+        for(int i = 0; i < agentList.size(); i++){
+            agentId.add(agentList.get(i).getId());
         }
         if (token != null) {
             parentActivity.showLoadingView(true);

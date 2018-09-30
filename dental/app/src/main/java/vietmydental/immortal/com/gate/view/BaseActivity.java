@@ -430,9 +430,10 @@ public class BaseActivity extends AppCompatActivity {
      * @param status status of receipt
      * @param fromDate from date of receipt
      * @param status to date of receipt
+     * @param agentList List Agent
      */
-    public void openG02F00S03Fragment(String status, String fromDate, String toDate) {
-        navigator.openG02F00S03Fragment(status,fromDate,toDate);
+    public void openG02F00S03Fragment(String status, String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
+        navigator.openG02F00S03Fragment(status,fromDate,toDate,agentList);
     }
 
     /**
