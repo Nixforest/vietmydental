@@ -94,6 +94,10 @@ public class MenuListAdapter extends BaseAdapter {
                 return R.drawable.logoutitem;
             case DomainConst.MENU_ID_LIST.LOGIN:
                 return R.drawable.login;
+            //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+            case DomainConst.MENU_ID_LIST.REPORT_REVENUE:
+                return R.drawable.ic_menu_report;
+            //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
             default:
                 break;
         }

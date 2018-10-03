@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/colorMain"
+        android:textSize="@dimen/text_size_18"/>
+
+    <TextView
+        android:id="@+id/tv_sum_statistic"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CONTENT00590"
+        android:layout_gravity="right"
+        android:textColor="@color/colorMain"
+        android:textSize="@dimen/text_size_14"
+        android:layout_marginRight="@dimen/layout_margin_small"/>
+
+    <LinearLayout
+        android:layout_margin="@dimen/layout_margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/CONTENT00372"
+            android:textColor="@color/flat_color_1"/>
+        <TextView
+            android:id="@+id/tv_discount_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/main_color_3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+       android:layout_marginLeft="@dimen/layout_margin_small"
+       android:layout_marginRight="@dimen/layout_margin_small"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/CONTENT00583"
+            android:textColor="@color/flat_color_1"/>
+        <TextView
+            android:id="@+id/tv_debt_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/CONTENT00590"
+            android:textColor="@color/main_color_3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="@dimen/layout_margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/CONTENT00589"
+            android:textColor="@color/flat_color_1"/>
+        <TextView
+            android:id="@+id/tv_doctor_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_color_3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/layout_margin_small"
+        android:layout_marginRight="@dimen/layout_margin_small"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/CONTENT00588"
+            android:textColor="@color/flat_color_1"/>
+        <TextView
+            android:id="@+id/tv_cashier_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/main_color_3"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_statistic"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

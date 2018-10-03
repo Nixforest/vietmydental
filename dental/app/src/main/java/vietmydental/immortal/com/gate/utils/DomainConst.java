@@ -174,7 +174,12 @@ public final class DomainConst {
     public static final String PATH_LIST_STREETS                 = "default/listStreets";
     /** Path to connect with PHP server */
     public static final String PATH_USER_CHANGE_PROFILE          = "user/update";
-
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /** Path to connect with PHP server */
+    public static final String PATH_GET_STATISTICS               = "report/getStatistic";
+    /** Path to connect with PHP server */
+    public static final String PATH_LIST_RECEIPTS                = "report/listReceipts";
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     /** -----List of keys----- */
     /**
      * Token
@@ -315,6 +320,17 @@ public final class DomainConst {
      * Note Customer
      */
     public static final String KEY_NOTE_CUSTOMER = "note_customer";
+    /**
+     * total
+     */
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    public static final String KEY_TOTAL = "total";
+
+    /**
+     * total quantity
+     */
+    public static final String KEY_TOTAL_QTY = "total_qty";
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     /**
      * qty_12
      */
@@ -681,9 +697,14 @@ public final class DomainConst {
     // List order status
     public static final String KEY_DISCOUNT_TYPE = "discount_type";
     // List order status
-    public static final String KEY_DISCOUNT_AMOUNT      = "amount_discount";
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    public static final String KEY_DISCOUNT_AMOUNT      = "discount_amount";
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     public static final String KEY_DISCOUNT             = "discount";
     public static final String KEY_FINAL                = "final";
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    public static final String KEY_DEBT                 = "debt";
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     public static final String KEY_CUSTOMER_CONFIRM     = "customer_confirm";
     public static final String KEY_RECEIPTIONIST_ID     = "receiptionist_id";
     public static final String KEY_CHANGE_TO_AGENT = "change_to_agent";
@@ -702,6 +723,9 @@ public final class DomainConst {
     public static final String KEY_RESIZE_HEIGHT = "resize_height";
     public static final String KEY_CUSTOMER_CHAIN_STORE = "customer_chain_store";
     public static final String KEY_GAS24H_MENU_TEXT = "gas24h_menu_text";
+    //++
+    public static final String KEY_IMAGE = "image";
+    //--
 
     public interface GAS_REMAIN_TYPE {
         String KEY = "gas_remain_type";
@@ -726,6 +750,10 @@ public final class DomainConst {
      * List street for register customer
      */
     public static final String KEY_LIST_AGENT = "list_agent";
+    /**
+     * List street for register customer
+     */
+    public static final String KEY_AGENT_LIST = "agent_list";
     /**
      * Agent id
      */
@@ -1120,7 +1148,12 @@ public final class DomainConst {
         public static final String KEY_MESSAGE = "message";
         public static final String CUSTOMER_LIST = "customer_list";
         public static final String CONFIGURATION = "configuration";
-
+        //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+        public static final String REPORT_REVENUE = "report_revenue";
+        public static final String COLLECTED_REVENUE = "Danh sách đã thu";
+        public static final String NO_COLLECTED_REVENUE = "Danh sách chưa thu";
+        public static final String STATISTIC = "Thống kê";
+        //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     }
 
     public static class WEB_PAGE_ID {
@@ -1314,9 +1347,25 @@ public final class DomainConst {
     public static final String ITEM_TEETH_INFO                   = "40";
     /* Item id: Customer debt */
     public static final String ITEM_CUSTOMER_DEBT                = "41";
-    /* Item id: Image */
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /* Item id: Customer debt */
     public static final String ITEM_IMAGE                        = "42";
-    /* Item id: Create */
+    /* Item id: Image */
+    public static final String ITEM_IMAGE_TREATMENT              = "43";
+    /* Item id: Image */
+    public static final String ITEM_AGENT_ID                     = "44";
+    /* Item id: Image */
+    public static final String ITEM_PRICE                        = "45";
+    /* Item id: Image */
+    public static final String ITEM_QUANTITY                     = "46";
+    /* Item id: Image */
+    public static final String ITEM_TOTAL                        = "47";
+    /* Item id: Image */
+    public static final String ITEM_DEBT                         = "48";
+    /* Item id: Image */
+    public static final String ITEM_RECEIPTIONIST                = "49";
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+
     public static final String ITEM_CREATE_NEW                   = "XXX";
     // MARK: Status
     public static final String TREATMENT_SCHEDULE_INACTIVE           = "0";

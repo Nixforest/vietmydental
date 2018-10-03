@@ -1,7 +1,6 @@
-package vietmydental.immortal.com.gate.g00.fragment;
+package vietmydental.immortal.com.gate.g02.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,42 +18,55 @@ import butterknife.OnClick;
 import me.gujun.android.taggroup.TagGroup;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
+import vietmydental.immortal.com.gate.g00.model.LoginBean;
+import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.g02.G02Const;
 import vietmydental.immortal.com.gate.g02.api.GetStatisticRequest;
-import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g02.model.StatisticBean;
-import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.model.BaseModel;
+import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
-public class HomeFragment extends BaseFragment<G00HomeActivity> {
+public class G02F00S02Fragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.tv_files) TextView tvFiles;
     @BindView(R.id.tv_colect) TextView tvColect;
     @BindView(R.id.tv_dept) TextView tvDept;
     @BindView(R.id.tv_discount) TextView tvDiscount;
     @BindView(R.id.tv_sum) TextView tvSum;
     @BindView(R.id.tv_date_search) TextView tvDateSearch;
-    @BindView(R.id.tag_group) TagGroup mTagGroup;
     public StatisticBean statisticBean;
-    String currentDate = DomainConst.BLANK;
+    @BindView(R.id.tag_group) TagGroup mTagGroup;
+    private String fromDate = DomainConst.BLANK;
+    private String toDate   = DomainConst.BLANK;
+    private ArrayList<ConfigBean> agentList   = new ArrayList<>();
+
+    private String page   = "-1";
+    /**
+     * Set data
+     * @param fromDate From Date
+     * @param toDate To Date
+     * @param agentList List Agent
+     */
+    public void setData(String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.agentList = agentList;
+
+    }
     @OnClick(R.id.btn_list_collected)
     public void goListCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST,currentDate,currentDate,LoginBean.getInstance().listAgent);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_RECEIPTIONIST, fromDate, toDate,agentList);
     }
 
     @OnClick(R.id.btn_list_no_collected)
     public void goListNoCollectedScreen() {
-        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate,LoginBean.getInstance().listAgent);
+        parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR, fromDate, toDate,agentList);
     }
 
 
-    public HomeFragment() {
+    public G02F00S02Fragment() {
         // Required empty public constructor
     }
 
@@ -65,7 +77,7 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
      */
     @Override
     public String getFragmentUUID() {
-        return DomainConst.MENU_ID_LIST.HOME;
+        return DomainConst.MENU_ID_LIST.STATISTIC;
     }
 
     /**
@@ -75,7 +87,7 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
      */
     @Override
     public TitleConfigObject getTitleConfig() {
-        return new BaseFragment.TitleConfigObject(true, false);
+        return new BaseFragment.TitleConfigObject(false, true);
     }
 
     @Override
@@ -86,23 +98,30 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_g02_f00_s02, container, false);
         ButterKnife.bind(this, rootView);
-        mTagGroup.setTags(new String[]{"Tất cả"});
-        Date todayDate = Calendar.getInstance().getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        String sDate = formatter.format(todayDate);
-        currentDate = sDate;
-        tvDateSearch.setText("Từ "+ sDate + " đến " + sDate);
-        String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         ArrayList<String> agentId = new ArrayList<>();
-        Log.e("size",String.valueOf(LoginBean.getInstance().agentList.size()));
-        for(int i = 0; i < LoginBean.getInstance().agentList.size(); i++){
-            agentId.add(LoginBean.getInstance().agentList.get(i).getId());
+
+        tvDateSearch.setText("Từ "+ fromDate + " đến " + toDate);
+        if (agentList.size() == LoginBean.getInstance().agentList.size()){
+            mTagGroup.setTags("Tất cả");
         }
+        else{
+            String[] strings = new String[agentList.size()];
+            for(int i = 0; i< agentList.size(); i++){
+                strings[i] = agentList.get(i).getName();
+            }
+            mTagGroup.setTags(strings);
+            for(int i = 0; i < agentList.size(); i++){
+                agentId.add(agentList.get(i).getId());
+            }
+        }
+
+        String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
+
         if (token != null) {
             parentActivity.showLoadingView(true);
-            GetStatisticRequest request = new GetStatisticRequest(token, sDate, sDate,agentId
+            GetStatisticRequest request = new GetStatisticRequest(token, fromDate, toDate,agentId
             ) {
                 @Override
                 protected void onPostExecute(Object o) {

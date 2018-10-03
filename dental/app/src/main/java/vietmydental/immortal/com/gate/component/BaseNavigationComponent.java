@@ -33,6 +33,9 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F02S06Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S03Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F03S04Fragment;
+import vietmydental.immortal.com.gate.g02.fragment.G02F00S01Fragment;
+import vietmydental.immortal.com.gate.g02.fragment.G02F00S02Fragment;
+import vietmydental.immortal.com.gate.g02.fragment.G02F00S03Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -263,6 +266,11 @@ public class BaseNavigationComponent {
             case DomainConst.MENU_ID_LIST.LOGIN:
                 openLogin();
                 break;
+            //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+            case DomainConst.MENU_ID_LIST.REPORT_REVENUE:
+                openReportReVenue();
+                break;
+            //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
             default:
                 break;
         }
@@ -286,7 +294,15 @@ public class BaseNavigationComponent {
         BaseFragment fragment = new HomeFragment();
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
-
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /**
+     * Open home screen
+     */
+    public void openReportReVenue() {
+        BaseFragment fragment = new G02F00S01Fragment();
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     /**
      * Open Configuration
      */
@@ -487,4 +503,30 @@ public class BaseNavigationComponent {
         ((G01F03S04Fragment)fragment).setData(id, amount, discount, finalAmount, description, debt);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
+
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /**
+     * Open G02F00S03Fragment screen
+     * @param status Status
+     * @param fromDate From Date
+     * @param toDate To Date
+     */
+    public void openG02F00S03Fragment(String status, String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
+        BaseFragment fragment = new G02F00S03Fragment();
+        ((G02F00S03Fragment)fragment).setData(status, fromDate, toDate, agentList);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G02F00S02Fragment screen
+     * @param fromDate From Date
+     * @param toDate To Date
+     * @param agentList List Agent
+     */
+    public void openG02F00S02Fragment(String fromDate, String toDate, ArrayList<ConfigBean> agentList) {
+        BaseFragment fragment = new G02F00S02Fragment();
+        ((G02F00S02Fragment)fragment).setData(fromDate,toDate,agentList);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
 }

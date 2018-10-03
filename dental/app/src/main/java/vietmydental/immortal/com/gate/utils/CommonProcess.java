@@ -10,21 +10,20 @@ import android.text.InputType;
 import android.widget.EditText;
 
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
+import vietmydental.immortal.com.gate.g02.model.PropertyBean;
+import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -271,6 +270,52 @@ public class CommonProcess {
         } catch (Exception e) {
             return new JsonArray();
         }
+    }
+
+    /**
+     * Get list config
+     * @param data Json object data
+     * @param key Key value
+     * @return List of config bean object
+     */
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    public static ArrayList<ReceiptBean> getListReceipt(JsonObject data, String key) {
+        ArrayList<ReceiptBean> retVal = new ArrayList<>();
+        try {
+            JsonArray array = data.getAsJsonArray(key);
+//            Gson gson = new Gson();
+//            retVal = gson.fromJson(array.toString(), new TypeToken<ArrayList<ConfigBean>>(){}.getType());
+            for (JsonElement obj :
+                    array) {
+                retVal.add(new ReceiptBean(obj.getAsJsonObject()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retVal;
+    }
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+
+    /**
+     * Get list config
+     * @param data Json object data
+     * @param key Key value
+     * @return List of config bean object
+     */
+    public static ArrayList<PropertyBean> getListProperty(JsonObject data, String key) {
+        ArrayList<PropertyBean> retVal = new ArrayList<>();
+        try {
+            JsonArray array = data.getAsJsonArray(key);
+//            Gson gson = new Gson();
+//            retVal = gson.fromJson(array.toString(), new TypeToken<ArrayList<ConfigBean>>(){}.getType());
+            for (JsonElement obj :
+                    array) {
+                retVal.add(new PropertyBean(obj.getAsJsonObject()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retVal;
     }
 
     /**

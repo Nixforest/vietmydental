@@ -18,6 +18,9 @@ public class LoginBean extends ConfigBean {
     // MARK: Properties
     /** User token */
     private String token                            = DomainConst.BLANK;
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    public String agent_id                         = DomainConst.BLANK;
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     /** Id of role */
     private String role_id                          = DomainConst.BLANK;
     /** Flag need change pass */
@@ -38,6 +41,11 @@ public class LoginBean extends ConfigBean {
     private ArrayList<ConfigBean> timer             = new ArrayList<>();
     /** Id of diagnosis other */
     private String diagnosis_other_id               = DomainConst.BLANK;
+    //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    /** list of agent */
+    public ArrayList<ConfigBean> listAgent         = new ArrayList<>();
+    public ArrayList<ConfigBean> agentList         = new ArrayList<>();
+    //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
 
     /**
      * Constructor.
@@ -79,6 +87,11 @@ public class LoginBean extends ConfigBean {
         this.teeth              = CommonProcess.getListConfigExt(gsonObject, DomainConst.KEY_TEETH);
         this.timer              = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_TIMER);
         this.diagnosis_other_id = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_DIAGNOSIS_OTHER_ID);
+        //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+        this.listAgent          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_LIST_AGENT);
+        this.agent_id           = CommonProcess.getJsonString(gsonObject, DomainConst.KEY_AGENT_ID);
+        this.agentList          = CommonProcess.getListConfig(gsonObject, DomainConst.KEY_AGENT_LIST);
+        //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     }
 
     /**
@@ -97,6 +110,11 @@ public class LoginBean extends ConfigBean {
         this.teeth.clear();
         this.timer.clear();
         this.diagnosis_other_id = DomainConst.BLANK;
+        //++ BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+        this.listAgent.clear();
+        this.agentList.clear();
+        this.agent_id = DomainConst.BLANK;
+        //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     }
 
     /**
@@ -213,4 +231,5 @@ public class LoginBean extends ConfigBean {
             }
         }
     }
+
 }
