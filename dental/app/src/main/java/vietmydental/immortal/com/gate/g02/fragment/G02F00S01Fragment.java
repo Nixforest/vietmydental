@@ -167,9 +167,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
         else{
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             Calendar c = Calendar.getInstance();   // this takes current date
-            c.add(Calendar.DAY_OF_MONTH, 1);
+            c.set(Calendar.DAY_OF_MONTH, 1);
             Calendar c2 = Calendar.getInstance();
-            c2.add(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+            c2.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
             String fromDate = formatter.format(c.getTime());
             String toDate = formatter.format(c2.getTime());
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
@@ -182,11 +182,26 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
         if(listSelected.size() == 0){
             Toast.makeText(parentActivity,"Bạn chưa chọn chi nhánh!",Toast.LENGTH_SHORT).show();
         }
+        else if(fromDate.equals(DomainConst.BLANK) && toDate.equals(DomainConst.BLANK)){
+            Date todayDate = Calendar.getInstance().getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            String sDate = formatter.format(todayDate);
+            parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
+            mUserItems.clear();
+            fromDate = DomainConst.BLANK;
+            toDate = DomainConst.BLANK;
+        }
         else if(fromDate.equals(DomainConst.BLANK)){
-            Toast.makeText(parentActivity,"Bạn chưa chọn ngày bắt đầu!",Toast.LENGTH_SHORT).show();
+            parentActivity.openG02F00S02Fragment(toDate,toDate, listSelected);
+            mUserItems.clear();
+            fromDate = DomainConst.BLANK;
+            toDate = DomainConst.BLANK;
         }
         else if(toDate.equals(DomainConst.BLANK)){
-            Toast.makeText(parentActivity,"Bạn chưa chọn ngày kết thúc!",Toast.LENGTH_SHORT).show();
+            parentActivity.openG02F00S02Fragment(fromDate,fromDate, listSelected);
+            mUserItems.clear();
+            fromDate = DomainConst.BLANK;
+            toDate = DomainConst.BLANK;
         }
         else{
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
@@ -310,6 +325,11 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             listItems[i] = LoginBean.getInstance().agentList.get(i).getName();
         }
         checkedItems = new boolean[listItems.length];
+        for (int i = 0; i < checkedItems.length; i++) {
+            checkedItems[i] = true;
+            mUserItems.add(i);
+
+        }
         listSelected = LoginBean.getInstance().agentList;
         //requestServer();
         return rootView;
