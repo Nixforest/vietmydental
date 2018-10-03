@@ -757,9 +757,6 @@ public final class DomainConst {
     /**
      * Agent id
      */
-    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
-    public static final String KEY_IMAGE = "image";
-    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     public static final String KEY_AGENT_ID = "agent_id";
     public static final String KEY_AGENT_NAME = "agent_name";
     public static final String KEY_AGENT = "agent";
