@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.g00.api.UpdateConfigurationRequest;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
+import vietmydental.immortal.com.gate.g00.model.UserProfileBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.NotificationBean;
@@ -25,6 +26,9 @@ import vietmydental.immortal.com.vietmydental.R;
 
 public class G00HomeActivity extends BaseActivity {
     /** Flag need open Home */
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public UserProfileBean userProfileBean;
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     private boolean isNotOpenHome = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

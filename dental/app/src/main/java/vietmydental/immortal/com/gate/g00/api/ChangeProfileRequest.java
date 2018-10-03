@@ -27,24 +27,26 @@ public class ChangeProfileRequest extends BaseRequest {
     /** Email */
     private final String email;
     /** Id of agent */
-    private final String agentId;
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    //    private final String agentId;
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     /** Token */
     private final String token;
 
     /**
      * Constructor
-     * @param name Name
-     * @param cityId Id of city
-     * @param districtId Id of district
-     * @param wardId Id of ward
-     * @param streetId Id of street
+     *
+     * @param name        Name
+     * @param cityId      Id of city
+     * @param districtId  Id of district
+     * @param wardId      Id of ward
+     * @param streetId    Id of street
      * @param houseNumber House number
-     * @param email Email
-     * @param agentId Id of agent
+     * @param email       Email
      * @param token
      */
     public ChangeProfileRequest(String name, String cityId, String districtId, String wardId,
-                                String streetId, String houseNumber, String email, String agentId,
+                                String streetId, String houseNumber, String email,
                                 String token) {
         super(DomainConst.PATH_USER_CHANGE_PROFILE);
         this.name = name;
@@ -54,7 +56,9 @@ public class ChangeProfileRequest extends BaseRequest {
         this.streetId = streetId;
         this.houseNumber = houseNumber;
         this.email = email;
-        this.agentId = agentId;
+        //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+//        this.agentId = agentId;
+        //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
         this.token = token;
     }
 
@@ -75,7 +79,9 @@ public class ChangeProfileRequest extends BaseRequest {
             object.put(DomainConst.KEY_STREET_ID, streetId);
             object.put(DomainConst.KEY_HOUSE_NUMBER, houseNumber);
             object.put(DomainConst.KEY_EMAIL, email);
-            object.put(DomainConst.KEY_AGENT_ID, agentId);
+            //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+//            object.put(DomainConst.KEY_AGENT_ID, agentId);
+            //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
             object.put(DomainConst.KEY_TOKEN, token);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -172,6 +172,11 @@ public class LoginBean extends ConfigBean {
         return treatment;
     }
 
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public ArrayList<ConfigBean> getAddress() {
+        return address_config;
+    }
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     /**
      * Get diagnosis by id
      * @param id Id of item

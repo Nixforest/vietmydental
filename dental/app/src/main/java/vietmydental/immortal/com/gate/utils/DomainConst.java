@@ -757,6 +757,9 @@ public final class DomainConst {
     /**
      * Agent id
      */
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public static final String KEY_IMAGE = "image";
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
     public static final String KEY_AGENT_ID = "agent_id";
     public static final String KEY_AGENT_NAME = "agent_name";
     public static final String KEY_AGENT = "agent";
@@ -1085,6 +1088,9 @@ public final class DomainConst {
         public static final String NEWS_LIST = "news_list";
         public static final String USER_PROFILE = "account";
         public static final String USER_PROFILE_EDIT = "Cập nhật tài khoản";
+        //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+        public static final String USER_PROFILE_CHANGE_PASS = "Cập nhật mật khẩu";
+        //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
         public static final String MAP_CHECKER = "map_checker";
         public static final String FAMILY_LIST = "customer_list";
         public static final String FAMILY_VIEW = "Thông tin khách hàng";
@@ -1961,4 +1967,8 @@ public final class DomainConst {
     public static final String CONTENT00576 = "Dữ liệu chưa đầy đủ, bạn có muốn tiếp tục không?";
     public static final String CONTENT00577 = "Nợ cũ";
     public static final String CONTENT00578 = "Bạn có chắc chắn muốn tạo mới Đợt điều trị này không?";
+    //++ BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    public static final String CONTENT00579 = "Thay mật khẩu thành công";
+    public static final String CONTENT00580 = "Cập nhật tài khoản thành công";
+    //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
 }
