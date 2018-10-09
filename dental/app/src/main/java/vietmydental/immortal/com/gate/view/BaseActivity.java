@@ -41,6 +41,7 @@ import vietmydental.immortal.com.gate.g00.view.G00LoginActivity;
 import vietmydental.immortal.com.gate.g01.fragment.G01F00S01Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S02Fragment;
 import vietmydental.immortal.com.gate.g01.fragment.G01F02S05Fragment;
+import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -471,4 +472,37 @@ public class BaseActivity extends AppCompatActivity {
 
     }
     //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+
+    //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+    /**
+     * Open G03F00S01Fragment
+     */
+    public void openG03F00S01Fragment() {
+        this.navigator.openG03F00S01Fragment();
+
+    }
+
+    /**
+     * Open G03F00S02Fragment
+     */
+    public void openG03F00S02Fragment(String date) {
+        this.navigator.openG03F00S02Fragment(date);
+
+    }
+
+    /**
+     * Open G03F00S02Fragment
+     */
+    public void openG03F00S03Fragment(ReceiptBean receiptBean, String date) {
+        this.navigator.openG03F00S03Fragment( receiptBean, date);
+    }
+
+    /**
+     * Open openG02F00S03Fragment screen
+     * @param receiptBean ReceiptBean
+     */
+    public void openG02F00S03Fragment(ReceiptBean receiptBean) {
+        navigator.openG02F00S03Fragment(receiptBean);
+    }
+    //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
 }

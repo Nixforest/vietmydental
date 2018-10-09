@@ -36,6 +36,10 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F03S04Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S01Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S02Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S03Fragment;
+import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
+import vietmydental.immortal.com.gate.g03.fragment.G03F00S01Fragment;
+import vietmydental.immortal.com.gate.g03.fragment.G03F00S02Fragment;
+import vietmydental.immortal.com.gate.g03.fragment.G03F00S03Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -271,6 +275,11 @@ public class BaseNavigationComponent {
                 openReportReVenue();
                 break;
             //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+            //++
+            case DomainConst.MENU_ID_LIST.KEY_DAILY_REPORT:
+                openG03F00S01Fragment();
+                break;
+            //--
             default:
                 break;
         }
@@ -529,4 +538,42 @@ public class BaseNavigationComponent {
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+
+    //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+    /**
+     * Open G03F00S01Fragment
+     */
+    public void openG03F00S01Fragment() {
+        BaseFragment fragment = new G03F00S01Fragment();
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G03F00S02Fragment
+     */
+    public void openG03F00S02Fragment(String date) {
+        BaseFragment fragment = new G03F00S02Fragment();
+        ((G03F00S02Fragment)fragment).setData(date);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G03F00S02Fragment
+     */
+    public void openG03F00S03Fragment(ReceiptBean receiptBean, String date) {
+        BaseFragment fragment = new G03F00S03Fragment();
+        ((G03F00S03Fragment)fragment).setData(receiptBean, date);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    /**
+     * Open G02F00S03Fragment screen
+     * @param receiptBean Receiptbean
+     */
+    public void openG02F00S03Fragment(ReceiptBean receiptBean) {
+        BaseFragment fragment = new G02F00S03Fragment();
+        ((G02F00S03Fragment)fragment).setData(receiptBean);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+    //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
 }

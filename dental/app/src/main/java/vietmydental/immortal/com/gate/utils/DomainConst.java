@@ -789,6 +789,8 @@ public final class DomainConst {
     public static final String KEY_STORE_ORDER_DATA = "order_data";
     public static final String KEY_MATERIAL_GAS = "material_gas";
 
+    // For Report
+    public static final String KEY_MONTH = "month";
     /** -----Specified constant----- */
     /**
      * File parameter: file_name[ + ]
@@ -1151,6 +1153,12 @@ public final class DomainConst {
         public static final String NO_COLLECTED_REVENUE = "Danh sách chưa thu";
         public static final String STATISTIC = "Thống kê";
         //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+        //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+        public static final String KEY_DAILY_REPORT = "daily_report";
+        public static final String DAILY_REPORT = "Báo cáo hằng ngày";
+        public static final String DAILY_REPORT_DATE = "Báo cáo ngày ";
+        public static final String REVENUE_DETAIL = "Chi tiết doanh thu ";
+        //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
     }
 
     public static class WEB_PAGE_ID {
@@ -1362,6 +1370,10 @@ public final class DomainConst {
     /* Item id: Image */
     public static final String ITEM_RECEIPTIONIST                = "49";
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    //++
+    /* Item Status: status */
+    public static final String ITEM_STATUS_TEXT                  = "50";
+    //--
 
     public static final String ITEM_CREATE_NEW                   = "XXX";
     // MARK: Status

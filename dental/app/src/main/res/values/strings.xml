@@ -427,6 +427,12 @@
     <string name="CONTENT00593">Tháng này</string>
     <string name="CONTENT00594">Tháng trước</string>
 
+    //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+    <string name="CONTENT00595">Tổng tiền</string>
+    <string name="CONTENT00596">Chi nhánh</string>
+    <string name="CONTENT00597">Không xác nhận</string>
+    //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+
     <!-- For discount view-->
     <string name="discount_0001">Giới thiệu</string>
     <string name="discount_0002">Sử dụng mã</string>
