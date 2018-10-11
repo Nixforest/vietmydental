@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
+import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
@@ -39,6 +40,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
     String[] listItems = new String [LoginBean.getInstance().agentList.size()];
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
+    //++
+    ArrayList<Integer> sUserItems = new ArrayList<>();
+    //--
     ArrayList<ConfigBean> listSelected = new ArrayList<>();
     private DatePickerDialog.OnDateSetListener mDateSetListenerFromDate;
     private DatePickerDialog.OnDateSetListener mDateSetListenerToDate;
@@ -110,6 +114,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             String sDate = formatter.format(todayDate);
             parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
             mUserItems.clear();
         }
     }
@@ -129,6 +136,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             String sDate = formatter.format(yesterday());
             parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().listSelected = listSelected;
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
             mUserItems.clear();
         }
     }
@@ -155,6 +165,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             String fromDate = formatter.format(firstDateOfPreviousMonth.getTime());
             String toDate = formatter.format(lastDateOfPreviousMonth.getTime());
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
             mUserItems.clear();
         }
     }
@@ -173,6 +186,9 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             String fromDate = formatter.format(c.getTime());
             String toDate = formatter.format(c2.getTime());
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
             mUserItems.clear();
         }
     }
@@ -188,26 +204,38 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             String sDate = formatter.format(todayDate);
             parentActivity.openG02F00S02Fragment(sDate,sDate, listSelected);
             mUserItems.clear();
-            fromDate = DomainConst.BLANK;
-            toDate = DomainConst.BLANK;
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().fromdate = fromDate;
+            BaseModel.getInstance().todate = toDate;
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
         }
         else if(fromDate.equals(DomainConst.BLANK)){
             parentActivity.openG02F00S02Fragment(toDate,toDate, listSelected);
             mUserItems.clear();
-            fromDate = DomainConst.BLANK;
-            toDate = DomainConst.BLANK;
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().fromdate = toDate;
+            BaseModel.getInstance().todate = toDate;
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
         }
         else if(toDate.equals(DomainConst.BLANK)){
             parentActivity.openG02F00S02Fragment(fromDate,fromDate, listSelected);
             mUserItems.clear();
-            fromDate = DomainConst.BLANK;
-            toDate = DomainConst.BLANK;
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().fromdate = fromDate;
+            BaseModel.getInstance().todate = fromDate;
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
         }
         else{
             parentActivity.openG02F00S02Fragment(fromDate,toDate, listSelected);
             mUserItems.clear();
-            fromDate = DomainConst.BLANK;
-            toDate = DomainConst.BLANK;
+            //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+            BaseModel.getInstance().fromdate = fromDate;
+            BaseModel.getInstance().todate = toDate;
+            BaseModel.getInstance().listSelected = listSelected;
+            //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
         }
 
     }
@@ -325,12 +353,45 @@ public class G02F00S01Fragment extends BaseFragment<G00HomeActivity> {
             listItems[i] = LoginBean.getInstance().agentList.get(i).getName();
         }
         checkedItems = new boolean[listItems.length];
-        for (int i = 0; i < checkedItems.length; i++) {
-            checkedItems[i] = true;
-            mUserItems.add(i);
-
+        //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+        if (BaseModel.getInstance().listSelected.size() > 0){
+            listSelected = BaseModel.getInstance().listSelected;
+            if( BaseModel.getInstance().listSelected.size() ==  LoginBean.getInstance().agentList.size()){
+                tvBranch.setText(getResources().getString(R.string.CONTENT00580));
+            }
+            else{
+                String branch = "Đã chọn "+ String.valueOf(BaseModel.getInstance().listSelected.size()) + " chi nhánh";
+                tvBranch.setText(branch);
+            }
+            for (int i = 0; i < checkedItems.length; i++) {
+                checkedItems[i] = false;
+            }
+            for(int i = 0 ; i < BaseModel.getInstance().listSelected.size() ; i++){
+                for(int e = 0; e < LoginBean.getInstance().agentList.size(); e++){
+                    if(LoginBean.getInstance().agentList.get(e).getId().equals(BaseModel.getInstance().listSelected.get(i).getId())){
+                        checkedItems[e] = true;
+                        mUserItems.add(e);
+                    }
+                }
+            }
         }
-        listSelected = LoginBean.getInstance().agentList;
+        else{
+            listSelected = LoginBean.getInstance().agentList;
+            for (int i = 0; i < checkedItems.length; i++) {
+                checkedItems[i] = true;
+                mUserItems.add(i);
+
+            }
+        }
+        fromDate = BaseModel.getInstance().fromdate;
+        toDate = BaseModel.getInstance().todate;
+        if (!fromDate.equals(DomainConst.BLANK)){
+            tvFromDate.setText(fromDate);
+        }
+        if (!toDate.equals(DomainConst.BLANK)){
+            tvToDate.setText(toDate);
+        }
+        //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
         //requestServer();
         return rootView;
     }

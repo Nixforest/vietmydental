@@ -3,6 +3,8 @@ package vietmydental.immortal.com.gate.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class BaseModel {
@@ -16,7 +18,11 @@ public class BaseModel {
     /** Current application mode */
 //    private int                     mode                = DomainConst.MODE_TRAINING;
     private int                     mode                = DomainConst.MODE_RUNNING;
-
+    //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+    public String fromdate = DomainConst.BLANK;
+    public String todate = DomainConst.BLANK;
+    public ArrayList<ConfigBean> listSelected = new ArrayList<>();
+    //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
     /**
      * Get singleton instance.
      * @return Singleton instance

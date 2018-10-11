@@ -260,6 +260,9 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
                         showProgress(false);
                     } else {
                         CommonProcess.showErrorMessage(G00LoginActivity.this, resp.getMessage());
+                        //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+                        showProgress(false);
+                        //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
                     }
                 }
             };
