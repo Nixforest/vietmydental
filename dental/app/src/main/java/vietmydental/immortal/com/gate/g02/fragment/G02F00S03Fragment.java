@@ -39,11 +39,14 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.tv_cashier_statistic) TextView tvCashier;
     @BindView(R.id.tv_discount_statistic) TextView tvDiscount;
     @BindView(R.id.tv_name) TextView tvName;
+    @BindView(R.id.tv_type) TextView tvType;
     @BindView(R.id.lv_statistic) ListView lvStatistic;
     public GetListReceiptsResModel getListReceiptsResModel;
     public ArrayList<ReceiptBean> listReceipt = new ArrayList<>();
     public ArrayList<ConfigBean> agentList = new ArrayList<>();
-
+    //++
+    ReceiptBean receiptBean = new ReceiptBean();
+    //--
 
     private String fromDate = DomainConst.BLANK;
     private String toDate = DomainConst.BLANK;
@@ -60,6 +63,17 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
         this.agentList = agentList;
 
     }
+
+    /**
+     * Set data
+     * @param receiptBean
+     */
+    //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+    public void setData(ReceiptBean receiptBean) {
+        this.receiptBean = receiptBean;
+
+    }
+    //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
     /**
      * Get fragment UUID.
      *
@@ -70,9 +84,14 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
         if (status.equals(G02Const.STATUS_RECEIPTIONIST)){
             return DomainConst.MENU_ID_LIST.COLLECTED_REVENUE;
         }
-        else {
+        else if(status.equals(G02Const.STATUS_DOCTOR)){
             return DomainConst.MENU_ID_LIST.NO_COLLECTED_REVENUE;
         }
+        //++ BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+        else{
+            return DomainConst.MENU_ID_LIST.REVENUE_DETAIL;
+        }
+        //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
         //return DomainConst.MENU_ID_LIST.DETAIL_REVENUE;
     }
 
@@ -100,56 +119,91 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
 //        Date todayDate = Calendar.getInstance().getTime();
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 //        String sDate = formatter.format(todayDate);
-        String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
-        ArrayList<String> agentId = new ArrayList<>();
-        for(int i = 0; i < agentList.size(); i++){
-            agentId.add(agentList.get(i).getId());
+        if (!receiptBean.getId().equals(DomainConst.BLANK)){
+            if ( receiptBean.getData().size() > 0){
+                for(int i = 0; i < receiptBean.getData().size(); i++){
+                    switch (receiptBean.getData().get(i).getId()){
+                        case DomainConst.ITEM_NAME:  tvName
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_DOCTOR:  tvDoctor
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_RECEIPTIONIST:  tvCashier
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_DISCOUNT:  tvDiscount
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_TOTAL:  tvSum
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_DEBT:  tvDebt
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        case DomainConst.ITEM_TREATMENT:  tvType
+                                .setText(receiptBean.getData().get(i).getData());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
-        if (token != null) {
-            parentActivity.showLoadingView(true);
-            GetListReceiptsRequest request = new GetListReceiptsRequest(token, fromDate, toDate,agentId,page,status
-            ) {
-                @Override
-                protected void onPostExecute(Object o) {
-                    BaseResponse resp = getResponse();
-                    if ((resp != null) && resp.isSuccess()) {
-                        parentActivity.showLoadingView(false);
-                        getListReceiptsResModel = new GetListReceiptsResModel(resp.getJsonData());
-                        listReceipt = getListReceiptsResModel.list;
-                        ReceiptAdapter customAdaper = new ReceiptAdapter(parentActivity,R.layout.list_item_g02_f00_s03,listReceipt);
-                        lvStatistic.setAdapter(customAdaper);
-                        lvStatistic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                if ( listReceipt.get(i).getData().size() > 0){
-                                    for(int p = 0; p < listReceipt.get(i).getData().size(); p++ ){
-                                        switch (listReceipt.get(i).getData().get(p).getId()){
-                                            case DomainConst.ITEM_NAME:  tvName
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
-                                            case DomainConst.ITEM_DOCTOR:  tvDoctor
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
-                                            case DomainConst.ITEM_RECEIPTIONIST:  tvCashier
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
-                                            case DomainConst.ITEM_DISCOUNT:  tvDiscount
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
-                                            case DomainConst.ITEM_TOTAL:  tvSum
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
-                                            case DomainConst.ITEM_DEBT:  tvDebt
-                                                    .setText(listReceipt.get(i).getData().get(p).getData());
-                                                break;
+        else{
+            String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
+            ArrayList<String> agentId = new ArrayList<>();
+            for(int i = 0; i < agentList.size(); i++){
+                agentId.add(agentList.get(i).getId());
+            }
+            if (token != null) {
+                parentActivity.showLoadingView(true);
+                GetListReceiptsRequest request = new GetListReceiptsRequest(token, fromDate, toDate,agentId,page,status
+                ) {
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        BaseResponse resp = getResponse();
+                        if ((resp != null) && resp.isSuccess()) {
+                            parentActivity.showLoadingView(false);
+                            getListReceiptsResModel = new GetListReceiptsResModel(resp.getJsonData());
+                            listReceipt = getListReceiptsResModel.list;
+                            ReceiptAdapter customAdaper = new ReceiptAdapter(parentActivity,R.layout.list_item_g02_f00_s03,listReceipt);
+                            lvStatistic.setAdapter(customAdaper);
+                            lvStatistic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    if ( listReceipt.get(i).getData().size() > 0){
+                                        for(int p = 0; p < listReceipt.get(i).getData().size(); p++ ){
+                                            switch (listReceipt.get(i).getData().get(p).getId()){
+                                                case DomainConst.ITEM_NAME:  tvName
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_DOCTOR:  tvDoctor
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_RECEIPTIONIST:  tvCashier
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_DISCOUNT:  tvDiscount
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_TOTAL:  tvSum
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_DEBT:  tvDebt
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
+                                                case DomainConst.ITEM_TREATMENT:  tvType
+                                                        .setText(listReceipt.get(i).getData().get(p).getData());
+                                                    break;
 
-                                            default:
-                                                break;
+                                                default:
+                                                    break;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
+                            });
 //                        lvStatistic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                            @Override
 //                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -177,15 +231,17 @@ public class G02F00S03Fragment extends BaseFragment<G00HomeActivity> {
 //                            }
 //                        });
 
-                    } else {
-                        parentActivity.showLoadingView(false);
-                        CommonProcess.showErrorMessage(parentActivity, resp);
+                        } else {
+                            parentActivity.showLoadingView(false);
+                            CommonProcess.showErrorMessage(parentActivity, resp);
+                        }
                     }
-                }
-            };
-            request.execute();
+                };
+                request.execute();
+            }
+            //requestServer();
         }
-        //requestServer();
+
         return rootView;
     }
 }

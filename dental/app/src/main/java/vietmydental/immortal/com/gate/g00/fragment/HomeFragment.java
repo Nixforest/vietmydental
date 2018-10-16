@@ -53,7 +53,6 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate,LoginBean.getInstance().listAgent);
     }
 
-
     public HomeFragment() {
         // Required empty public constructor
     }

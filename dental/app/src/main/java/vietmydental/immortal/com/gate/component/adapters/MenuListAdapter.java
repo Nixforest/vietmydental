@@ -98,6 +98,10 @@ public class MenuListAdapter extends BaseAdapter {
             case DomainConst.MENU_ID_LIST.REPORT_REVENUE:
                 return R.drawable.ic_menu_report;
             //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+            //++
+            case DomainConst.MENU_ID_LIST.KEY_DAILY_REPORT:
+                return R.drawable.ic_menu_report;
+            //--
             default:
                 break;
         }
