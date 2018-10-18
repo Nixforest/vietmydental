@@ -18,6 +18,7 @@ import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
+import vietmydental.immortal.com.gate.component.adapters.DailyReportBranchAdapter;
 import vietmydental.immortal.com.gate.component.adapters.DailyReportListAdapter;
 import vietmydental.immortal.com.gate.component.adapters.ReceiptAdapter;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
@@ -39,6 +41,7 @@ import vietmydental.immortal.com.gate.g02.model.GetListReceiptsResModel;
 import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
 import vietmydental.immortal.com.gate.g02.model.StatisticBean;
 import vietmydental.immortal.com.gate.g03.api.DailyReportListRequest;
+import vietmydental.immortal.com.gate.g03.api.DailyReportRequest;
 import vietmydental.immortal.com.gate.g03.model.DailyReportListResModel;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
@@ -54,6 +57,11 @@ public class G03F00S01Fragment extends BaseFragment<G00HomeActivity> {
     private DailyReportListResModel respData;
     /** List data */
     public ArrayList<ReceiptBean> list = new ArrayList<>();
+
+    /** List data */
+    //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
+    public ArrayList<ReceiptBean> listforbranch = new ArrayList<>();
+    //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
     public Integer year;
     public Integer month;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
@@ -130,18 +138,60 @@ public class G03F00S01Fragment extends BaseFragment<G00HomeActivity> {
                         });
                         lvReport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
                                 if ( list.get(position).getData().size() > 0){
                                     for(int i = 0; i < list.get(position).getData().size(); i++){
                                         switch (list.get(position).getData().get(i).getId()){
                                             case DomainConst.ITEM_STATUS_TEXT:
-                                                if(list.get(position).getData().get(i).getData().equals("Chưa duyệt")){
+                                                //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
+                                                if(list.get(position).getData().get(i).getData().equals("Chưa tạo") || list.get(position).getData().get(i).getData().equals("Mới tạo")){
                                                     Toast.makeText(parentActivity, "Báo cáo chưa được tạo bởi Lễ tân",Toast.LENGTH_SHORT).show();
 
                                                 }
                                                 else{
-                                                    parentActivity.openG03F00S02Fragment(list.get(position).getName());
+                                                    //parentActivity.openG03F00S02Fragment(list.get(position).getName());
+                                                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                                    Date pdate = new Date();
+                                                    try {
+                                                        pdate = format.parse(list.get(position).getName());
+                                                    } catch (ParseException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                                                    String sDate = formatter.format(pdate);
+                                                    String token = BaseModel.getInstance().getToken(parentActivity.getBaseContext());
+                                                    if (token != null) {
+                                                        parentActivity.showLoadingView(true);
+                                                        DailyReportRequest request = new DailyReportRequest(token,sDate
+                                                        ) {
+                                                            @Override
+                                                            protected void onPostExecute(Object o) {
+                                                                BaseResponse resp = getResponse();
+                                                                if ((resp != null) && resp.isSuccess()) {
+                                                                    parentActivity.showLoadingView(false);
+                                                                    parseDataForBranch(resp.getArrayData());
+                                                                    if(listforbranch.size() == 1){
+                                                                        parentActivity.openG03F00S03Fragment(listforbranch.get(0), list.get(position).getName());
+                                                                    }
+                                                                    else if (list.size() > 1){
+                                                                        parentActivity.openG03F00S02Fragment(list.get(position).getName());
+
+                                                                    }
+                                                                    else{
+
+                                                                    }
+
+
+                                                                } else {
+                                                                    parentActivity.showLoadingView(false);
+                                                                    CommonProcess.showErrorMessage(parentActivity, resp);
+                                                                }
+                                                            }
+                                                        };
+                                                        request.execute();
+                                                    }
                                                 }
+                                                //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                                                 break;
 //
                                             default:
@@ -217,5 +267,18 @@ public class G03F00S01Fragment extends BaseFragment<G00HomeActivity> {
         respData = new DailyReportListResModel(gsonObject);
         list = respData.getList();
     }
+
+    //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
+    /**
+     * Parse data from response.
+     * @param data JSONObject data
+     */
+    private void parseDataForBranch(JSONArray data) {
+        JsonParser jsonParser = new JsonParser();
+        JsonArray gsonObject = (JsonArray) jsonParser.parse(data.toString());
+        respData = new DailyReportListResModel(gsonObject);
+        listforbranch = respData.getList();
+    }
+    //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
 }
 //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.

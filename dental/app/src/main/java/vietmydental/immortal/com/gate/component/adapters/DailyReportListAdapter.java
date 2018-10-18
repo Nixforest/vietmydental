@@ -67,20 +67,12 @@ public class DailyReportListAdapter extends ArrayAdapter<ReceiptBean> {
                         else if(receipt.getData().get(i).getData().equals("Không duyệt")){
                             viewHolder.imgStatus.setImageResource(R.drawable.add_medical_history);
                         }
+                        //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                         else{
-
+                            viewHolder.imgStatus.setImageResource(R.drawable.address_icon);
                         }
+                        //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                         break;
-//                    case DomainConst.ITEM_DOCTOR:  viewHolder.tvDoctorName.setText(receipt.getData().get(i).getData());
-//                        break;
-//                    case DomainConst.ITEM_RECEIPTIONIST:  viewHolder.tvCashierName.setText(receipt.getData().get(i).getData());
-//                        break;
-//                    case DomainConst.ITEM_DISCOUNT:  viewHolder.tvDiscount.setText(receipt.getData().get(i).getData());
-//                        break;
-//                    case DomainConst.ITEM_TOTAL:  viewHolder.tvTotal.setText(receipt.getData().get(i).getData());
-//                        break;
-//                    case DomainConst.ITEM_FINAL:  viewHolder.tvFinal.setText(receipt.getData().get(i).getData());
-//                        break;
                     default:
                         break;
                 }

@@ -98,38 +98,62 @@ public class G03F00S02Fragment extends BaseFragment<G00HomeActivity> {
                     if ((resp != null) && resp.isSuccess()) {
                         parentActivity.showLoadingView(false);
                         parseData(resp.getArrayData());
-                        if(list.size() == 1){
-                            parentActivity.openG03F00S03Fragment(list.get(0), date);
-                        }
-                        else if (list.size() > 1){
-                            customAdaper = new DailyReportBranchAdapter(parentActivity,R.layout.list_item_g03_f00_s01,list);
-                            lvReport.setAdapter(customAdaper);
-                            lvReport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                                    if ( list.get(position).getData().size() > 0){
-                                        for(int i = 0; i < list.get(position).getData().size(); i++){
-                                            switch (list.get(position).getData().get(i).getId()){
-                                                case DomainConst.ITEM_STATUS_TEXT:
-                                                    if(list.get(position).getData().get(i).getData().equals("Chưa duyệt")){
-                                                        Toast.makeText(parentActivity, "Báo cáo chưa được tạo bởi Lễ tân",Toast.LENGTH_SHORT).show();
-                                                    }
-                                                    else{
-                                                        parentActivity.openG03F00S03Fragment(list.get(position), date);
-                                                    }
-                                                    break;
+//                        if(list.size() == 1){
+//                            parentActivity.openG03F00S03Fragment(list.get(0), date);
+//                        }
+//                        else if (list.size() > 1){
+//                            customAdaper = new DailyReportBranchAdapter(parentActivity,R.layout.list_item_g03_f00_s01,list);
+//                            lvReport.setAdapter(customAdaper);
+//                            lvReport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                                    if ( list.get(position).getData().size() > 0){
+//                                        for(int i = 0; i < list.get(position).getData().size(); i++){
+//                                            switch (list.get(position).getData().get(i).getId()){
+//                                                case DomainConst.ITEM_STATUS_TEXT:
+//                                                    if(list.get(position).getData().get(i).getData().equals("Chưa duyệt")){
+//                                                        Toast.makeText(parentActivity, "Báo cáo chưa được tạo bởi Lễ tân",Toast.LENGTH_SHORT).show();
+//                                                    }
+//                                                    else{
+//                                                        parentActivity.openG03F00S03Fragment(list.get(position), date);
+//                                                    }
+//                                                    break;
+////
+//                                                default:
+//                                                    break;
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            });
+//                        }
+//                        else{
 //
-                                                default:
-                                                    break;
-                                            }
+//                        }
+                        customAdaper = new DailyReportBranchAdapter(parentActivity,R.layout.list_item_g03_f00_s01,list);
+                        lvReport.setAdapter(customAdaper);
+                        lvReport.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                                if ( list.get(position).getData().size() > 0){
+                                    for(int i = 0; i < list.get(position).getData().size(); i++){
+                                        switch (list.get(position).getData().get(i).getId()){
+                                            case DomainConst.ITEM_STATUS_TEXT:
+                                                if(list.get(position).getData().get(i).getData().equals("Chưa tạo") || list.get(position).getData().get(i).getData().equals("Mới tạo")){
+                                                    Toast.makeText(parentActivity, "Báo cáo chưa được tạo bởi Lễ tân",Toast.LENGTH_SHORT).show();
+                                                }
+                                                else{
+                                                    parentActivity.openG03F00S03Fragment(list.get(position), date);
+                                                }
+                                                break;
+//
+                                            default:
+                                                break;
                                         }
                                     }
                                 }
-                            });
-                        }
-                        else{
-
-                        }
+                            }
+                        });
 
 
                     } else {

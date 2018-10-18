@@ -1230,10 +1230,11 @@ public final class DomainConst {
 
     // For employee HGD
     public static final int STATUS_NEW = 1;
-    public static final int STATUS_CONFIRM = 2;
-    public static final int STATUS_UNCONFIRM = 3;
+    public static final int STATUS_PROCESS = 2;
+    public static final int STATUS_CONFIRM = 3;
     public static final int STATUS_CANCEL = 4;
-    public static final int STATUS_COMPLETE = 5;
+    public static final int STATUS_SHOULD_REVIEW = 5;
+    public static final int STATUS_NOT_CREATED_YET = 6;
     public static final String KEY_REFERRAL_FROM_GOOGLE = "KEY_REFERRAL_FROM_GOOGLE";
 
     public static String getMaterialTypeName(String key) {
