@@ -103,8 +103,11 @@ public class MenuListAdapter extends BaseAdapter {
                 return R.drawable.ic_menu_report;
             //--
             default:
-                break;
+                //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+                //break;
+                return R.drawable.ic_menu_home;
         }
-        return 0;
+        //return 0;
+        //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
     }
 }
