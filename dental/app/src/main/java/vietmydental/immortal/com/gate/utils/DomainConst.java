@@ -789,6 +789,10 @@ public final class DomainConst {
     public static final String KEY_STORE_ORDER_DATA = "order_data";
     public static final String KEY_MATERIAL_GAS = "material_gas";
 
+    //++
+    public static final String KEY_QR = "qr";
+    //--
+
     /** -----Specified constant----- */
     /**
      * File parameter: file_name[ + ]
@@ -1151,6 +1155,9 @@ public final class DomainConst {
         public static final String NO_COLLECTED_REVENUE = "Danh sách chưa thu";
         public static final String STATISTIC = "Thống kê";
         //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+        //++
+        public static final String QRCODE = "Danh sách QR Code";
+        //--
     }
 
     public static class WEB_PAGE_ID {

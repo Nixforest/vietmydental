@@ -1,5 +1,6 @@
 package vietmydental.immortal.com.gate.g00.view;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -151,4 +152,5 @@ public class G00HomeActivity extends BaseActivity {
         }
         startActivityForResult(galleryIntent, DomainConst.RESULT_LOAD_IMG);
     }
+
 }

@@ -426,6 +426,10 @@
     <string name="CONTENT00592">Hôm qua</string>
     <string name="CONTENT00593">Tháng này</string>
     <string name="CONTENT00594">Tháng trước</string>
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    <string name="CONTENT00598">LỊCH SỬ</string>
+    <string name="CONTENT00599">Chưa nhập mã</string>
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 
     <!-- For discount view-->
     <string name="discount_0001">Giới thiệu</string>

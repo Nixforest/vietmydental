@@ -471,4 +471,14 @@ public class BaseActivity extends AppCompatActivity {
 
     }
     //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    /**
+     * Open UserEditProfileFragment
+     */
+    public void openG04F00S01Fragment() {
+        this.navigator.openG04F00S01Fragment();
+
+    }
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 }

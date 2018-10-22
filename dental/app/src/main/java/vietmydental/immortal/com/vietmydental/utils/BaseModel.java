@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import vietmydental.immortal.com.vietmydental.model.ConfigBean;
@@ -52,6 +53,7 @@ public class BaseModel {
     private int mode = DomainConst.MODE_TRAINING;
     /** Singleton instance */
     private String serverURL = DomainConst.SERVER_URL_TRAINING;
+
 
     /**
      * Get singleton instance.

@@ -36,6 +36,7 @@ import vietmydental.immortal.com.gate.g01.fragment.G01F03S04Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S01Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S02Fragment;
 import vietmydental.immortal.com.gate.g02.fragment.G02F00S03Fragment;
+import vietmydental.immortal.com.gate.g04.fragment.G04F00S01Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -529,4 +530,16 @@ public class BaseNavigationComponent {
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
     }
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    /**
+     * Open G04F00S01Fragment screen
+     */
+    public void openG04F00S01Fragment() {
+        BaseFragment fragment = new G04F00S01Fragment();
+        //((G02F00S02Fragment)fragment).setData(fromDate,toDate,agentList);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 }

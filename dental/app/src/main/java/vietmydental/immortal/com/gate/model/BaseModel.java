@@ -3,6 +3,8 @@ package vietmydental.immortal.com.gate.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class BaseModel {
@@ -16,7 +18,9 @@ public class BaseModel {
     /** Current application mode */
 //    private int                     mode                = DomainConst.MODE_TRAINING;
     private int                     mode                = DomainConst.MODE_RUNNING;
-
+    //++
+    public ArrayList<String> listQRCode = new ArrayList<>();
+    //--
     /**
      * Get singleton instance.
      * @return Singleton instance
