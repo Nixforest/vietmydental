@@ -66,9 +66,11 @@ public class DailyReportBranchAdapter extends ArrayAdapter<ReceiptBean> {
                         else if(receipt.getData().get(i).getData().equals("Không duyệt")){
                             viewHolder.imgStatus.setImageResource(R.drawable.add_medical_history);
                         }
+                        //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                         else{
-
+                            viewHolder.imgStatus.setImageResource(R.drawable.address_icon);
                         }
+                        //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                         break;
                     default:
                         break;

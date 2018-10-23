@@ -44,7 +44,7 @@ public class UpdateDailyReportRequest extends BaseRequest {
         try {
             object.put(DomainConst.KEY_TOKEN, token);
             object.put(DomainConst.KEY_ID, id);
-            object.put(DomainConst.KEY_STATUS, status);
+            object.put(DomainConst.KEY_STATUS, String.valueOf(status));
         } catch (JSONException e) {
             e.printStackTrace();
         }
