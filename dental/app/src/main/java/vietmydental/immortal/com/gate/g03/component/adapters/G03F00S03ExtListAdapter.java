@@ -47,18 +47,16 @@ public class G03F00S03ExtListAdapter extends ArrayAdapter<PropertyBean> {
         PropertyBean propertyBean = arrProperty.get(position);
         viewHolder.tvDate.setText(propertyBean.getName());
         viewHolder.tvStatus.setText(propertyBean.getData());
-        switch (propertyBean.getId()){
-            case DomainConst.ITEM_TOTAL:
-                viewHolder.imgStatus.setVisibility(View.VISIBLE);
-                viewHolder.imgStatus.setImageResource(R.drawable.ic_total);
-                break;
-            case DomainConst.ITEM_AGENT:
-                viewHolder.imgStatus.setVisibility(View.VISIBLE);
-                viewHolder.imgStatus.setImageResource(R.drawable.ic_palace);
-                break;
-            default:
-                viewHolder.imgStatus.setVisibility(View.INVISIBLE);
-                break;
+        int imageId = 0;
+        if (DomainConst.VMD_IMG_LIST.get(propertyBean.getId()) != null) {
+            imageId = DomainConst.VMD_IMG_LIST.get(propertyBean.getId());
+        }
+
+        if (imageId != 0) {
+            viewHolder.imgStatus.setImageResource(imageId);
+            viewHolder.imgStatus.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.imgStatus.setVisibility(View.INVISIBLE);
         }
         return convertView;
     }

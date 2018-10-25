@@ -1427,6 +1427,8 @@ public final class DomainConst {
             put(ITEM_TEETH_INFO,        R.drawable.teeth);
             put(ITEM_CUSTOMER_DEBT,     R.drawable.debt);
             put(ITEM_IMAGE,             R.drawable.xray);
+            put(ITEM_TOTAL,             R.drawable.sum);
+
         }
     };
     // MARK: -----Public static strings-----
