@@ -48,35 +48,44 @@ public class DailyReportBranchAdapter extends ArrayAdapter<ReceiptBean> {
         }
         ReceiptBean receipt = arrReceipt.get(position);
         viewHolder.tvDate.setText(receipt.getName());
+        //++ BUG0127-IMT (KhoiVT 20181030) [Android] Update status icon for daily report.
         if ( receipt.getData().size() > 0){
             for(int i = 0; i < receipt.getData().size(); i++){
                 switch (receipt.getData().get(i).getId()){
-                    case DomainConst.ITEM_STATUS_TEXT:  viewHolder.tvStatus.setText(receipt.getData().get(i).getData());
-                        if (receipt.getData().get(i).getData().equals("Chưa tạo")) {
-                            viewHolder.imgStatus.setImageResource(R.drawable.menu_add);
-
-                        }
-                        else if(receipt.getData().get(i).getData().equals("Đã duyệt")){
-                            viewHolder.imgStatus.setImageResource(R.drawable.add_1);
-                        }
-                        else if(receipt.getData().get(i).getData().equals("Chưa duyệt")){
-                            viewHolder.imgStatus.setImageResource(R.drawable.address);
-
-                        }
-                        else if(receipt.getData().get(i).getData().equals("Không duyệt")){
-                            viewHolder.imgStatus.setImageResource(R.drawable.add_medical_history);
-                        }
-                        //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
-                        else{
-                            viewHolder.imgStatus.setImageResource(R.drawable.address_icon);
+                    case DomainConst.ITEM_STATUS:
+                        switch (receipt.getData().get(i).getData()) {
+                            case DomainConst.REPORT_STATUS_NEW:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_new);
+                                break;
+                            case DomainConst.REPORT_STATUS_ACTIVE_:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_active);
+                                break;
+                            case DomainConst.REPORT_STATUS_REQUEST:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_request);
+                                break;
+                            case DomainConst.REPORT_STATUS_APPROVED:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_approved);
+                                break;
+                            case DomainConst.REPORT_STATUS_CANCEL:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_cancel);
+                                break;
+                            case DomainConst.REPORT_STATUS_SHOULD_REVIEW:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_request);
+                                break;
+                            //++ BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
+                            default:
+                                viewHolder.imgStatus.setImageResource(R.drawable.report_status_new);
+                                break;
                         }
                         //-- BUG0094_1-IMT (KhoiVT20180910) [Android] Fix bug Daily Report.
                         break;
+                    case DomainConst.ITEM_STATUS_TEXT:  viewHolder.tvStatus.setText(receipt.getData().get(i).getData());
                     default:
                         break;
                 }
             }
         }
+        //-- BUG0127-IMT (KhoiVT 20181030) [Android] Update status icon for daily report.
         return convertView;
     }
 

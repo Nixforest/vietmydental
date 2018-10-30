@@ -1981,4 +1981,13 @@ public final class DomainConst {
     public static final String CONTENT00579 = "Thay mật khẩu thành công";
     public static final String CONTENT00580 = "Cập nhật tài khoản thành công";
     //-- BUG0032-IMT (KhoiVT 20180921) [Android] Các màn hình vệ tinh
+    //++ BUG0127-IMT (KhoiVT 20181030) [Android] Update status icon for daily report.
+    //Status
+    public static final String REPORT_STATUS_NEW = "1";
+    public static final String REPORT_STATUS_ACTIVE_ = "2";
+    public static final String REPORT_STATUS_REQUEST = "3";
+    public static final String REPORT_STATUS_APPROVED = "4";
+    public static final String REPORT_STATUS_CANCEL = "5";
+    public static final String REPORT_STATUS_SHOULD_REVIEW = "6";
+    //-- BUG0127-IMT (KhoiVT 20181030) [Android] Update status icon for daily report.
 }
