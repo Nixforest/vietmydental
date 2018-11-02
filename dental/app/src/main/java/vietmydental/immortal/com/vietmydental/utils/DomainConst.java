@@ -683,6 +683,9 @@ public final class DomainConst {
     public static final String KEY_RESIZE_HEIGHT = "resize_height";
     public static final String KEY_CUSTOMER_CHAIN_STORE = "customer_chain_store";
     public static final String KEY_GAS24H_MENU_TEXT = "gas24h_menu_text";
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    public static final String KEY_QR = "qr";
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 
     public interface GAS_REMAIN_TYPE {
         String KEY = "gas_remain_type";

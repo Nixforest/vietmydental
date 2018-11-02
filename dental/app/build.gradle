@@ -59,6 +59,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:14.0.0'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.google.zxing:core:3.2.1'
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 }
 repositories {
     mavenCentral()

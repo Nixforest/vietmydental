@@ -1159,6 +1159,9 @@ public final class DomainConst {
         public static final String DAILY_REPORT_DATE = "Báo cáo ngày ";
         public static final String REVENUE_DETAIL = "Chi tiết doanh thu ";
         //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+        //++
+        public static final String QRCODE = "Danh sách QR Code";
+        //--
     }
 
     public static class WEB_PAGE_ID {
