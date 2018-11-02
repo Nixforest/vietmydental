@@ -39,6 +39,7 @@ import vietmydental.immortal.com.gate.g02.fragment.G02F00S03Fragment;
 import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
 import vietmydental.immortal.com.gate.g03.fragment.G03F00S01Fragment;
 import vietmydental.immortal.com.gate.g03.fragment.G03F00S02Fragment;
+import vietmydental.immortal.com.gate.g03.fragment.G03F00S03ExtFragment;
 import vietmydental.immortal.com.gate.g03.fragment.G03F00S03Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
@@ -561,9 +562,14 @@ public class BaseNavigationComponent {
      * Open G03F00S02Fragment
      */
     public void openG03F00S03Fragment(ReceiptBean receiptBean, String date) {
-        BaseFragment fragment = new G03F00S03Fragment();
-        ((G03F00S03Fragment)fragment).setData(receiptBean, date);
+        //++ BUG0094-IMT (KhoiVT20180910) [Android] extend when update value for api
+//        BaseFragment fragment = new G03F00S03Fragment();
+//        ((G03F00S03Fragment)fragment).setData(receiptBean, date);
+//        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+        BaseFragment fragment = new G03F00S03ExtFragment();
+        ((G03F00S03ExtFragment)fragment).setData(receiptBean, date);
         this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+        //-- BUG0094-IMT (KhoiVT20180910) [Android] extend when update value for api
     }
 
     /**
