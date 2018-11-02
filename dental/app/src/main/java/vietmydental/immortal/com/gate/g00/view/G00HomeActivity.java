@@ -38,7 +38,7 @@ public class G00HomeActivity extends BaseActivity {
         ButterKnife.bind(this);
         // For menu
         updateMenu();
-        openHome();
+        //openHome();
         String token = BaseModel.getInstance().getToken(getBaseContext());
         if (token != null) {
             showLoadingView(true);
@@ -49,6 +49,7 @@ public class G00HomeActivity extends BaseActivity {
                     if ((resp != null) && resp.isSuccess()) {
                         handleUpdateConfig(resp.getData());
                         showLoadingView(false);
+                        openHome();
                     } else {
                         showLoadingView(false);
 //                        CommonProcess.showErrorMessage(G00HomeActivity.this, resp.getMessage());

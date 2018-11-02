@@ -209,11 +209,12 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
 //            request.execute();
 //        }
         //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
-        if (LoginBean.getInstance().role_id.equals("6")){
+        if (LoginBean.getInstance().role_id.equals("8")){
             viewScan.setVisibility(View.VISIBLE);
             viewStatistic.setVisibility(View.GONE);
         }
         else{
+            String role = LoginBean.getInstance().role_id;
             viewScan.setVisibility(View.GONE);
             viewStatistic.setVisibility(View.VISIBLE);
             mTagGroup.setTags(new String[]{"Tất cả"});
