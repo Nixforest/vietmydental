@@ -23,6 +23,9 @@ public class BaseModel {
     public String todate = DomainConst.BLANK;
     public ArrayList<ConfigBean> listSelected = new ArrayList<>();
     //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
+    //++
+    public ArrayList<String> listQRCode = new ArrayList<>();
+    //--
     /**
      * Get singleton instance.
      * @return Singleton instance

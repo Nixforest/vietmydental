@@ -432,6 +432,10 @@
     <string name="CONTENT00596">Chi nhánh</string>
     <string name="CONTENT00597">Không xác nhận</string>
     //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    <string name="CONTENT00598">LỊCH SỬ</string>
+    <string name="CONTENT00599">Chưa nhập mã</string>
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 
     <!-- For discount view-->
     <string name="discount_0001">Giới thiệu</string>

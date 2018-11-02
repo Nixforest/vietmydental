@@ -505,4 +505,15 @@ public class BaseActivity extends AppCompatActivity {
         navigator.openG02F00S03Fragment(receiptBean);
     }
     //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
+
+
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    /**
+     * Open UserEditProfileFragment
+     */
+    public void openG04F00S01Fragment() {
+        this.navigator.openG04F00S01Fragment();
+
+    }
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 }

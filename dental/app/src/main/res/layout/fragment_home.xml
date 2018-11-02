@@ -11,6 +11,12 @@
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   tools:context="vietmydental.immortal.com.gate.g00.fragment.HomeFragment">
+    <LinearLayout
+        android:id="@+id/view_statistic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <me.gujun.android.taggroup.TagGroup
             android:id="@+id/tag_group"
@@ -175,7 +181,67 @@
             android:background="@android:color/transparent"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/view_Scan"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                >
+                <LinearLayout
+                    android:id="@+id/view_choose_branch"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/layout_margin_small"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/layout_margin_small"
+                    android:layout_marginRight="@dimen/layout_margin_small"
+                    android:background="@drawable/corner_border_view"
+                    android:clickable="true">
+                    <EditText
+                        android:id="@+id/edt_qrcode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Scan"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/imgNext"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/next"
+                        android:layout_gravity="center_vertical"/>/>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/img_scan"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/photo_camera"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_history"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="20dp"
+                android:text="@string/CONTENT00598"
+                android:textColor="@android:color/white"
+                android:background="@drawable/corner_button"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

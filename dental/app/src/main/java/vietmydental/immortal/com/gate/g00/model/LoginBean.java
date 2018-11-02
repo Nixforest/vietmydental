@@ -22,7 +22,7 @@ public class LoginBean extends ConfigBean {
     public String agent_id                         = DomainConst.BLANK;
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
     /** Id of role */
-    private String role_id                          = DomainConst.BLANK;
+    public String role_id                          = DomainConst.BLANK;
     /** Flag need change pass */
     private String need_change_pass                 = DomainConst.BLANK;
     /** List menu */
