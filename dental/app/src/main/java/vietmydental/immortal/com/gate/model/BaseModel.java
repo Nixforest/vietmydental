@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 
+import vietmydental.immortal.com.gate.g03.model.QRCodeBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
 public class BaseModel {
@@ -23,9 +24,9 @@ public class BaseModel {
     public String todate = DomainConst.BLANK;
     public ArrayList<ConfigBean> listSelected = new ArrayList<>();
     //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
-    //++
-    public ArrayList<String> listQRCode = new ArrayList<>();
-    //--
+    //++ BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+    public ArrayList<QRCodeBean> listQRCode = new ArrayList<>();
+    //-- BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
     /**
      * Get singleton instance.
      * @return Singleton instance

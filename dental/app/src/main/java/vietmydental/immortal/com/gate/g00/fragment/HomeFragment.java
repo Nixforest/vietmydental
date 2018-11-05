@@ -37,6 +37,7 @@ import vietmydental.immortal.com.gate.g02.model.ReceiptBean;
 import vietmydental.immortal.com.gate.g02.model.StatisticBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.g03.model.DailyReportListResModel;
+import vietmydental.immortal.com.gate.g03.model.QRCodeBean;
 import vietmydental.immortal.com.gate.g04.api.GetCustomerByQRCodeRequest;
 import vietmydental.immortal.com.gate.g04.model.CustomerBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
@@ -103,8 +104,11 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
 //                            }
                             CustomerBean customerBean = new CustomerBean(resp.getJsonData());
                             if(!customerBean.dataId.equals(DomainConst.BLANK)){
-                                Toast.makeText(parentActivity, "Có thông tin", Toast.LENGTH_SHORT).show();
+                                //++ BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+                                //Toast.makeText(parentActivity, "Có thông tin", Toast.LENGTH_SHORT).show();
+                                BaseModel.getInstance().listQRCode.add(new QRCodeBean(edtQRCODE.getText().toString(),customerBean.dataId));
                                 parentActivity.openG01F01S01(customerBean.dataId);
+                                //-- BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                             }
                             else {
                                 Toast.makeText(parentActivity, "Không có thông tin", Toast.LENGTH_SHORT).show();
@@ -287,7 +291,7 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
                     String id = segments[segments.length-1];
                     //edtQRCODE.setText(result.getContents());
                     edtQRCODE.setText(id);
-                    BaseModel.getInstance().listQRCode.add(id);
+                    //BaseModel.getInstance().listQRCode.add(id);
                     //Automatic request
                     next();
                 }
