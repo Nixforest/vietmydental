@@ -24,9 +24,9 @@ public class BaseModel {
     public String todate = DomainConst.BLANK;
     public ArrayList<ConfigBean> listSelected = new ArrayList<>();
     //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
-    //++ BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+    //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
     public ArrayList<QRCodeBean> listQRCode = new ArrayList<>();
-    //-- BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+    //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
     /**
      * Get singleton instance.
      * @return Singleton instance

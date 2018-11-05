@@ -68,7 +68,7 @@ public class G04F00S01Fragment extends BaseFragment<G00HomeActivity> {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_g04_f00_s01, container, false);
         ButterKnife.bind(this, rootView);
-        //++ BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+        //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
         ArrayList<String> listQRCode = new ArrayList<>();
         for(int i = 0 ; i < BaseModel.getInstance().listQRCode.size() ; i++){
             listQRCode.add(BaseModel.getInstance().listQRCode.get(i).getQrCode());
@@ -82,7 +82,7 @@ public class G04F00S01Fragment extends BaseFragment<G00HomeActivity> {
                 parentActivity.openG01F01S01(BaseModel.getInstance().listQRCode.get(i).getCustomerId());
             }
         });
-        //-- BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+        //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
         return rootView;
     }
 

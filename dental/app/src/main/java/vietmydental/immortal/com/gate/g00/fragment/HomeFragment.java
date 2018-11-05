@@ -104,11 +104,11 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
 //                            }
                             CustomerBean customerBean = new CustomerBean(resp.getJsonData());
                             if(!customerBean.dataId.equals(DomainConst.BLANK)){
-                                //++ BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+                                //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                                 //Toast.makeText(parentActivity, "Có thông tin", Toast.LENGTH_SHORT).show();
                                 BaseModel.getInstance().listQRCode.add(new QRCodeBean(edtQRCODE.getText().toString(),customerBean.dataId));
                                 parentActivity.openG01F01S01(customerBean.dataId);
-                                //-- BUG0100-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
+                                //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                             }
                             else {
                                 Toast.makeText(parentActivity, "Không có thông tin", Toast.LENGTH_SHORT).show();
