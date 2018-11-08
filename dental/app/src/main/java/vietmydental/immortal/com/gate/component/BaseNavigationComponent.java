@@ -42,6 +42,7 @@ import vietmydental.immortal.com.gate.g03.fragment.G03F00S02Fragment;
 import vietmydental.immortal.com.gate.g03.fragment.G03F00S03ExtFragment;
 import vietmydental.immortal.com.gate.g03.fragment.G03F00S03Fragment;
 import vietmydental.immortal.com.gate.g04.fragment.G04F00S01Fragment;
+import vietmydental.immortal.com.gate.g05.fragment.G05F00S01Fragment;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.ConfigBean;
 import vietmydental.immortal.com.gate.model.ConfigExtBean;
@@ -596,4 +597,15 @@ BaseNavigationComponent {
     }
 
     //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    /**
+     * Open G04F00S01Fragment screen
+     */
+    public void openG05F00S01Fragment() {
+        BaseFragment fragment = new G05F00S01Fragment();
+        //((G02F00S02Fragment)fragment).setData(fromDate,toDate,agentList);
+        this.moveToFragment(fragment, DomainConst.LAYOUT_LEVEL_1);
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
 }

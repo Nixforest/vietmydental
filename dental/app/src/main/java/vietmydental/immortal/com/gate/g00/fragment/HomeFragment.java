@@ -64,11 +64,8 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
     @BindView(R.id.view_statistic) LinearLayout viewStatistic;
     @BindView(R.id.view_Scan) LinearLayout viewScan;
+    @BindView(R.id.view_customer) LinearLayout viewCustomer;
     @BindView(R.id.edt_qrcode) EditText edtQRCODE;
-    /** Data */
-//    private DailyReportListResModel respData;
-//    /** List data */
-//    public ArrayList<ReceiptBean> list = new ArrayList<>();
 
     @OnClick(R.id.img_scan)
     public void scan() {
@@ -141,6 +138,12 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate,LoginBean.getInstance().listAgent);
     }
 
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @OnClick(R.id.btn_set_timer)
+    public void goTimer() {
+        parentActivity.openG05F00S01Fragment();
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -216,11 +219,21 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         if (LoginBean.getInstance().role_id.equals("8")){
             viewScan.setVisibility(View.VISIBLE);
             viewStatistic.setVisibility(View.GONE);
+            viewCustomer.setVisibility(View.GONE);
+
         }
+        //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+        else if (LoginBean.getInstance().role_id.equals("3")){
+            viewScan.setVisibility(View.GONE);
+            viewStatistic.setVisibility(View.GONE);
+            viewCustomer.setVisibility(View.VISIBLE);
+        }
+        //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
         else{
             String role = LoginBean.getInstance().role_id;
             viewScan.setVisibility(View.GONE);
             viewStatistic.setVisibility(View.VISIBLE);
+            viewCustomer.setVisibility(View.GONE);
             mTagGroup.setTags(new String[]{"Tất cả"});
             Date todayDate = Calendar.getInstance().getTime();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");

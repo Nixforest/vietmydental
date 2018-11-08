@@ -516,4 +516,13 @@ public class BaseActivity extends AppCompatActivity {
 
     }
     //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    /**
+     * Open UserEditProfileFragment
+     */
+    public void openG05F00S01Fragment() {
+        this.navigator.openG05F00S01Fragment();
+
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
 }
