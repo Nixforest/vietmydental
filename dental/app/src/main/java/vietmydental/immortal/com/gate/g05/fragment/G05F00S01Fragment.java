@@ -74,8 +74,7 @@ public class G05F00S01Fragment extends BaseFragment<G00HomeActivity> {
 
     @OnClick(R.id.btn_set_timer)
     public void makeSchedule(View view) {
-        //String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
-        String token = "WORDPRESS_API_TOKEN";
+        String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         if (token != null) {
             parentActivity.showLoadingView(true);
             MakeScheduleRequest request = new MakeScheduleRequest(token, tvName.getText().toString(), tvPhone.getText().toString(), tvDate.getText().toString(), tvContent.getText().toString()) {
