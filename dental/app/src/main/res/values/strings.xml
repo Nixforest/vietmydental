@@ -439,8 +439,8 @@
     //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
     <string name="CONTENT00600">Dành cho bệnh nhân</string>
     <string name="CONTENT00601">Mã OTP</string>
-    <string name="CONTENT00602">Mã pin vừa được gửi đến số điện thoại</string>
-    <string name="CONTENT00603">Vui lòng xem tin nhắn và nhập mã pin vào ô bên trên để hoàn tất đăng nhập sử dụng ứng dụng</string>
+    <string name="CONTENT00602">Mã OTP vừa được gửi đến số điện thoại</string>
+    <string name="CONTENT00603">Vui lòng xem tin nhắn và nhập mã OTP vào ô bên trên để hoàn tất đăng nhập sử dụng ứng dụng</string>
     <string name="CONTENT00604">Nhập lại</string>
     <string name="CONTENT00605">Gửi lại</string>
     <string name="CONTENT00606">Vui lòng nhập mã OTP</string>
@@ -510,8 +510,8 @@
     <string name="login_0002">Số điện thoại</string>
     <string name="login_0003">Nhập mã pin</string>
     <string name="login_0004">Mã pin vừa được gửi đến số điện thoại</string>
-    <string name="login_0005">Vui lòng xem tin nhắn\n và nhập mã pin vào ô bên trên để \n hoàn tất đăng nhập sử dụng ứng dụng</string>
-    <string name="login_0006">Chưa nhận được mã PIN?</string>
+    <string name="login_0005">Vui lòng xem tin nhắn\n và nhập mã OTP vào ô bên trên để \n hoàn tất đăng nhập sử dụng ứng dụng</string>
+    <string name="login_0006">Chưa nhận được mã OTP?</string>
     <string name="login_0007">Gửi lại</string>
     <string name="login_0008">Sai số điện thoại?</string>
     <string name="login_0009">Trở về</string>

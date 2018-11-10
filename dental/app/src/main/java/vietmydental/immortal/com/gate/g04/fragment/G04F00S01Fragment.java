@@ -78,7 +78,7 @@ public class G04F00S01Fragment extends BaseFragment<G00HomeActivity> {
         lvQRCode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                parentActivity.openG01F01S01(BaseModel.getInstance().listQRCode.get(i).getCustomerId());
+                parentActivity.openG01F00S02(BaseModel.getInstance().listQRCode.get(i).getCustomerId());
             }
         });
         //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.

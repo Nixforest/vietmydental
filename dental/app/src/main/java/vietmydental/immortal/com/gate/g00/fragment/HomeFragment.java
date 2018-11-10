@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
                                 //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                                 //Toast.makeText(parentActivity, "Có thông tin", Toast.LENGTH_SHORT).show();
                                 BaseModel.getInstance().listQRCode.add(new QRCodeBean(edtQRCODE.getText().toString(),customerBean.dataId));
-                                parentActivity.openG01F01S01(customerBean.dataId);
+                                parentActivity.openG01F00S02(customerBean.dataId);
                                 //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                             }
                             else {
@@ -135,7 +135,8 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     @OnClick(R.id.btn_medical_profile)
     public void goMedicalProfile() {
         //String id = LoginBean.getInstance().customer_id;
-        parentActivity.openG01F01S01(LoginBean.getInstance().customer_id);
+        //parentActivity.openG01F01S01(LoginBean.getInstance().customer_id);
+        parentActivity.openG01F00S02(LoginBean.getInstance().customer_id);
     }
     //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
 
