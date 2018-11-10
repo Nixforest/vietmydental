@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,6 +67,9 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     @BindView(R.id.view_Scan) LinearLayout viewScan;
     @BindView(R.id.view_customer) LinearLayout viewCustomer;
     @BindView(R.id.edt_qrcode) EditText edtQRCODE;
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @BindView(R.id.btn_medical_profile) Button btnMedicalProfile;
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
 
     @OnClick(R.id.img_scan)
     public void scan() {
@@ -127,6 +131,14 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         parentActivity.openG04F00S01Fragment();
     }
     //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @OnClick(R.id.btn_medical_profile)
+    public void goMedicalProfile() {
+        //String id = LoginBean.getInstance().customer_id;
+        parentActivity.openG01F01S01(LoginBean.getInstance().customer_id);
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+
 
     @OnClick(R.id.btn_list_collected)
     public void goListCollectedScreen() {
@@ -216,17 +228,20 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
 //            request.execute();
 //        }
         //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
-        if (LoginBean.getInstance().role_id.equals("8")){
+        if (LoginBean.getInstance().role_id.equals(DomainConst.ROLE_RECEIPTIONIST)){
             viewScan.setVisibility(View.VISIBLE);
             viewStatistic.setVisibility(View.GONE);
             viewCustomer.setVisibility(View.GONE);
 
         }
         //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
-        else if (LoginBean.getInstance().role_id.equals("3")){
+        else if (LoginBean.getInstance().role_id.equals(DomainConst.ROLE_CUSTOMER)){
             viewScan.setVisibility(View.GONE);
             viewStatistic.setVisibility(View.GONE);
             viewCustomer.setVisibility(View.VISIBLE);
+            if (LoginBean.getInstance().customer_id.equals(DomainConst.BLANK)) {
+                btnMedicalProfile.setVisibility(View.GONE);
+            }
         }
         //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
         else{

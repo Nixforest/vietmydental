@@ -263,9 +263,19 @@
             <Button
                 android:id="@+id/btn_set_timer"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_margin="20dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
                 android:text="@string/CONTENT00608"
+                android:textColor="@android:color/white"
+                android:background="@drawable/corner_button"/>
+            <Button
+                android:id="@+id/btn_medical_profile"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="@dimen/base_margin"
+                android:layout_marginRight="@dimen/base_margin"
+                android:layout_marginLeft="@dimen/base_margin"
+                android:text="@string/CONTENT00544"
                 android:textColor="@android:color/white"
                 android:background="@drawable/corner_button"/>
 

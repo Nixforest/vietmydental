@@ -805,6 +805,7 @@ public final class DomainConst {
 
     // For Report
     public static final String KEY_MONTH = "month";
+
     /** -----Specified constant----- */
     /**
      * File parameter: file_name[ + ]
@@ -992,7 +993,12 @@ public final class DomainConst {
     /**
      * Role id: Customer
      */
-    public static final String ROLE_CUSTOMER = "4";
+    public static final String ROLE_CUSTOMER = "3";
+    /**
+     * Role id: Customer
+     */
+    public static final String ROLE_RECEIPTIONIST = "8";
+
     /**
      * Role id: Coordinator
      */

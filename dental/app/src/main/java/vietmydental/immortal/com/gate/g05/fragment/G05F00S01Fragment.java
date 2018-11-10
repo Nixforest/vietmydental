@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,22 +14,28 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import vietmydental.immortal.com.gate.api.BaseResponse;
 import vietmydental.immortal.com.gate.component.BaseFragment;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 import vietmydental.immortal.com.gate.g02.api.GetStatisticRequest;
 import vietmydental.immortal.com.gate.g02.model.StatisticBean;
+import vietmydental.immortal.com.gate.g05.G05Const;
 import vietmydental.immortal.com.gate.g05.api.MakeScheduleRequest;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
@@ -39,11 +46,11 @@ public class G05F00S01Fragment extends BaseFragment<G00HomeActivity> {
 
     @BindView(R.id.tv_name) AutoCompleteTextView tvName;
     @BindView(R.id.tv_phone) AutoCompleteTextView tvPhone;
-    @BindView(R.id.tv_date) AutoCompleteTextView tvDate;
-    @BindView(R.id.tv_content) AutoCompleteTextView tvContent;
-    @BindView(R.id.btn_pick_date) Button btnPickDate;
+    @BindView(R.id.tv_date) TextView tvDate;
+    @BindView(R.id.btn_pick_date) LinearLayout btnPickDate;
     @BindView(R.id.btn_set_timer) Button btnSetTimer;
     private DatePickerDialog.OnDateSetListener mDateSetListenerToDate;
+    @BindView(R.id.textArea_information) EditText textArea;
     String sdate   = DomainConst.BLANK;
 
     @OnClick(R.id.btn_pick_date)
@@ -77,13 +84,13 @@ public class G05F00S01Fragment extends BaseFragment<G00HomeActivity> {
         String token = BaseModel.getInstance().getToken(this.parentActivity.getBaseContext());
         if (token != null) {
             parentActivity.showLoadingView(true);
-            MakeScheduleRequest request = new MakeScheduleRequest(token, tvName.getText().toString(), tvPhone.getText().toString(), tvDate.getText().toString(), tvContent.getText().toString()) {
+            MakeScheduleRequest request = new MakeScheduleRequest(token, tvName.getText().toString(), tvPhone.getText().toString(), tvDate.getText().toString(), textArea.getText().toString()) {
                 @Override
                 protected void onPostExecute(Object o) {
                     BaseResponse resp = getResponse();
                     if ((resp != null) && resp.isSuccess()) {
                         parentActivity.showLoadingView(false);
-                        Toast.makeText(parentActivity, "đặt lịch hẹn khám thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(parentActivity, G05Const.MESSAGE_MAKE_SCHEDULE_SUCCESS, Toast.LENGTH_SHORT).show();
                     } else {
                         parentActivity.showLoadingView(false);
                         CommonProcess.showErrorMessage(parentActivity, resp);
@@ -93,6 +100,7 @@ public class G05F00S01Fragment extends BaseFragment<G00HomeActivity> {
             request.execute();
         }
     }
+
     /**
      * Get fragment UUID.
      *
@@ -124,7 +132,23 @@ public class G05F00S01Fragment extends BaseFragment<G00HomeActivity> {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_g05_f00_s01, container, false);
         ButterKnife.bind(this, rootView);
-
+        textArea.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK){
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+        tvPhone.setText(BaseModel.getInstance().phone);
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String sDate = formatter.format(todayDate);
+        tvDate.setText(sDate);
         return rootView;
     }
 

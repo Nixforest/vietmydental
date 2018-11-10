@@ -87,6 +87,7 @@ public class G00PatientLoginActivity extends AppCompatActivity {
                 protected void onPostExecute(Object o) {
                     BaseResponse resp = getResponse();
                     if ((resp != null) && resp.isSuccess()) {
+                        BaseModel.getInstance().phone   = edtPhone.getText().toString();
                         handleLoginSuccess(resp.getData());
                         showProgress(false);
                     } else {

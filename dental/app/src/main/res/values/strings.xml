@@ -443,8 +443,8 @@
     <string name="CONTENT00603">Vui lòng xem tin nhắn và nhập mã pin vào ô bên trên để hoàn tất đăng nhập sử dụng ứng dụng</string>
     <string name="CONTENT00604">Nhập lại</string>
     <string name="CONTENT00605">Gửi lại</string>
-    <string name="CONTENT00606">NHẬP MÃ OTP</string>
-    <string name="CONTENT00607">ĐĂNG NHẬP</string>
+    <string name="CONTENT00606">Vui lòng nhập mã OTP</string>
+    <string name="CONTENT00607">Vui lòng nhập số điện thoại</string>
     <string name="CONTENT00608">ĐẶT LỊCH HẸN</string>
     <string name="CONTENT00609">Ngày hẹn</string>
     //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
