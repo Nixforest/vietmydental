@@ -129,9 +129,22 @@ public final class DomainConst {
      * Uphold list
      */
     public static final String PATH_SITE_UPHOLD_LIST = "site/upholdList";
+    //++
+    /**
+     * Customer Login
+     */
+    public static final String PATH_DEFAULT_CUSTOMER_LOGIN = "default/loginCustomer";
+    /**
+     * Customer Login
+     */
+    public static final String PATH_DEFAULT_CUSTOMER_LOGIN_CONFIRM = "default/loginCustomerConfirm";
+
+
+    //--
     /**
      * Uphold reply
      */
+
     public static final String PATH_SITE_UPHOLD_REPLY = "site/upholdReply";
     public static final String PATH_SITE_BOMOI_EMPLOYEE_CASHBOOK_CREATE = "boMoi/employeeCashbookCreate";
     public static final String PATH_SITE_BOMOI_EMPLOYEE_CASHBOOK_UPDATE = "boMoi/employeeCashbookUpdate";
@@ -725,6 +738,7 @@ public final class DomainConst {
     public static final String KEY_GAS24H_MENU_TEXT = "gas24h_menu_text";
     //++
     public static final String KEY_IMAGE = "image";
+    public static final String KEY_OTP = "otp";
     //--
 
     public interface GAS_REMAIN_TYPE {
@@ -791,6 +805,7 @@ public final class DomainConst {
 
     // For Report
     public static final String KEY_MONTH = "month";
+
     /** -----Specified constant----- */
     /**
      * File parameter: file_name[ + ]
@@ -978,7 +993,12 @@ public final class DomainConst {
     /**
      * Role id: Customer
      */
-    public static final String ROLE_CUSTOMER = "4";
+    public static final String ROLE_CUSTOMER = "3";
+    /**
+     * Role id: Customer
+     */
+    public static final String ROLE_RECEIPTIONIST = "8";
+
     /**
      * Role id: Coordinator
      */
@@ -1161,6 +1181,9 @@ public final class DomainConst {
         //-- BUG0094-IMT (KhoiVT20180910) [Android] Daily Report.
         //++
         public static final String QRCODE = "Danh sách QR Code";
+        //--
+        //++
+        public static final String TIMER = "Đặt lịch hẹn khám";
         //--
     }
 

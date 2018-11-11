@@ -108,6 +108,22 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
+        //++
+        Button mPatientButton = (Button) findViewById(R.id.for_patient_button);
+        mPatientButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), G00PatientLoginActivity.class);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    intent.putExtras(getIntent().getExtras());
+                }
+                startActivity(intent);
+                finish();
+            }
+        });
+        //--
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override

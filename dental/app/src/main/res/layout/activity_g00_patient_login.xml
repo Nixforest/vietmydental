@@ -1,0 +1,233 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              >
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/login_logo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/layout_margin_horizontal_large"
+                android:layout_marginRight="@dimen/layout_margin_horizontal_large"
+                android:layout_marginTop="@dimen/layout_margin_horizontal"
+                android:layout_weight="0.9"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo_main_v3" />
+            <LinearLayout
+                android:id="@+id/view_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CONTENT00607"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_16"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_border_view"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:padding="@dimen/base_margin"
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_marginRight="@dimen/base_margin">
+                    <EditText
+                        android:id="@+id/login_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberSigned"
+                        android:maxLength="12"
+                        android:maxLines="1" />
+
+                    <Button
+                        android:id="@+id/btn_phone_next"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/next"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/view_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CONTENT00606"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_16"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_border_view"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:padding="@dimen/base_margin"
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_marginRight="@dimen/base_margin">
+                    <EditText
+                        android:id="@+id/login_otp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberSigned"
+                        android:maxLength="6"
+                        android:maxLines="1" />
+
+                    <Button
+                        android:id="@+id/btn_otp_next"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/next"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CONTENT00602"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/base_margin"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorMain"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_0005"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"/>
+                <LinearLayout
+                    android:id="@+id/ll_login_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/base_margin"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/login_0008"
+                            android:textSize="@dimen/text_size_18"
+                            android:textStyle="italic"
+                            android:textColor="@color/colorMain"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/CONTENT00604"
+                        android:background="@drawable/corner_button"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_login_resend_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/login_0006"
+                            android:textColor="@color/colorMain"
+                            android:textSize="@dimen/text_size_18"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/btn_resend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/CONTENT00605"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/corner_button"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

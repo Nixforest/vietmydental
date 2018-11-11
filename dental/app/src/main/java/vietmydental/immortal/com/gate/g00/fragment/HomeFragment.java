@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,11 +65,11 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
     //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
     @BindView(R.id.view_statistic) LinearLayout viewStatistic;
     @BindView(R.id.view_Scan) LinearLayout viewScan;
+    @BindView(R.id.view_customer) LinearLayout viewCustomer;
     @BindView(R.id.edt_qrcode) EditText edtQRCODE;
-    /** Data */
-//    private DailyReportListResModel respData;
-//    /** List data */
-//    public ArrayList<ReceiptBean> list = new ArrayList<>();
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @BindView(R.id.btn_medical_profile) Button btnMedicalProfile;
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
 
     @OnClick(R.id.img_scan)
     public void scan() {
@@ -107,7 +108,7 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
                                 //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                                 //Toast.makeText(parentActivity, "Có thông tin", Toast.LENGTH_SHORT).show();
                                 BaseModel.getInstance().listQRCode.add(new QRCodeBean(edtQRCODE.getText().toString(),customerBean.dataId));
-                                parentActivity.openG01F01S01(customerBean.dataId);
+                                parentActivity.openG01F00S02(customerBean.dataId);
                                 //-- BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
                             }
                             else {
@@ -130,6 +131,15 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         parentActivity.openG04F00S01Fragment();
     }
     //-- BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @OnClick(R.id.btn_medical_profile)
+    public void goMedicalProfile() {
+        //String id = LoginBean.getInstance().customer_id;
+        //parentActivity.openG01F01S01(LoginBean.getInstance().customer_id);
+        parentActivity.openG01F00S02(LoginBean.getInstance().customer_id);
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+
 
     @OnClick(R.id.btn_list_collected)
     public void goListCollectedScreen() {
@@ -141,6 +151,12 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
         parentActivity.openG02F00S03Fragment(G02Const.STATUS_DOCTOR,currentDate,currentDate,LoginBean.getInstance().listAgent);
     }
 
+    //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+    @OnClick(R.id.btn_set_timer)
+    public void goTimer() {
+        parentActivity.openG05F00S01Fragment();
+    }
+    //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -213,14 +229,27 @@ public class HomeFragment extends BaseFragment<G00HomeActivity> {
 //            request.execute();
 //        }
         //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
-        if (LoginBean.getInstance().role_id.equals("8")){
+        if (LoginBean.getInstance().role_id.equals(DomainConst.ROLE_RECEIPTIONIST)){
             viewScan.setVisibility(View.VISIBLE);
             viewStatistic.setVisibility(View.GONE);
+            viewCustomer.setVisibility(View.GONE);
+
         }
+        //++ BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
+        else if (LoginBean.getInstance().role_id.equals(DomainConst.ROLE_CUSTOMER)){
+            viewScan.setVisibility(View.GONE);
+            viewStatistic.setVisibility(View.GONE);
+            viewCustomer.setVisibility(View.VISIBLE);
+            if (LoginBean.getInstance().customer_id.equals(DomainConst.BLANK)) {
+                btnMedicalProfile.setVisibility(View.GONE);
+            }
+        }
+        //-- BUG0109-IMT (KhoiVT20181105) [Android] Login and make schedule for customer
         else{
             String role = LoginBean.getInstance().role_id;
             viewScan.setVisibility(View.GONE);
             viewStatistic.setVisibility(View.VISIBLE);
+            viewCustomer.setVisibility(View.GONE);
             mTagGroup.setTags(new String[]{"Tất cả"});
             Date todayDate = Calendar.getInstance().getTime();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");

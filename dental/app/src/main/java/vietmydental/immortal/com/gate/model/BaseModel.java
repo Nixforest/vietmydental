@@ -22,6 +22,7 @@ public class BaseModel {
     //++ BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
     public String fromdate = DomainConst.BLANK;
     public String todate = DomainConst.BLANK;
+    public String phone  =  DomainConst.BLANK;
     public ArrayList<ConfigBean> listSelected = new ArrayList<>();
     //-- BUG0097-IMT (KhoiVT20181010) [Android] Fix bug.
     //++ BUG0132-IMT (KhoiVT20180910) [Android] Fix scan QRCode get wrong patient.
