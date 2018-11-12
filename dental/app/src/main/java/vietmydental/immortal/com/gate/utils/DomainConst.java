@@ -1089,7 +1089,7 @@ public final class DomainConst {
     /**
      * Server URL (Training mode)
      */
-    public static final String SERVER_URL_TRAINING  = "http://vietmy.immortal.vn/index.php/api/";
+    public static final String SERVER_URL_TRAINING  = "http://test.nkvietmy.com/index.php/api/";
     /**
      * Server URL
      */
