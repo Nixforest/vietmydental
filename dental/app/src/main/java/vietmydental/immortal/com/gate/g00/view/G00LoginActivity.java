@@ -45,13 +45,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vietmydental.immortal.com.gate.api.BaseResponse;
+import vietmydental.immortal.com.gate.g00.api.GetDomainRequest;
 import vietmydental.immortal.com.gate.g00.api.LoginRequest;
 import vietmydental.immortal.com.gate.g00.model.LoginBean;
+import vietmydental.immortal.com.gate.g04.model.CustomerBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 import vietmydental.immortal.com.gate.model.NotificationBean;
 import vietmydental.immortal.com.gate.utils.CommonProcess;
 import vietmydental.immortal.com.gate.utils.DomainConst;
+import vietmydental.immortal.com.vietmydental.LoginActivity;
 import vietmydental.immortal.com.vietmydental.R;
+import vietmydental.immortal.com.vietmydental.utils.CommonUtils;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -91,6 +95,11 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g00_login);
+        //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+        if (BaseModel.getInstance().getServerURL().equals(vietmydental.immortal.com.vietmydental.utils.DomainConst.BLANK)){
+            getDomain();
+        }
+        //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
         checkExtrasData(getIntent().getExtras());
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -169,6 +178,9 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
                     }
                     CommonProcess.showErrorMessage(G00LoginActivity.this, "Mode = " + String.valueOf(BaseModel.getInstance().getMode(getBaseContext())));
                 }
+                //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+                getDomain();
+                //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
             }
         });
     }
@@ -202,6 +214,30 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
         }
         return false;
     }
+
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    void getDomain() {
+        BaseModel.getInstance().setServerUrl(vietmydental.immortal.com.vietmydental.utils.DomainConst.MAIN_URL);
+        //showLoadingView(true);
+        GetDomainRequest api = new GetDomainRequest() {
+            @Override
+            protected void onPostExecute(Object o) {
+                BaseResponse resp = getResponse();
+                if (resp != null && resp.isSuccess()) {
+                    JSONObject data = resp.getData();
+                    CustomerBean customerBean = new CustomerBean(resp.getJsonData());
+                    if(!customerBean.dataId.equals(vietmydental.immortal.com.vietmydental.utils.DomainConst.BLANK)){
+                        BaseModel.getInstance().setServerUrl(customerBean.dataId);
+                    }
+                } else {
+                    CommonUtils.showErrorMessage(G00LoginActivity.this, resp.toString());
+                }
+                //showLoadingView(false);
+            }
+        };
+        api.execute();
+    }
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
 
     /**
      * Callback received when a permissions request has been completed.

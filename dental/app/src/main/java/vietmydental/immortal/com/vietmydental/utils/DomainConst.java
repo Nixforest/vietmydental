@@ -11,6 +11,12 @@ package vietmydental.immortal.com.vietmydental.utils;
  *         11/04/2016
  */
 public final class DomainConst {
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    /**
+     * Main url
+     */
+    public static final String MAIN_URL = "http://nixforest.com/index.php/api/";
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     /**
      * Submit customer info
      */
