@@ -147,6 +147,7 @@ public abstract class BaseRequest extends AsyncTask {
         } else {
             Log.w(DomainConst.LOG_TAG_WARN,
                     DomainConst.LOG_MSG_GET_DATA_FROM_URL + BaseRequest.getServerURL());
+
             response = execute(BaseRequest.getServerURL() + getSubUrl(), requestType, entity);
         }
 

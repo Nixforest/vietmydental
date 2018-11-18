@@ -193,7 +193,20 @@ public final class DomainConst {
     /** Path to connect with PHP server */
     public static final String PATH_LIST_RECEIPTS                = "report/listReceipts";
     //-- BUG0089-IMT (KhoiVT20180113) [Android] Statistic Screen.
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    /** Path to connect with PHP server */
+    public static final String PATH_DOMAIN                       = "default/getDomainName";
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     /** -----List of keys----- */
+    /**
+     * Bundle ID
+     */
+    public static final String KEY_BUNDLE_ID = "bundle_id";
+    /**
+     * Bundle
+     */
+    public static final String BUNDLE_ID = "vietmydental.immortal.com.vietmydental";
+
     /**
      * Token
      */
@@ -2018,4 +2031,8 @@ public final class DomainConst {
     public static final String REPORT_STATUS_CANCEL = "4";
     public static final String REPORT_STATUS_SHOULD_REVIEW = "5";
     //-- BUG0127-IMT (KhoiVT 20181030) [Android] Update status icon for daily report.
+
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    public static final String BUNDLE_APP_ID = "com.immortal.vietmydental";
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
 }

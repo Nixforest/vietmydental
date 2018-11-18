@@ -15,6 +15,12 @@ public class BaseModel {
     private static final String     DB_NAME             = "Share_DB";
     private String shareString = "";
     private String mDeviceToken                         = "";
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    private String serverUrl                            = DomainConst.BLANK;
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+    //++
+    public boolean isFirstCallApi                         = true;
+    //---
 
     /** Current application mode */
 //    private int                     mode                = DomainConst.MODE_TRAINING;
@@ -58,14 +64,20 @@ public class BaseModel {
      * Get server URL.
      * @return Server URL
      */
+    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     public String getServerURL() {
-        if (this.mode == DomainConst.MODE_TRAINING) {
-            return DomainConst.SERVER_URL_TRAINING;
-        } else {
-            return DomainConst.SERVER_URL;
-        }
+//        if (this.mode == DomainConst.MODE_TRAINING) {
+//            return DomainConst.SERVER_URL_TRAINING;
+//        } else {
+//            return DomainConst.SERVER_URL;
+//        }
+        return serverUrl;
     }
 
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     /**
      * Get Shared preference.
      * @param ctx Current context
