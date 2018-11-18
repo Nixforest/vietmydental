@@ -15,7 +15,7 @@ public final class DomainConst {
     /**
      * Main url
      */
-    public static final String MAIN_URL = "http://nixforest.com/index.php/api/";
+    public static final String MAIN_URL = "https://nixforest.com/index.php/api/";
     //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     /**
      * Submit customer info

@@ -171,12 +171,18 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
                     clickNumber = 0;
                     if (BaseModel.getInstance().getMode(getBaseContext()) == DomainConst.MODE_TRAINING) {
                         BaseModel.getInstance().setMode(getBaseContext(), DomainConst.MODE_RUNNING);
+                        CommonProcess.showMessage(G00LoginActivity.this,
+                                G00LoginActivity.this.getString(R.string.CONTENT00048),
+                                "Training mode is OFF", null);
                         mEmailView.setTextColor(Color.BLACK);
                     } else {
                         BaseModel.getInstance().setMode(getBaseContext(), DomainConst.MODE_TRAINING);
+                        CommonProcess.showMessage(G00LoginActivity.this,
+                                G00LoginActivity.this.getString(R.string.CONTENT00048),
+                                "Training mode is ON", null);
                         mEmailView.setTextColor(Color.RED);
                     }
-                    CommonProcess.showErrorMessage(G00LoginActivity.this, "Mode = " + String.valueOf(BaseModel.getInstance().getMode(getBaseContext())));
+//                    CommonProcess.showErrorMessage(G00LoginActivity.this, "Mode = " + String.valueOf(BaseModel.getInstance().getMode(getBaseContext())));
                 }
                 //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
                 getDomain();
