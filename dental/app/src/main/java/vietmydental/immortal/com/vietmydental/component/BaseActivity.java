@@ -30,24 +30,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.http.HttpException;
-
-import java.net.UnknownHostException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.RuntimePermissions;
-import retrofit2.Response;
-import vietmydental.immortal.com.vietmydental.BuildConfig;
 import vietmydental.immortal.com.vietmydental.R;
 import vietmydental.immortal.com.vietmydental.component.adapters.MenuListAdapter;
-import vietmydental.immortal.com.vietmydental.utils.BaseModel;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
-import vietmydental.immortal.com.vietmydental.utils.ErrorCode;
 
 @RuntimePermissions
 public class BaseActivity extends AppCompatActivity {

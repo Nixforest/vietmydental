@@ -24,8 +24,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.utils.BaseModel;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.utils.ErrorCode;
 
 /**

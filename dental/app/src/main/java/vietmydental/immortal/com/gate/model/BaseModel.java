@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 
+import vietmydental.immortal.com.gate.g00.model.LoginBean;
 import vietmydental.immortal.com.gate.g04.model.QRCodeBean;
 import vietmydental.immortal.com.gate.utils.DomainConst;
 
@@ -174,4 +175,16 @@ public class BaseModel {
     public void setDeviceToken(String token) {
         this.mDeviceToken = token;
     }
+
+    //++ BUG0151-IMT (KhoiVT 20181114) fix bug
+
+    public void setDefaultServerUrl(Context context){
+        if (getMode(context) == DomainConst.MODE_TRAINING){
+            this.serverUrl = DomainConst.TRAINING_URL;
+        }
+        else{
+            this.serverUrl = DomainConst.SERVER_URL;
+        }
+    }
+    //-- BUG0151-IMT (KhoiVT 20181114) fix bug
 }

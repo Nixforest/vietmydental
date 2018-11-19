@@ -10,9 +10,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 import vietmydental.immortal.com.vietmydental.model.ConfigBean;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
 
 public abstract class BaseNavigationComponent {
     protected BaseActivity activity;

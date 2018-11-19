@@ -10,7 +10,7 @@ import java.util.List;
 
 import vietmydental.immortal.com.gate.api.BaseRequest;
 import vietmydental.immortal.com.gate.g04.G04Const;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 
 //++ BUG0100-IMT (KhoiVT20180910) [Android] Scan QRCode.
 public class GetCustomerByQRCodeRequest extends BaseRequest {

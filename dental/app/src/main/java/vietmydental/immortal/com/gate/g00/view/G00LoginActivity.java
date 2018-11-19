@@ -96,7 +96,7 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_g00_login);
         //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
-        if (BaseModel.getInstance().getServerURL().equals(vietmydental.immortal.com.vietmydental.utils.DomainConst.BLANK)){
+        if (BaseModel.getInstance().getServerURL().equals(DomainConst.BLANK)){
             getDomain();
         }
         //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
@@ -172,21 +172,21 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
                     if (BaseModel.getInstance().getMode(getBaseContext()) == DomainConst.MODE_TRAINING) {
                         BaseModel.getInstance().setMode(getBaseContext(), DomainConst.MODE_RUNNING);
                         CommonProcess.showMessage(G00LoginActivity.this,
-                                G00LoginActivity.this.getString(R.string.CONTENT00048),
+                                G00LoginActivity.this.getString(R.string.CONTENT00162),
                                 "Training mode is OFF", null);
                         mEmailView.setTextColor(Color.BLACK);
                     } else {
                         BaseModel.getInstance().setMode(getBaseContext(), DomainConst.MODE_TRAINING);
                         CommonProcess.showMessage(G00LoginActivity.this,
-                                G00LoginActivity.this.getString(R.string.CONTENT00048),
+                                G00LoginActivity.this.getString(R.string.CONTENT00162),
                                 "Training mode is ON", null);
                         mEmailView.setTextColor(Color.RED);
                     }
 //                    CommonProcess.showErrorMessage(G00LoginActivity.this, "Mode = " + String.valueOf(BaseModel.getInstance().getMode(getBaseContext())));
+                    //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
+                    BaseModel.getInstance().setDefaultServerUrl(G00LoginActivity.this);
+                    //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
                 }
-                //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
-                getDomain();
-                //-- BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
             }
         });
     }
@@ -223,7 +223,7 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
 
     //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
     void getDomain() {
-        BaseModel.getInstance().setServerUrl(vietmydental.immortal.com.vietmydental.utils.DomainConst.MAIN_URL);
+        BaseModel.getInstance().setServerUrl(DomainConst.MAIN_URL);
         //showLoadingView(true);
         GetDomainRequest api = new GetDomainRequest() {
             @Override
@@ -232,10 +232,18 @@ public class G00LoginActivity extends AppCompatActivity implements LoaderCallbac
                 if (resp != null && resp.isSuccess()) {
                     JSONObject data = resp.getData();
                     CustomerBean customerBean = new CustomerBean(resp.getJsonData());
-                    if(!customerBean.dataId.equals(vietmydental.immortal.com.vietmydental.utils.DomainConst.BLANK)){
+                    if(!customerBean.dataId.equals(DomainConst.BLANK)){
                         BaseModel.getInstance().setServerUrl(customerBean.dataId);
                     }
+                    else{
+                        //++ BUG0151-IMT (KhoiVT 20181114) fix bug
+                        BaseModel.getInstance().setDefaultServerUrl(G00LoginActivity.this);
+                        //++ BUG0151-IMT (KhoiVT 20181114) fix bug
+                    }
                 } else {
+                    //++ BUG0151-IMT (KhoiVT 20181114) fix bug
+                    BaseModel.getInstance().setDefaultServerUrl(G00LoginActivity.this);
+                    //++ BUG0151-IMT (KhoiVT 20181114) fix bug
                     CommonUtils.showErrorMessage(G00LoginActivity.this, resp.toString());
                 }
                 //showLoadingView(false);

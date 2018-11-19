@@ -107,6 +107,27 @@ public class CommonProcess {
     }
 
     /**
+     * Show message.
+     * @param context Current context
+     * @param message Message to show
+     * @param listener Listener
+     */
+    public static void showErrorMessage(Activity context, String message, final ConfirmDialogCallback listener) {
+//        new AlertDialog.Builder(context)
+//                .setTitle(context.getString(R.string.CONTENT00048))
+//                .setMessage(Html.fromHtml(message))
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if (listener != null) {
+//                            listener.onConfirmed();
+//                        }
+//                    }
+//                })
+//                .setIcon(android.R.drawable.ic_dialog_alert)
+//                .show();
+        showMessage(context, context.getString(R.string.CONTENT00048), message, listener);
+    }
+    /**
      * Show message dialog
      *
      * @param context  Current context
@@ -114,7 +135,7 @@ public class CommonProcess {
      * @param message
      * @param listener
      */
-    public static void showMessage(Context context, String title, String message, final CommonProcess.ConfirmDialogCallback listener) {
+    public static void showMessage(Context context, String title, String message, final ConfirmDialogCallback listener) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(Html.fromHtml(message))
@@ -140,7 +161,6 @@ public class CommonProcess {
 
     /**
      * Show message.
-     *
      * @param context Current context
      * @param message Message to show
      */

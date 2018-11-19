@@ -26,7 +26,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -36,16 +35,13 @@ import org.json.JSONObject;
 import java.util.List;
 
 import vietmydental.immortal.com.gate.api.BaseResponse;
-import vietmydental.immortal.com.gate.g00.api.GetDomainRequest;
 import vietmydental.immortal.com.gate.g00.api.LoginRequest;
-import vietmydental.immortal.com.gate.g04.model.CustomerBean;
-import vietmydental.immortal.com.gate.g04.model.QRCodeBean;
 import vietmydental.immortal.com.gate.model.BaseModel;
 //import vietmydental.immortal.com.vietmydental.api.LoginRequest;
 //import vietmydental.immortal.com.vietmydental.utils.BaseModel;
-import vietmydental.immortal.com.vietmydental.utils.CommonProcess;
+import vietmydental.immortal.com.gate.utils.CommonProcess;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.utils.CommonUtils;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 
 /**
