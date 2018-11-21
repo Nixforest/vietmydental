@@ -180,7 +180,7 @@ public class BaseModel {
 
     public void setDefaultServerUrl(Context context){
         if (getMode(context) == DomainConst.MODE_TRAINING){
-            this.serverUrl = DomainConst.TRAINING_URL;
+            this.serverUrl = DomainConst.SERVER_URL_TRAINING;
         }
         else{
             this.serverUrl = DomainConst.SERVER_URL;

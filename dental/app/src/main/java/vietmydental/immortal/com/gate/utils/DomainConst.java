@@ -10,8 +10,6 @@ import vietmydental.immortal.com.vietmydental.R;
 
 public final class DomainConst {
     //++ BUG0151-IMT (KhoiVT 20181114) get domain by GetDomainName api
-    /** Training url */
-    public static final String TRAINING_URL                          = "http://vietmy.immortal.vn/index.php/api/";
     /**
      * Main url
      */
@@ -692,11 +690,11 @@ public final class DomainConst {
     /**
      * Server URL (Training mode)
      */
-    public static final String SERVER_URL_TRAINING  = "http://test.nkvietmy.com/index.php/api/";
+    public static final String SERVER_URL_TRAINING  = "https://test.nkvietmy.com/index.php/api/";
     /**
      * Server URL
      */
-    public static final String SERVER_URL           = "http://nkvietmy.com/index.php/api/";
+    public static final String SERVER_URL           = "https://nkvietmy.com/index.php/api/";
 
     /**
      * -----Define id of fragment-----
