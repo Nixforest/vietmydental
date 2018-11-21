@@ -3,8 +3,8 @@ package vietmydental.immortal.com.vietmydental.component;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.utils.BaseModel;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
 import vietmydental.immortal.com.gate.g00.view.G00HomeActivity;
 
 public class NavigationComponent extends BaseNavigationComponent {

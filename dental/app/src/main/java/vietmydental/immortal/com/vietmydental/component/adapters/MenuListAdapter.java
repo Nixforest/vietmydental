@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 import vietmydental.immortal.com.vietmydental.R;
 import vietmydental.immortal.com.vietmydental.model.ConfigBean;
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
 
 public class MenuListAdapter extends BaseAdapter {
     public MenuListAdapter(ArrayList<ConfigBean> list, LayoutInflater inflater) {

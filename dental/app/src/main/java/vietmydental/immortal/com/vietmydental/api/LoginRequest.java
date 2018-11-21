@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 
 /**
  * Created by nguyenpt on 4/16/18.

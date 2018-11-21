@@ -31,7 +31,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import vietmydental.immortal.com.vietmydental.utils.DomainConst;
+import vietmydental.immortal.com.gate.utils.DomainConst;
 
 /**
  * Created by nguyenpt on 4/16/18.
